@@ -1,6 +1,9 @@
 # Pylings
 
-Pylings is a collection of coding exercises designed to help Python programmers improve their skills by providing a series of code snippets with intentional errors. The goal of Pylings is to challenge your understanding of Python syntax, common pitfalls, and best practices.
+Rustlings is an interactive program designed to teach Rust programming language by example. It offers a series of exercises containing code with errors, such as syntax issues or failed tests, which the user must fix before proceeding to the next exercise. This program has been highly popular and effective in teaching Rust to new learners.
+
+In an effort to emulate this successful approach, PyLings aims to be a similar program for Python. With a similar interactive learning experience, PyLings offers a range of exercises that teach Python through example, with broken code that the user must fix before moving on to the next task.
+
 
 ## Table of Contents
 
@@ -10,6 +13,7 @@ Pylings is a collection of coding exercises designed to help Python programmers 
     - [Prerequisites](#prerequisites)
   - [Running the Exercises](#running-the-exercises)
   - [Project Structure](#project-structure)
+    - [Contributing](#contributing)
 
 ## Getting Started
 
@@ -58,3 +62,17 @@ The project is organized as follows:
 The exercises directory contains the code snippets with intentional errors. Each exercise is in its own file, organized into subdirectories by topic (e.g. functions, variables).
 
 The tests directory contains the test files for each exercise. Each test file should have the same name as the corresponding exercise file, with _test appended to the end (e.g. variables1.py -> variables1_test.py). The test files should be organized into subdirectories that mirror the structure of the exercises
+
+### Contributing
+We welcome contributions to PyLings! If you find any issues or have ideas for new exercises, feel free to open a new issue or submit a pull request.
+
+To contribute, follow these steps:
+
+Fork the repository
+Create a new branch for your changes
+Make your changes and commit them with descriptive messages
+Push your changes to your fork
+Open a pull request
+We'll review your changes and merge them if they meet our criteria.
+
+Thank you for contributing to PyLings!

@@ -1,11 +1,17 @@
 # test_variable.py
 
+import os
 import sys
 
-import pytest
+# Get the absolute path of the current module (the test file)
+test_dir = os.path.dirname(os.path.abspath(__file__))
 
-sys.append("../examples/variables")
-from variables1 import a, b, c
+# Construct the path to the exercises directory relative to the test file
+exercises_dir = os.path.join(test_dir, "..", "..")
+# Add the exercises directory to the Python path
+sys.path.append(exercises_dir)
+
+from exercises.variables.variables1 import a, b, c
 
 
 def test_a_is_int():
