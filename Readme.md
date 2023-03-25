@@ -13,6 +13,7 @@ In an effort to emulate this successful approach, PyLings aims to be a similar p
     - [Prerequisites](#prerequisites)
   - [Running the Exercises](#running-the-exercises)
   - [Project Structure](#project-structure)
+    - [List of exercises](#list-of-exercises)
     - [Contributing](#contributing)
 
 ## Getting Started
@@ -62,6 +63,45 @@ The project is organized as follows:
 The exercises directory contains the code snippets with intentional errors. Each exercise is in its own file, organized into subdirectories by topic (e.g. functions, variables).
 
 The tests directory contains the test files for each exercise. Each test file should have the same name as the corresponding exercise file, with _test appended to the end (e.g. variables1.py -> variables1_test.py). The test files should be organized into subdirectories that mirror the structure of the exercises
+
+
+### List of exercises
+The following is a list of exercises that are currently available in PyLings. This list will be updated as new exercises are added.
+
+Variables
+-   Assigning values to variables
+-   Basic arithmetic operations using variables
+-   Working with different data types (strings, integers, booleans, etc.)
+Functions
+-   Creating and calling functions with and without arguments
+-   Returning values from functions
+-   Recursion
+Loops
+-   For loops
+-   While loops
+-   Loop control statements (break, continue)
+Conditional statements
+-   If statements
+- If-else statements
+- Nested if-else statements
+Lists and Tuples
+- Creating and manipulating lists and tuples
+- Accessing elements of a list or tuple
+- Slicing and indexing
+Dictionaries
+- Creating and accessing key-value pairs in a dictionary
+- Manipulating dictionary elements
+File I/O
+- Reading from and writing to files
+- Working with CSV and JSON files
+Exception handling
+- Handling common exceptions (e.g. ValueError, TypeError)
+- Raising exceptions
+Object-Oriented Programming
+- Creating and using classes
+- Encapsulation
+- Inheritance
+- Polymorphism
 
 ### Contributing
 We welcome contributions to PyLings! If you find any issues or have ideas for new exercises, feel free to open a new issue or submit a pull request.
