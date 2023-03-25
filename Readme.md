@@ -36,22 +36,23 @@ To run the tests for all exercises, simply execute the pylings.sh script:
 ## Project Structure
 
 The project is organized as follows:
-    ├── exercises
-    │   ├── __init__.py
-    │   ├── functions
-    │   │   └── fuctions1.py
-    │   └── variables
-    │       ├── __init__.py
-    │       ├── variables1.py
-    │       └── variables2.py
-    ├── pylings.py
-    ├── pylings.sh
-    └── tests
-        ├── functions
-        │   └── fuctions1_test.py
-        └── variables
-            ├── variables1_test.py
-            └── variables2_test.py
+├── exercises
+│   ├── __init__.py
+│   ├── functions
+│   │   └── fuctions1.py
+│   └── variables
+│       ├── __init__.py
+│       ├── variables1.py
+│       └── variables2.py
+├── pylings.py
+├── pylings.sh
+└── tests
+    ├── functions
+    │   └── fuctions1_test.py
+    └── variables
+        ├── variables1_test.py
+        └── variables2_test.py
+
 
 
 The exercises directory contains the code snippets with intentional errors. Each exercise is in its own file, organized into subdirectories by topic (e.g. functions, variables).
