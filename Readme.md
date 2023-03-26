@@ -17,11 +17,11 @@ In an effort to emulate this successful approach, PyLings aims to be a similar p
       - [Variables](#variables)
       - [Functions](#functions)
       - [Loops](#loops)
-      - [Conditional statements](#conditional-statements)
+      - [Conditional Statements](#conditional-statements)
       - [Lists and Tuples](#lists-and-tuples)
       - [Dictionaries](#dictionaries)
       - [File I/O](#file-io)
-      - [Exception handling](#exception-handling)
+      - [Exception Handling](#exception-handling)
       - [Object-Oriented Programming](#object-oriented-programming)
     - [Contributing](#contributing)
 
@@ -77,36 +77,43 @@ The tests directory contains the test files for each exercise. Each test file sh
 ### List of exercises
 The following is a list of exercises that are currently available in PyLings. This list will be updated as new exercises are added.
 
-#### Variables
+#### [Variables](./exercises/variables)
 -   Assigning values to variables
 -   Basic arithmetic operations using variables
 -   Working with different data types (strings, integers, booleans, etc.)
-#### Functions
+
+#### [Functions](./exercises/functions)
 -   Creating and calling functions with and without arguments
 -   Returning values from functions
 -   Recursion
-#### Loops
+
+#### [Loops](./exercises/loops)
 -   For loops
 -   While loops
 -   Loop control statements (break, continue)
-#### Conditional statements
+
+#### [Conditional Statements](./exercises/conditional_statements)
 -   If statements
-- If-else statements
-- Nested if-else statements
-#### Lists and Tuples
+-   If-else statements
+-   Nested if-else statements
+
+#### [Lists and Tuples](./exercises/lists_and_tuples)
 - Creating and manipulating lists and tuples
 - Accessing elements of a list or tuple
 - Slicing and indexing
-#### Dictionaries
+
+#### [Dictionaries](./exercises/dictionaries)
 - Creating and accessing key-value pairs in a dictionary
 - Manipulating dictionary elements
-#### File I/O
+
+#### [File I/O](./exercises/file_io)
 - Reading from and writing to files
 - Working with CSV and JSON files
-#### Exception handling
+
+#### [Exception Handling](./exercises/exception_handling)
 - Handling common exceptions (e.g. ValueError, TypeError)
 - Raising exceptions
-#### Object-Oriented Programming
+#### [Object-Oriented Programming](./exercises/oop)
 - Creating and using classes
 - Encapsulation
 - Inheritance
