@@ -14,6 +14,15 @@ In an effort to emulate this successful approach, PyLings aims to be a similar p
   - [Running the Exercises](#running-the-exercises)
   - [Project Structure](#project-structure)
     - [List of exercises](#list-of-exercises)
+      - [Variables](#variables)
+      - [Functions](#functions)
+      - [Loops](#loops)
+      - [Conditional statements](#conditional-statements)
+      - [Lists and Tuples](#lists-and-tuples)
+      - [Dictionaries](#dictionaries)
+      - [File I/O](#file-io)
+      - [Exception handling](#exception-handling)
+      - [Object-Oriented Programming](#object-oriented-programming)
     - [Contributing](#contributing)
 
 ## Getting Started
@@ -68,36 +77,36 @@ The tests directory contains the test files for each exercise. Each test file sh
 ### List of exercises
 The following is a list of exercises that are currently available in PyLings. This list will be updated as new exercises are added.
 
-Variables
+#### Variables
 -   Assigning values to variables
 -   Basic arithmetic operations using variables
 -   Working with different data types (strings, integers, booleans, etc.)
-Functions
+#### Functions
 -   Creating and calling functions with and without arguments
 -   Returning values from functions
 -   Recursion
-Loops
+#### Loops
 -   For loops
 -   While loops
 -   Loop control statements (break, continue)
-Conditional statements
+#### Conditional statements
 -   If statements
 - If-else statements
 - Nested if-else statements
-Lists and Tuples
+#### Lists and Tuples
 - Creating and manipulating lists and tuples
 - Accessing elements of a list or tuple
 - Slicing and indexing
-Dictionaries
+#### Dictionaries
 - Creating and accessing key-value pairs in a dictionary
 - Manipulating dictionary elements
-File I/O
+#### File I/O
 - Reading from and writing to files
 - Working with CSV and JSON files
-Exception handling
+#### Exception handling
 - Handling common exceptions (e.g. ValueError, TypeError)
 - Raising exceptions
-Object-Oriented Programming
+#### Object-Oriented Programming
 - Creating and using classes
 - Encapsulation
 - Inheritance

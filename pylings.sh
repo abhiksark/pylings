@@ -13,11 +13,12 @@ TESTS_DIR="./tests"
 # Get list of exercise files (excluding __init__.py files)
 EXERCISE_FILES=$(find "$EXERCISES_DIR" -name "*.py" ! -name "__init__.py")
 echo "Running tests for the following exercises:"
-echo "$EXERCISE_FILES"
+
 # Iterate over exercise files and run tests for each one
 for EXERCISE_FILE in $EXERCISE_FILES; do
     # Get the relative path of the exercise file
     EXERCISE_REL_PATH=${EXERCISE_FILE#"$EXERCISES_DIR/"}
+    echo "$EXERCISE_REL_PATH"
     
     # Replace the exercise file name with the test file name
     TEST_FILE_REL_PATH=${EXERCISE_REL_PATH/%.py/"_test.py"}
