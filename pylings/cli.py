@@ -38,6 +38,16 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _snapshot_all(root: Path) -> None:
+    """Ensure every exercise has a snapshot in .pylings/originals/."""
+    from pylings.core.manifest import load as load_manifest
+    from pylings.core.reset import snapshot
+
+    manifest = load_manifest(root)
+    for ex in manifest.exercises:
+        snapshot(root, ex)
+
+
 def _cmd_verify(root: Path) -> int:
     from pylings.core.manifest import load as load_manifest
     from pylings.core.runner import run_verify
@@ -113,11 +123,60 @@ def _cmd_run(root: Path, name: str) -> int:
     return 0
 
 
+def _cmd_reset(root: Path, name: str, yes: bool) -> int:
+    from pylings.core.manifest import load as load_manifest
+    from pylings.core.reset import ResetError, restore
+    from pylings.core.state import load as load_state, save as save_state
+
+    manifest = load_manifest(root)
+    try:
+        ex = manifest.by_name(name)
+    except KeyError:
+        sys.stderr.write(f"pylings: no exercise named {name!r}\n")
+        return 1
+
+    if not yes:
+        sys.stdout.write(f"Reset {name}? (y/N) ")
+        sys.stdout.flush()
+        answer = sys.stdin.readline().strip().lower()
+        if answer != "y":
+            return 0
+
+    try:
+        restore(root, ex)
+    except ResetError as e:
+        sys.stderr.write(f"pylings: {e}\n")
+        return 1
+
+    # Rewind state per spec: if name is completed → uncomplete it; if name
+    # precedes current → make name the new current.
+    state = load_state(root)
+    target_idx = manifest.index_of(name)
+    if state.current is not None:
+        current_idx = manifest.index_of(state.current)
+    else:
+        current_idx = len(manifest.exercises)  # treat 'all done' as past-end
+
+    state.completed.discard(name)
+    if target_idx < current_idx:
+        state.current = name
+    save_state(root, state)
+
+    print(f"reset: {name}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv if argv is not None else sys.argv[1:])
 
     try:
+        if args.command not in {"hint"}:
+            try:
+                _snapshot_all(args.root)
+            except Exception:
+                pass  # snapshot best-effort; real errors surface from subcommands
+
         if args.command == "verify":
             return _cmd_verify(args.root)
         if args.command == "list":
@@ -126,6 +185,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_hint(args.root, args.name)
         if args.command == "run":
             return _cmd_run(args.root, args.name)
+        if args.command == "reset":
+            return _cmd_reset(args.root, args.name, args.yes)
 
         if args.command in (None, "watch"):
             from pylings.app import run_tui  # lazy: Textual is heavy
