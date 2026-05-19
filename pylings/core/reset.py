@@ -13,7 +13,9 @@ class ResetError(RuntimeError):
 
 
 def _snapshot_path(root: Path, exercise: Exercise) -> Path:
-    return root / ".pylings" / "originals" / exercise.path.name
+    # Key on Exercise.name (unique per the manifest validator) so two
+    # exercises in different topics with the same filename don't collide.
+    return root / ".pylings" / "originals" / f"{exercise.name}.py"
 
 
 def snapshot(root: Path, exercise: Exercise) -> None:

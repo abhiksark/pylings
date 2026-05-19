@@ -44,3 +44,26 @@ def test_restore_raises_when_no_snapshot(tmp_path: Path) -> None:
     ex = _ex(tmp_path, "no snapshot taken")
     with pytest.raises(ResetError, match="snapshot"):
         restore(tmp_path, ex)
+
+
+def test_snapshot_keys_on_exercise_name_not_filename(tmp_path: Path) -> None:
+    # Two exercises with the same filename in different topic subdirs must
+    # snapshot to distinct files (regression: previously keyed on
+    # path.name, causing silent collision).
+    (tmp_path / "exercises" / "variables").mkdir(parents=True)
+    (tmp_path / "exercises" / "functions").mkdir(parents=True)
+
+    a_path = tmp_path / "exercises" / "variables" / "utils.py"
+    b_path = tmp_path / "exercises" / "functions" / "utils.py"
+    a_path.write_text("variables-version\n", encoding="utf-8")
+    b_path.write_text("functions-version\n", encoding="utf-8")
+
+    a = Exercise(name="variables_utils", path=a_path, topic="variables", hint="")
+    b = Exercise(name="functions_utils", path=b_path, topic="functions", hint="")
+
+    snapshot(tmp_path, a)
+    snapshot(tmp_path, b)
+
+    originals = tmp_path / ".pylings" / "originals"
+    assert (originals / "variables_utils.py").read_text() == "variables-version\n"
+    assert (originals / "functions_utils.py").read_text() == "functions-version\n"

@@ -37,3 +37,8 @@ def test_verify_does_not_import_textual() -> None:
 def test_run_does_not_import_textual() -> None:
     out = _cold_start_ms("run", "passing")
     assert "import 'textual'" not in out
+
+
+def test_reset_does_not_import_textual() -> None:
+    out = _cold_start_ms("reset", "passing", "--yes")
+    assert "import 'textual'" not in out
