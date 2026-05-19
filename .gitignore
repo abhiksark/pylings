@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Pylings runtime state
-/.pylings/
+# Pylings runtime state (root install and any nested fixture roots)
+.pylings/

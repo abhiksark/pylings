@@ -1,134 +1,55 @@
 # Pylings
 
-Rustlings is an interactive program designed to teach Rust programming language by example. It offers a series of exercises containing code with errors, such as syntax issues or failed tests, which the user must fix before proceeding to the next exercise. This program has been highly popular and effective in teaching Rust to new learners.
+Rustlings, but for Python. A series of interactive exercises that teach Python by example — each ships with broken code and a `# I AM NOT DONE` marker. Fix it, save the file, watch the checks pass, advance to the next one.
 
-In an effort to emulate this successful approach, PyLings aims to be a similar program for Python. With a similar interactive learning experience, PyLings offers a range of exercises that teach Python through example, with broken code that the user must fix before moving on to the next task.
-
-
-## Table of Contents
-
-- [Pylings](#pylings)
-  - [Table of Contents](#table-of-contents)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-  - [Running the Exercises](#running-the-exercises)
-  - [Project Structure](#project-structure)
-    - [List of exercises](#list-of-exercises)
-      - [Variables](#variables)
-      - [Functions](#functions)
-      - [Loops](#loops)
-      - [Conditional Statements](#conditional-statements)
-      - [Lists and Tuples](#lists-and-tuples)
-      - [Dictionaries](#dictionaries)
-      - [File I/O](#file-io)
-      - [Exception Handling](#exception-handling)
-      - [Object-Oriented Programming](#object-oriented-programming)
-    - [Contributing](#contributing)
-
-## Getting Started
-
-### Prerequisites
-
-Before you start working with Pylings, you'll need to have the following software installed on your computer:
-
-- Python 3.6 or later
-- pytest
-
-To install pytest, run the following command:
+## Install
 
 ```bash
-pip install pytest
-
+pipx install pylings           # end users
+# or, for contributors:
+git clone <repo> pylings && cd pylings && pip install -e ".[dev]"
 ```
 
-## Running the Exercises
-To run the tests for all exercises, simply execute the pylings.sh script:
-    
+## Use
+
 ```bash
-    ./pylings.sh
+pylings                                # launches the TUI in watch mode
+pylings list                           # shows every exercise with its status
+pylings hint variables1                # prints the hint for an exercise
+pylings run variables1                 # one-shot run, no TUI
+pylings reset variables1               # restore original (asks y/N; --yes skips)
+pylings --root <path> verify           # CI / curriculum-author validation
 ```
-## Project Structure
 
-The project is organized as follows:
-├── exercises
-│   ├── __init__.py
-│   ├── functions
-│   │   └── fuctions1.py
-│   └── variables
-│       ├── __init__.py
-│       ├── variables1.py
-│       └── variables2.py
-├── pylings.py
-├── pylings.sh
-└── tests
-    ├── functions
-    │   └── fuctions1_test.py
-    └── variables
-        ├── variables1_test.py
-        └── variables2_test.py
+In the TUI:
 
+| Key | Action |
+|---|---|
+| `h` | Toggle hint |
+| `r` | Reset current exercise |
+| `n` | Skip success animation |
+| `l` | Toggle exercise list |
+| `q` | Quit |
 
+## How an exercise works
 
-The exercises directory contains the code snippets with intentional errors. Each exercise is in its own file, organized into subdirectories by topic (e.g. functions, variables).
+Each file in `exercises/` contains:
+1. A `# I AM NOT DONE` line near the top (the gate).
+2. Broken code you have to fix.
+3. A block of `assert` statements at the bottom (the checks — don't edit).
 
-The tests directory contains the test files for each exercise. Each test file should have the same name as the corresponding exercise file, with _test appended to the end (e.g. variables1.py -> variables1_test.py). The test files should be organized into subdirectories that mirror the structure of the exercises
+When the script exits 0 *and* you've removed `# I AM NOT DONE`, pylings advances you to the next exercise.
 
+## Adding exercises
 
-### List of exercises
-The following is a list of exercises that are currently available in PyLings. This list will be updated as new exercises are added.
+1. Create the file under `exercises/<topic>/<name>.py` with the marker, the broken code, and the asserts.
+2. Add an entry to `info.toml`, including a `hint`.
+3. The curriculum order is the order in `info.toml`.
 
-#### [Variables](./exercises/variables)
--   Assigning values to variables
--   Basic arithmetic operations using variables
--   Working with different data types (strings, integers, booleans, etc.)
+## Development
 
-#### [Functions](./exercises/functions)
--   Creating and calling functions with and without arguments
--   Returning values from functions
--   Recursion
-
-#### [Loops](./exercises/loops)
--   For loops
--   While loops
--   Loop control statements (break, continue)
-
-#### [Conditional Statements](./exercises/conditional_statements)
--   If statements
--   If-else statements
--   Nested if-else statements
-
-#### [Lists and Tuples](./exercises/lists_and_tuples)
-- Creating and manipulating lists and tuples
-- Accessing elements of a list or tuple
-- Slicing and indexing
-
-#### [Dictionaries](./exercises/dictionaries)
-- Creating and accessing key-value pairs in a dictionary
-- Manipulating dictionary elements
-
-#### [File I/O](./exercises/file_io)
-- Reading from and writing to files
-- Working with CSV and JSON files
-
-#### [Exception Handling](./exercises/exception_handling)
-- Handling common exceptions (e.g. ValueError, TypeError)
-- Raising exceptions
-#### [Object-Oriented Programming](./exercises/oop)
-- Creating and using classes
-- Encapsulation
-- Inheritance
-- Polymorphism
-
-### Contributing
-We welcome contributions to PyLings! If you find any issues or have ideas for new exercises, feel free to open a new issue or submit a pull request.
-
-To contribute, follow these steps:
-
-Fork the repository
-Create a new branch for your changes
-Make your changes and commit them with descriptive messages
-Push your changes to your fork
-Open a pull request
-We'll review your changes and merge them if they meet our criteria.
-
-Thank you for contributing to PyLings!
+```bash
+pip install -e ".[dev]"
+pytest                                                  # all tests
+pylings --root tests/fixtures/passing_curriculum verify  # smoke-check the runner
+```
