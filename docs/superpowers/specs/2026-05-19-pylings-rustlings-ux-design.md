@@ -172,7 +172,9 @@ class Manifest:
 
 ### CLI surface
 
-All commands accept a global `--root <path>` flag that overrides the project root (defaults to the current working directory). This is what the test suite uses to point at `tests/fixtures/tiny_curriculum/`.
+All commands accept a global `--root <path>` flag that overrides the project root (defaults to the current working directory). This is what the test suite uses to point at `tests/fixtures/tiny_curriculum/`. `info.toml`, `exercises/`, and `.pylings/` are all resolved relative to `--root`, so each test fixture and each user install gets its own isolated state.
+
+The `--version` flag (handled by argparse) prints the installed pylings version and exits.
 
 | Command | Behavior |
 |---|---|
@@ -222,6 +224,7 @@ hint = "Re-check the value of b so a + b equals 13."
 ### Manifest validation rules
 
 - `format_version` must equal `1`.
+- The `[[exercises]]` array must be non-empty.
 - Every `path` must exist relative to the project root.
 - Every `name` must be unique.
 - The list order *is* the curriculum order. Reorder by editing this file.
@@ -280,12 +283,24 @@ async for _ in Watcher.watch(current.path):     ← debounced 100 ms
             switch watcher target → current.path
 ```
 
-### Pass criteria (both required)
+### Pass criteria — two definitions
 
+There are two distinct notions of "pass" because the marker is a UX gate, not a code-correctness signal:
+
+**TUI pass (used by the watch loop and `run` / `list`)** — both required:
 1. `RunResult.exit_code == 0` — no `AssertionError`, no `SyntaxError`, no timeout.
 2. `Exercise.is_pending()` returns `False` — the `# I AM NOT DONE` line has been removed.
 
 If exit code is 0 but the marker is still present, the TUI shows: *"Tests pass! Remove the `# I AM NOT DONE` line to advance."* This is the Rustlings nudge that prevents accidental skips.
+
+**Verify pass (used by `pylings verify` only)** — exit code only:
+1. `RunResult.exit_code == 0`.
+
+`verify` is intentionally marker-agnostic. The real curriculum ships with the marker on every exercise by design (so `pylings verify` against a fresh learner checkout would always fail). `verify`'s job is to confirm exercise *code* runs cleanly — used in two cases:
+- CI of pylings-the-tool, run against `tests/fixtures/tiny_curriculum/` where fixtures are pre-solved.
+- A curriculum author validating their own solved curriculum before publishing.
+
+There is no "verify the real curriculum" use case for end users.
 
 ### Subprocess invocation
 
@@ -295,13 +310,17 @@ subprocess.run(
     cwd=root,
     capture_output=True,
     text=True,
+    encoding="utf-8",
+    errors="replace",
     timeout=5.0,
-    env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+    env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1", "PYTHONIOENCODING": "utf-8"},
 )
 ```
 
 - `sys.executable` so the exercise runs under the same interpreter pylings was installed into.
 - `PYTHONDONTWRITEBYTECODE=1` keeps the exercises tree free of `__pycache__/`.
+- `encoding="utf-8"` + `PYTHONIOENCODING=utf-8` so output is consistent regardless of the host's locale (`text=True` alone would use locale encoding and mangle non-ASCII output on misconfigured systems).
+- `errors="replace"` so a stray non-UTF-8 byte never crashes the decoder.
 - 5 s timeout. On `TimeoutExpired`, `RunResult` carries `timed_out=True`.
 
 ### State transitions
@@ -381,7 +400,19 @@ Every runner/CLI test uses `tests/fixtures/tiny_curriculum/`. Tests pass `--root
 ### CI
 
 - GitHub Actions matrix: Python 3.11, 3.12, 3.13 on Ubuntu.
-- `pylings verify` runs against the real curriculum as the final CI step — guarantees no exercise is broken end-to-end.
+- `pylings verify --root tests/fixtures/tiny_curriculum` runs as the final CI step. (The real curriculum is intentionally broken on a fresh checkout, so `verify` is run against the pre-solved fixture curriculum, not `exercises/`.)
+
+---
+
+## Notable implementation considerations
+
+These are not full requirements but constraints the implementation plan must respect:
+
+- **Lazy-import Textual.** `textual` (and its transitive `rich`) is heavy — naive top-of-file import adds ~300 ms to every CLI invocation, which is unacceptable for `pylings hint`, `pylings list`, `pylings run`, `pylings verify`. `cli.py` must import Textual and `app.py` only on the code paths that actually launch the TUI (no-arg / `watch`). Subcommands stay sub-100 ms.
+- **`.pylings/` placement.** `.pylings/` always lives at `<root>/.pylings/`, never at `~/.pylings/` or `$XDG_STATE_HOME`. This keeps each test fixture and each user install fully isolated — no cross-contamination between tutorials, no global config.
+- **`tomllib` vs `tomli`.** Use stdlib `tomllib` (Python 3.11+). No `tomli` fallback — minimum version is 3.11 per the dependency list.
+- **Package data.** `pyproject.toml` must include `pylings/pylings.tcss` as package data (`[tool.setuptools.package-data]` or hatchling equivalent) so the stylesheet ships with the wheel.
+- **Solutions directory (out of scope, but noted).** A future `solutions/` directory mirroring `exercises/` would let curriculum authors validate the real curriculum end-to-end. Not in this design — call out as a known follow-up.
 
 ---
 
@@ -402,5 +433,6 @@ The redesign is considered done when:
 2. Editing a current exercise file triggers an automatic rerun within 200 ms of save.
 3. Removing `# I AM NOT DONE` from a passing exercise advances the learner to the next one with a visible transition.
 4. `pylings hint`, `pylings list`, `pylings reset`, `pylings verify` all behave as specified.
-5. CI runs `pylings verify` green on the real curriculum across Python 3.11/3.12/3.13.
+5. CI runs `pylings verify --root tests/fixtures/tiny_curriculum` green across Python 3.11/3.12/3.13. (The real curriculum stays broken-by-design; `verify` is not the test for it.)
 6. The unit + integration + TUI test suites for pylings itself pass.
+7. Cold-start latency for `pylings hint`, `pylings list`, `pylings run`, `pylings verify` stays under 200 ms on a developer laptop (validated by the lazy-import rule).
