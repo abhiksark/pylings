@@ -1,0 +1,48 @@
+Screen {
+    layout: vertical;
+}
+
+#progress {
+    height: 1;
+    background: $primary 30%;
+    color: $text;
+    padding: 0 1;
+}
+
+#main {
+    layout: horizontal;
+    height: 1fr;
+}
+
+#tree {
+    width: 30%;
+    border-right: solid $primary;
+    padding: 1;
+}
+
+#output {
+    width: 1fr;
+    padding: 1;
+}
+
+#output.passed {
+    background: $success 20%;
+}
+
+#output.failed {
+    background: $error 20%;
+}
+
+#output.pending {
+    background: $warning 20%;
+}
+
+#hint {
+    border-top: dashed $secondary;
+    padding: 1 0;
+    display: none;
+}
+
+#hint.visible {
+    display: block;
+}

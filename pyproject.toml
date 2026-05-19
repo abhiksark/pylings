@@ -26,6 +26,9 @@ pylings = "pylings.cli:main"
 [tool.hatch.build.targets.wheel]
 packages = ["pylings"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"pylings/pylings.tcss" = "pylings/pylings.tcss"
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
