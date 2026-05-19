@@ -53,6 +53,24 @@ def _cmd_verify(root: Path) -> int:
     return 0
 
 
+def _cmd_list(root: Path) -> int:
+    from pylings.core.manifest import load as load_manifest
+    from pylings.core.state import load as load_state
+
+    manifest = load_manifest(root)
+    state = load_state(root)
+    current = state.current or state.next_pending(manifest)
+    for ex in manifest.exercises:
+        if ex.name in state.completed:
+            marker = "✓"
+        elif ex.name == current:
+            marker = "●"
+        else:
+            marker = "🔒"
+        print(f"  {marker}  {ex.topic}/{ex.name}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv if argv is not None else sys.argv[1:])
@@ -60,6 +78,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "verify":
             return _cmd_verify(args.root)
+        if args.command == "list":
+            return _cmd_list(args.root)
 
         if args.command in (None, "watch"):
             from pylings.app import run_tui  # lazy: Textual is heavy
