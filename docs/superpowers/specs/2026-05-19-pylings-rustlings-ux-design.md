@@ -94,6 +94,8 @@ Dev-only: `pytest`, `pytest-asyncio`.
 3. `pylings.sh` is deleted. The README is updated to direct CI/script callers to `pylings verify` instead.
 4. `pylings.py` (currently empty) is deleted — superseded by the package.
 5. Each exercise file gains an `# I AM NOT DONE` line near the top. Existing inconsistent markers (`# notdone`, `# not done`) are normalized.
+6. **Re-broken content.** The current `variables1.py` and `variables2.py` already contain correct answer values; adding the marker alone would let learners advance without writing any code. As part of migration, concrete values in these files are replaced with placeholders (`???`, `pass`, or a TODO comment) so each exercise has a genuine fix-to-pass step. The asserts at the bottom of the file remain unchanged — they are the success criteria the learner is working toward. `functions1.py` is already broken (missing parameters) and needs no rework.
+7. `.gitignore` is extended with `/.pylings/` so the runtime state directory is never committed.
 
 ---
 
@@ -125,7 +127,33 @@ class RunResult:
     stderr: str
     duration_s: float
     timed_out: bool
+
+
+@dataclass(frozen=True)
+class Manifest:
+    exercises: list[Exercise]      # in curriculum order
+    welcome_message: str            # default: "Welcome to pylings!"
+    final_message: str              # default: "All exercises complete."
+
+    def by_name(self, name: str) -> Exercise: ...
+    def index_of(self, name: str) -> int: ...
 ```
+
+### State file schema
+
+`.pylings/state.json` is the on-disk shape of the runtime state. Sets are serialized as JSON arrays:
+
+```json
+{
+  "format_version": 1,
+  "completed": ["variables1", "variables2"],
+  "current": "functions1"
+}
+```
+
+- `format_version` lets us evolve the schema later.
+- `current` is `null` when every exercise is complete.
+- Loaders deserialize `completed` into a `set[str]` in memory; writers serialize back to a sorted array for deterministic diffs.
 
 ---
 
@@ -144,6 +172,8 @@ class RunResult:
 
 ### CLI surface
 
+All commands accept a global `--root <path>` flag that overrides the project root (defaults to the current working directory). This is what the test suite uses to point at `tests/fixtures/tiny_curriculum/`.
+
 | Command | Behavior |
 |---|---|
 | `pylings` (no args) | Launch TUI in watch mode on the current pending exercise |
@@ -158,11 +188,13 @@ class RunResult:
 
 | Key | Action |
 |---|---|
-| `h` | Toggle hint pane |
+| `h` | Toggle hint section inside the output panel (collapsed by default) |
 | `r` | Reset current exercise (with `y/N` modal) |
-| `n` | Advance to next pending (only enabled when current is done) |
+| `n` | Skip the success animation and advance immediately (only meaningful right after a pass) |
 | `l` | Toggle list view of all exercises |
 | `q` | Quit |
+
+When the current exercise passes and the `# I AM NOT DONE` marker has been removed, the TUI plays a brief success animation (~1 s) and then auto-advances. Pressing `n` during the animation skips the delay. Outside of that window, `n` is a no-op.
 
 ---
 
@@ -193,6 +225,7 @@ hint = "Re-check the value of b so a + b equals 13."
 - Every `path` must exist relative to the project root.
 - Every `name` must be unique.
 - The list order *is* the curriculum order. Reorder by editing this file.
+- `welcome_message` and `final_message` are optional. If absent, defaults are used: `"Welcome to pylings!"` and `"All exercises complete."`.
 
 ---
 
@@ -275,9 +308,12 @@ subprocess.run(
 
 | Trigger | State change |
 |---|---|
-| First launch | `state.json` created; all exercises pending |
-| Exercise file saved → passes | `completed += {name}`; `current = next pending` |
-| `pylings reset X` | `completed -= {X}`; file restored from snapshot; if `X` precedes `current`, `current = X` |
+| First launch | `state.json` created; all exercises pending; `current` = first exercise |
+| Exercise file saved → passes | `completed += {name}`; `current` = next pending (or `None` if last) |
+| `pylings reset X` | File restored from snapshot. State changes by position: |
+| &nbsp;&nbsp;&nbsp;&nbsp;X == current | File only; state unchanged |
+| &nbsp;&nbsp;&nbsp;&nbsp;X precedes current | `completed -= {X}`; `current = X` (rewind) |
+| &nbsp;&nbsp;&nbsp;&nbsp;X follows current | File only; state unchanged (X stays locked) |
 | `pylings verify` | Read-only; never mutates state |
 | All exercises pass | `current = None`; final message shown; exit 0 |
 
