@@ -71,6 +71,19 @@ def _cmd_list(root: Path) -> int:
     return 0
 
 
+def _cmd_hint(root: Path, name: str) -> int:
+    from pylings.core.manifest import load as load_manifest
+
+    manifest = load_manifest(root)
+    try:
+        ex = manifest.by_name(name)
+    except KeyError:
+        sys.stderr.write(f"pylings: no exercise named {name!r}\n")
+        return 1
+    print(ex.hint.strip() or "(no hint provided)")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv if argv is not None else sys.argv[1:])
@@ -80,6 +93,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_verify(args.root)
         if args.command == "list":
             return _cmd_list(args.root)
+        if args.command == "hint":
+            return _cmd_hint(args.root, args.name)
 
         if args.command in (None, "watch"):
             from pylings.app import run_tui  # lazy: Textual is heavy
