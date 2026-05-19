@@ -1,0 +1,29 @@
+format_version = 1
+welcome_message = "Welcome to pylings! Save a file to re-run its checks."
+final_message = "All exercises complete. 🐍 Nice work."
+
+[[exercises]]
+name = "variables1"
+path = "exercises/variables/variables1.py"
+hint = """
+Declare a, b, c with concrete values of the right type.
+A bare 0 is an int; 0.0 is a float; "" is the empty string.
+"""
+
+[[exercises]]
+name = "variables2"
+path = "exercises/variables/variables2.py"
+hint = """
+a and b are ints; c is a string.
+Pick values so a + b == 13 and a % b == 1, then check that
+str(a) + c equals "10hello".
+"""
+
+[[exercises]]
+name = "functions1"
+path = "exercises/functions/functions1.py"
+hint = """
+The function is called as average(2, 4), so it needs to accept two
+parameters. Update the signature so a and b are arguments rather than
+unresolved names.
+"""
