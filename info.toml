@@ -1041,3 +1041,43 @@ hint = "Create c = Counter(), then assert c.value after each method call: 0, 1, 
 name = "testing12"
 path = "exercises/testing/testing12.py"
 hint = "Replace each `pass` with real assertions; each test function needs at least 2-3 assert statements."
+
+[[exercises]]
+name = "recursion1"
+path = "exercises/recursion/recursion1.py"
+hint = "Return [n] + countdown(n - 1) as the recursive case."
+
+[[exercises]]
+name = "recursion2"
+path = "exercises/recursion/recursion2.py"
+hint = "Return n * factorial(n - 1) as the recursive case."
+
+[[exercises]]
+name = "recursion3"
+path = "exercises/recursion/recursion3.py"
+hint = "Return lst[0] + recursive_sum(lst[1:]) as the recursive case."
+
+[[exercises]]
+name = "recursion4"
+path = "exercises/recursion/recursion4.py"
+hint = "The base case returns 0 — replace ??? with the correct value for an empty list."
+
+[[exercises]]
+name = "recursion5"
+path = "exercises/recursion/recursion5.py"
+hint = "fibonacci(1) should return 1 — replace ??? with that base-case value."
+
+[[exercises]]
+name = "recursion6"
+path = "exercises/recursion/recursion6.py"
+hint = "Return reverse_string(s[1:]) + s[0] as the recursive case."
+
+[[exercises]]
+name = "recursion7"
+path = "exercises/recursion/recursion7.py"
+hint = "Replace ??? with deep_sum(rest) to sum the remaining elements after recursing into the first list."
+
+[[exercises]]
+name = "recursion8"
+path = "exercises/recursion/recursion8.py"
+hint = "tree_depth: return 1 + max(tree_depth(c) for c in tree['children']). tree_search: return any(tree_search(c, target) for c in tree['children'])."
