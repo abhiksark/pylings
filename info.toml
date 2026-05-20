@@ -401,3 +401,53 @@ hint = "Chain square-bracket access for nested dicts: school[\"students\"][\"ali
 name = "dictionaries10"
 path = "exercises/dictionaries/dictionaries10.py"
 hint = "Use `freq[word] = freq.get(word, 0) + 1` inside a `for word in words:` loop to count occurrences."
+
+[[exercises]]
+name = "sets1"
+path = "exercises/sets/sets1.py"
+hint = "A set literal uses curly braces: primes = {2, 3, 5, 7}"
+
+[[exercises]]
+name = "sets2"
+path = "exercises/sets/sets2.py"
+hint = "colors.add(\"purple\") adds an element; colors.discard(\"orange\") removes it without raising an error."
+
+[[exercises]]
+name = "sets3"
+path = "exercises/sets/sets3.py"
+hint = "The `in` operator returns a bool: has_apple = \"apple\" in fruits"
+
+[[exercises]]
+name = "sets4"
+path = "exercises/sets/sets4.py"
+hint = "Use `a | b` or `a.union(b)` to get every element that appears in either set."
+
+[[exercises]]
+name = "sets5"
+path = "exercises/sets/sets5.py"
+hint = "Use `a & b` or `a.intersection(b)` to get only the elements present in both sets."
+
+[[exercises]]
+name = "sets6"
+path = "exercises/sets/sets6.py"
+hint = "Use `a - b` or `a.difference(b)` to get elements that are in `a` but not in `b`."
+
+[[exercises]]
+name = "sets7"
+path = "exercises/sets/sets7.py"
+hint = "Pass the list to set(): unique = set(numbers), then use len(unique) for the count."
+
+[[exercises]]
+name = "sets8"
+path = "exercises/sets/sets8.py"
+hint = "Use `small <= big` (or small.issubset(big)) and `big >= small` (or big.issuperset(small))."
+
+[[exercises]]
+name = "sets9"
+path = "exercises/sets/sets9.py"
+hint = "A set comprehension looks like: {n**2 for n in numbers if n % 2 == 0}"
+
+[[exercises]]
+name = "sets10"
+path = "exercises/sets/sets10.py"
+hint = "Convert lists to sets first, then use &, |, and - for intersection, union, and difference."
