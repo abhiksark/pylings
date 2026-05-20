@@ -1121,3 +1121,53 @@ hint = "Inside the `if __name__ == \"__main__\":` block, replace ??? with True."
 name = "modules8"
 path = "exercises/modules/modules8.py"
 hint = "Add `import math` and `import statistics`. Set data with a list comprehension using random.randint(1, 100), then use statistics.mean and math.sqrt."
+
+[[exercises]]
+name = "collections1"
+path = "exercises/collections/collections1.py"
+hint = "Counter takes any iterable: counts = Counter(words)."
+
+[[exercises]]
+name = "collections2"
+path = "exercises/collections/collections2.py"
+hint = "Call tally.most_common(2) to get the two highest-count entries as a list of (element, count) pairs."
+
+[[exercises]]
+name = "collections3"
+path = "exercises/collections/collections3.py"
+hint = "Set char_counts = defaultdict(int), then loop over text and do char_counts[ch] += 1."
+
+[[exercises]]
+name = "collections4"
+path = "exercises/collections/collections4.py"
+hint = "Set by_grade = defaultdict(list), then loop and call by_grade[grade].append(name)."
+
+[[exercises]]
+name = "collections5"
+path = "exercises/collections/collections5.py"
+hint = "Define the type with namedtuple('Point', ['x', 'y']), then create an instance: p = Point(3, 4)."
+
+[[exercises]]
+name = "collections6"
+path = "exercises/collections/collections6.py"
+hint = "Create card = Card('K', 'spades'), then upgraded = card._replace(rank='A')."
+
+[[exercises]]
+name = "collections7"
+path = "exercises/collections/collections7.py"
+hint = "Call d.appendleft(1), d.append(2), d.appendleft(0); then right_val = d.pop() and left_val = d.popleft()."
+
+[[exercises]]
+name = "collections8"
+path = "exercises/collections/collections8.py"
+hint = "Enqueue with queue.append(...) for each job; dequeue in order with queue.popleft()."
+
+[[exercises]]
+name = "collections9"
+path = "exercises/collections/collections9.py"
+hint = "combined = monday + tuesday adds counts; remainder = combined - sold drops non-positive results."
+
+[[exercises]]
+name = "collections10"
+path = "exercises/collections/collections10.py"
+hint = "Build grouped with defaultdict(list) then hit_counts = Counter(cat for cat, _ in log). top_category is most_common(1)[0][0]. avg_times maps each key to sum(v)/len(v)."
