@@ -501,3 +501,53 @@ hint = "Flatten with two for clauses: [item for sublist in matrix for item in su
 name = "comprehensions10"
 path = "exercises/comprehensions/comprehensions10.py"
 hint = "Use enumerate to get index-value pairs: {word: idx for idx, word in enumerate(words)}."
+
+[[exercises]]
+name = "exceptions1"
+path = "exercises/exceptions/exceptions1.py"
+hint = "Wrap the division in try/except ZeroDivisionError and return 'error' in the except branch."
+
+[[exercises]]
+name = "exceptions2"
+path = "exercises/exceptions/exceptions2.py"
+hint = "Catch the specific exception: except ValueError: return -1."
+
+[[exercises]]
+name = "exceptions3"
+path = "exercises/exceptions/exceptions3.py"
+hint = "Use 'except ValueError as e:' and return str(e) to surface the built-in error message."
+
+[[exercises]]
+name = "exceptions4"
+path = "exercises/exceptions/exceptions4.py"
+hint = "Add an else clause after the except block: else: return value * 2."
+
+[[exercises]]
+name = "exceptions5"
+path = "exercises/exceptions/exceptions5.py"
+hint = "Add a finally clause after the except block: finally: log.append('done')."
+
+[[exercises]]
+name = "exceptions6"
+path = "exercises/exceptions/exceptions6.py"
+hint = "Use 'raise ValueError' (no message needed) when n is not positive."
+
+[[exercises]]
+name = "exceptions7"
+path = "exercises/exceptions/exceptions7.py"
+hint = "Use 'raise ValueError(\"age must be between 0 and 120\")' when age is out of range."
+
+[[exercises]]
+name = "exceptions8"
+path = "exercises/exceptions/exceptions8.py"
+hint = "Add 'except ValueError:', 'except TypeError:', and 'except Exception:' clauses returning the right string."
+
+[[exercises]]
+name = "exceptions9"
+path = "exercises/exceptions/exceptions9.py"
+hint = "Define 'class InsufficientFundsError(Exception): pass', then raise it with a descriptive message."
+
+[[exercises]]
+name = "exceptions10"
+path = "exercises/exceptions/exceptions10.py"
+hint = "Check type first (TypeError), then length (ValueError), then .isalnum() (ValueError); return name.lower() on success."
