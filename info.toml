@@ -981,3 +981,63 @@ hint = "Replace ??? with `r\"(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})\
 name = "regex10"
 path = "exercises/regex/regex10.py"
 hint = "Use `r\"\\[(?P<level>\\w+)\\] (?P<logger>[\\w.]+): (?P<message>.+)\"` to capture all three named groups."
+
+[[exercises]]
+name = "testing1"
+path = "exercises/testing/testing1.py"
+hint = "double(2) returns 4 — replace ??? with the value that makes the assertion true."
+
+[[exercises]]
+name = "testing2"
+path = "exercises/testing/testing2.py"
+hint = "5 * 5 == 25; replace the first ??? with 25 and the second with a helpful message string."
+
+[[exercises]]
+name = "testing3"
+path = "exercises/testing/testing3.py"
+hint = "Add two assert statements inside test_add: assert add(2, 3) == 5 and assert add(0, 0) == 0."
+
+[[exercises]]
+name = "testing4"
+path = "exercises/testing/testing4.py"
+hint = "Add four assert statements inside test_is_even, one for each case listed in the goal comment."
+
+[[exercises]]
+name = "testing5"
+path = "exercises/testing/testing5.py"
+hint = "Add five assert statements for clamp: inside range, below lo, above hi, and both boundary values."
+
+[[exercises]]
+name = "testing6"
+path = "exercises/testing/testing6.py"
+hint = "Assert the happy path, then wrap parse_positive('-1') in try/except ValueError: pass."
+
+[[exercises]]
+name = "testing7"
+path = "exercises/testing/testing7.py"
+hint = "In the except clause, capture the exception with `as e` and assert 'zero' in str(e)."
+
+[[exercises]]
+name = "testing8"
+path = "exercises/testing/testing8.py"
+hint = "Replace `cases = []` with a list of four (fahrenheit, celsius) tuples matching the goal comment."
+
+[[exercises]]
+name = "testing9"
+path = "exercises/testing/testing9.py"
+hint = "Call user = make_user() at the top of the test, then assert greet(user) == 'Hello, Alice!'"
+
+[[exercises]]
+name = "testing10"
+path = "exercises/testing/testing10.py"
+hint = "Write five assertions: [], [0], [-1,-2], [1,-1], [1,2,3] — cover every edge case listed."
+
+[[exercises]]
+name = "testing11"
+path = "exercises/testing/testing11.py"
+hint = "Create c = Counter(), then assert c.value after each method call: 0, 1, 2, then 0 after reset()."
+
+[[exercises]]
+name = "testing12"
+path = "exercises/testing/testing12.py"
+hint = "Replace each `pass` with real assertions; each test function needs at least 2-3 assert statements."
