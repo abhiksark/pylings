@@ -37,20 +37,25 @@ haven't finished yet — the editor opens straight on it.
 
 ## How an exercise works
 
-Each file in `exercises/` contains:
-1. A `# I AM NOT DONE` line near the top (the gate).
-2. Broken code you have to fix.
-3. A block of `assert` statements at the bottom (the checks — don't edit).
+Each exercise is two files:
+- `exercises/<topic>/<name>.py` — what you edit: a `# I AM NOT DONE` line
+  near the top (the gate) and broken code to fix.
+- `checks/<topic>/<name>.py` — the `assert` statements that verify your
+  fix. This mirror tree is hidden; you never see or edit it.
 
-Edit the code in the pylings editor pane. When the script exits 0 *and*
+Edit the code in the pylings editor pane. When the checks pass *and*
 you've removed the `# I AM NOT DONE` line, pylings advances you to the
 next exercise.
 
 ## Adding exercises
 
-1. Create the file under `exercises/<topic>/<name>.py` with the marker, the broken code, and the asserts.
-2. Add an entry to `info.toml`, including a `hint`.
-3. The curriculum order is the order in `info.toml`.
+1. Create `exercises/<topic>/<name>.py` — the `# I AM NOT DONE` marker
+   and the broken code.
+2. Create `checks/<topic>/<name>.py` — the `assert` statements that
+   verify a fix. They run in the exercise's namespace, so they can
+   reference its variables and functions directly.
+3. Add an entry to `info.toml`, including a `hint`.
+4. The curriculum order is the order in `info.toml`.
 
 ## Development
 
