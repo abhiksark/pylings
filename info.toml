@@ -451,3 +451,53 @@ hint = "A set comprehension looks like: {n**2 for n in numbers if n % 2 == 0}"
 name = "sets10"
 path = "exercises/sets/sets10.py"
 hint = "Convert lists to sets first, then use &, |, and - for intersection, union, and difference."
+
+[[exercises]]
+name = "comprehensions1"
+path = "exercises/comprehensions/comprehensions1.py"
+hint = "A list comprehension collects expressions: [x for x in range(5)] gives [0, 1, 2, 3, 4]."
+
+[[exercises]]
+name = "comprehensions2"
+path = "exercises/comprehensions/comprehensions2.py"
+hint = "Add an if clause to filter: [x for x in values if x % 2 == 0] keeps only even numbers."
+
+[[exercises]]
+name = "comprehensions3"
+path = "exercises/comprehensions/comprehensions3.py"
+hint = "Transform the expression: [x * 2 for x in values] multiplies every element by 2."
+
+[[exercises]]
+name = "comprehensions4"
+path = "exercises/comprehensions/comprehensions4.py"
+hint = "Use two for clauses: [(r, c) for r in rows for c in cols] iterates every row-column pair."
+
+[[exercises]]
+name = "comprehensions5"
+path = "exercises/comprehensions/comprehensions5.py"
+hint = "A dict comprehension uses {key: val for item in iterable}: {x: x**2 for x in numbers}."
+
+[[exercises]]
+name = "comprehensions6"
+path = "exercises/comprehensions/comprehensions6.py"
+hint = "A set comprehension uses {expr for item in iterable}: {len(w) for w in words}."
+
+[[exercises]]
+name = "comprehensions7"
+path = "exercises/comprehensions/comprehensions7.py"
+hint = "Iterate over a string directly: [c for c in sentence if c in 'aeiou'] extracts vowels."
+
+[[exercises]]
+name = "comprehensions8"
+path = "exercises/comprehensions/comprehensions8.py"
+hint = "Put the ternary inside: ['even' if x % 2 == 0 else 'odd' for x in values]."
+
+[[exercises]]
+name = "comprehensions9"
+path = "exercises/comprehensions/comprehensions9.py"
+hint = "Flatten with two for clauses: [item for sublist in matrix for item in sublist]."
+
+[[exercises]]
+name = "comprehensions10"
+path = "exercises/comprehensions/comprehensions10.py"
+hint = "Use enumerate to get index-value pairs: {word: idx for idx, word in enumerate(words)}."
