@@ -10,8 +10,7 @@ readme = "Readme.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 dependencies = [
-    "textual>=0.50.0",
-    "watchfiles>=0.20.0",
+    "textual[syntax]>=8.0.0",
 ]
 
 [project.optional-dependencies]
