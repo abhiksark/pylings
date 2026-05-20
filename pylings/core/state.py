@@ -7,25 +7,17 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from pylings.core.manifest import Manifest
+from pylings.core.exercise import Exercise
 
-FORMAT_VERSION = 1
+FORMAT_VERSION = 2
 
 
 @dataclass
 class State:
     completed: set[str] = field(default_factory=set)
-    current: str | None = None
 
-    def mark_done(self, name: str, manifest: Manifest) -> None:
+    def mark_done(self, name: str) -> None:
         self.completed.add(name)
-        self.current = self.next_pending(manifest)
-
-    def next_pending(self, manifest: Manifest) -> str | None:
-        for ex in manifest.exercises:
-            if ex.name not in self.completed:
-                return ex.name
-        return None
 
 
 def _state_path(root: Path) -> Path:
@@ -39,16 +31,16 @@ def load(root: Path) -> State:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         if data.get("format_version") != FORMAT_VERSION:
-            raise ValueError(f"unknown state format_version: {data.get('format_version')}")
-        return State(
-            completed=set(data.get("completed", [])),
-            current=data.get("current"),
-        )
+            raise ValueError(
+                f"unsupported state format_version: {data.get('format_version')}"
+            )
+        return State(completed=set(data.get("completed", [])))
     except (json.JSONDecodeError, ValueError, KeyError) as e:
         backup = path.with_suffix(".json.bak")
         path.rename(backup)
         print(
-            f"pylings: state file corrupt ({e}); backed up to {backup} and starting fresh",
+            f"pylings: state file unreadable ({e}); backed up to {backup} "
+            f"and starting fresh",
             file=sys.stderr,
         )
         return State()
@@ -60,8 +52,15 @@ def save(root: Path, state: State) -> None:
     payload = {
         "format_version": FORMAT_VERSION,
         "completed": sorted(state.completed),
-        "current": state.current,
     }
     tmp = path.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     tmp.replace(path)
+
+
+def next_pending(exercises: list[Exercise], completed: set[str]) -> str | None:
+    """First exercise name in `exercises` not in `completed`, or None."""
+    for ex in exercises:
+        if ex.name not in completed:
+            return ex.name
+    return None

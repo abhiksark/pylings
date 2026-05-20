@@ -65,11 +65,11 @@ def _cmd_verify(root: Path) -> int:
 
 def _cmd_list(root: Path) -> int:
     from pylings.core.manifest import load as load_manifest
-    from pylings.core.state import load as load_state
+    from pylings.core.state import load as load_state, next_pending
 
     manifest = load_manifest(root)
     state = load_state(root)
-    current = state.current or state.next_pending(manifest)
+    current = next_pending(manifest.exercises, state.completed)
     for ex in manifest.exercises:
         if ex.name in state.completed:
             marker = "✓"
@@ -138,8 +138,7 @@ def _cmd_reset(root: Path, name: str, yes: bool) -> int:
     if not yes:
         sys.stdout.write(f"Reset {name}? (y/N) ")
         sys.stdout.flush()
-        answer = sys.stdin.readline().strip().lower()
-        if answer != "y":
+        if sys.stdin.readline().strip().lower() != "y":
             return 0
 
     try:
@@ -148,20 +147,9 @@ def _cmd_reset(root: Path, name: str, yes: bool) -> int:
         sys.stderr.write(f"pylings: {e}\n")
         return 1
 
-    # Rewind state per spec: if name is completed → uncomplete it; if name
-    # precedes current → make name the new current.
     state = load_state(root)
-    target_idx = manifest.index_of(name)
-    if state.current is not None:
-        current_idx = manifest.index_of(state.current)
-    else:
-        current_idx = len(manifest.exercises)  # treat 'all done' as past-end
-
     state.completed.discard(name)
-    if target_idx < current_idx:
-        state.current = name
     save_state(root, state)
-
     print(f"reset: {name}")
     return 0
 

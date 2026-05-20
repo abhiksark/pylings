@@ -15,9 +15,10 @@ class ExerciseTree(Tree[str]):
         super().__init__("exercises", id="tree")
         self.show_root = False
 
-    def render_manifest(self, manifest: "Manifest", state: "State") -> None:
+    def render_manifest(
+        self, manifest: "Manifest", state: "State", current: str | None
+    ) -> None:
         self.clear()
-        current = state.current or state.next_pending(manifest)
         topics: dict[str, object] = {}
         for ex in manifest.exercises:
             if ex.topic not in topics:

@@ -59,7 +59,7 @@ async def test_editor_loads_current_exercise(tmp_path: Path) -> None:
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
-        current = app.state.current
+        current = app.current
         assert current is not None
         expected = (work / "exercises" / f"{current}.py").read_text(encoding="utf-8")
         assert app.query_one("#code", TextArea).text == expected
@@ -114,7 +114,7 @@ async def test_f2_resets_current_file(tmp_path: Path) -> None:
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
-        current = app.state.current
+        current = app.current
         assert current is not None
         from pylings.core.reset import snapshot
         snapshot(work, app.manifest.by_name(current))
@@ -140,7 +140,7 @@ async def test_typing_triggers_autosave(tmp_path: Path) -> None:
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
-        current = app.state.current
+        current = app.current
         assert current is not None
         target = work / "exercises" / f"{current}.py"
 
@@ -175,7 +175,7 @@ async def test_solving_advances_to_next_exercise(tmp_path: Path) -> None:
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
-        assert app.state.current == "first"
+        assert app.current == "first"
 
         # Solve `first`: correct code, marker removed.
         app.query_one("#code", TextArea).text = "x = 1\n"
@@ -183,7 +183,7 @@ async def test_solving_advances_to_next_exercise(tmp_path: Path) -> None:
         await _settle(pilot)
 
         assert "first" in app.state.completed
-        assert app.state.current == "second"
+        assert app.current == "second"
         loaded = (work / "exercises" / "second.py").read_text(encoding="utf-8")
         assert app.query_one("#code", TextArea).text == loaded
 
@@ -202,9 +202,8 @@ async def test_launch_on_completed_curriculum_shows_final_message(
     (state_dir / "state.json").write_text(
         json.dumps(
             {
-                "format_version": 1,
+                "format_version": 2,
                 "completed": ["passing", "asserts", "syntax", "pending"],
-                "current": None,
             }
         ),
         encoding="utf-8",

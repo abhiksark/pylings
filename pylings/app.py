@@ -12,7 +12,7 @@ from textual.widgets import Footer, Header, TextArea
 from pylings.core.exercise import Exercise, RunResult
 from pylings.core.manifest import Manifest, load as load_manifest
 from pylings.core.runner import run as run_exercise
-from pylings.core.state import State, load as load_state, save as save_state
+from pylings.core.state import State, load as load_state, save as save_state, next_pending
 from pylings.widgets.editor_pane import EditorPane
 from pylings.widgets.exercise_tree import ExerciseTree
 from pylings.widgets.output_panel import OutputPanel
@@ -35,8 +35,9 @@ class PylingsApp(App[int]):
         self.root = root
         self.manifest: Manifest = load_manifest(root)
         self.state: State = load_state(root)
-        if self.state.current is None:
-            self.state.current = self.state.next_pending(self.manifest)
+        self.current: str | None = next_pending(
+            self.manifest.exercises, self.state.completed
+        )
         self._save_timer: Timer | None = None
         # The editor content as last loaded from disk. Used to tell a real
         # edit apart from the Changed event that a programmatic load emits.
@@ -57,7 +58,7 @@ class PylingsApp(App[int]):
         self.title = "pylings"
         self.sub_title = self.manifest.welcome_message
         self._render_state()
-        if self.state.current is None:
+        if self.current is None:
             # The curriculum was already complete when pylings launched.
             self.query_one(OutputPanel).show_final(self.manifest.final_message)
             return
@@ -68,19 +69,19 @@ class PylingsApp(App[int]):
     # --- rendering -------------------------------------------------------
 
     def _render_state(self) -> None:
-        self.query_one(ExerciseTree).render_manifest(self.manifest, self.state)
+        self.query_one(ExerciseTree).render_manifest(self.manifest, self.state, self.current)
         self.query_one(ProgressBar).update_progress(
             len(self.state.completed), len(self.manifest.exercises)
         )
 
     def _load_current(self) -> None:
         """Load the current exercise file into the editor (no run)."""
-        if self.state.current is None:
+        if self.current is None:
             return
         if self._save_timer is not None:
             self._save_timer.stop()
             self._save_timer = None
-        exercise = self.manifest.by_name(self.state.current)
+        exercise = self.manifest.by_name(self.current)
         pane = self.query_one(EditorPane)
         pane.load_exercise(exercise)
         self._loaded_text = pane.text
@@ -100,16 +101,16 @@ class PylingsApp(App[int]):
 
     def _flush_and_run(self) -> None:
         self._save_timer = None
-        if self.state.current is None:
+        if self.current is None:
             return
-        exercise = self.manifest.by_name(self.state.current)
+        exercise = self.manifest.by_name(self.current)
         exercise.path.write_text(self.query_one(EditorPane).text, encoding="utf-8")
         self._run_current()
 
     def _run_current(self) -> None:
-        if self.state.current is None:
+        if self.current is None:
             return
-        exercise = self.manifest.by_name(self.state.current)
+        exercise = self.manifest.by_name(self.current)
         self.run_worker(
             lambda: self._run_blocking(exercise), exclusive=True, thread=True
         )
@@ -120,15 +121,16 @@ class PylingsApp(App[int]):
         self.call_from_thread(self._apply_result, exercise, result)
 
     def _apply_result(self, exercise: Exercise, result: RunResult) -> None:
-        if exercise.name != self.state.current:
+        if exercise.name != self.current:
             return  # a superseded run finished late — ignore its result
         self.query_one(OutputPanel).render_result(exercise, result)
         if not result.passed:
             return
-        self.state.mark_done(exercise.name, self.manifest)
+        self.state.mark_done(exercise.name)
+        self.current = next_pending(self.manifest.exercises, self.state.completed)
         save_state(self.root, self.state)
         self._render_state()
-        if self.state.current is None:
+        if self.current is None:
             self.query_one(OutputPanel).show_final(self.manifest.final_message)
             return
         self._load_current()
@@ -137,20 +139,20 @@ class PylingsApp(App[int]):
     # --- actions ---------------------------------------------------------
 
     def action_toggle_hint(self) -> None:
-        if self.state.current is None:
+        if self.current is None:
             return
-        exercise = self.manifest.by_name(self.state.current)
+        exercise = self.manifest.by_name(self.current)
         self.query_one(OutputPanel).toggle_hint(exercise.hint)
 
     def action_reset(self) -> None:
         from pylings.core.reset import restore
 
-        if self.state.current is None:
+        if self.current is None:
             return
         if self._save_timer is not None:
             self._save_timer.stop()
             self._save_timer = None
-        exercise = self.manifest.by_name(self.state.current)
+        exercise = self.manifest.by_name(self.current)
         restore(self.root, exercise)
         self._load_current()
         self._run_current()
@@ -164,8 +166,8 @@ class PylingsApp(App[int]):
         if self._save_timer is not None:
             self._save_timer.stop()
             self._save_timer = None
-            if self.state.current is not None:
-                exercise = self.manifest.by_name(self.state.current)
+            if self.current is not None:
+                exercise = self.manifest.by_name(self.current)
                 exercise.path.write_text(
                     self.query_one(EditorPane).text, encoding="utf-8"
                 )
