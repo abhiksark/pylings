@@ -711,3 +711,53 @@ hint = "Replace the first ??? with `x < 0 for x in numbers` and the second with 
 name = "functional10"
 path = "exercises/functional/functional10.py"
 hint = "Three lambdas: `lambda x: x * 2` for map, `lambda x: x > 10` for filter, `lambda a, b: a + b` for reduce."
+
+[[exercises]]
+name = "decorators1"
+path = "exercises/decorators/decorators1.py"
+hint = "Replace `pass` with `return func()` — call the function that was passed in and return its result."
+
+[[exercises]]
+name = "decorators2"
+path = "exercises/decorators/decorators2.py"
+hint = "Change `return result` to `return result.upper()` inside the wrapper."
+
+[[exercises]]
+name = "decorators3"
+path = "exercises/decorators/decorators3.py"
+hint = "Add `@stamp` on the line directly above `def get_message():` — this applies the decorator automatically."
+
+[[exercises]]
+name = "decorators4"
+path = "exercises/decorators/decorators4.py"
+hint = "Capture the return value: `result = func()` then `return result * 2`."
+
+[[exercises]]
+name = "decorators5"
+path = "exercises/decorators/decorators5.py"
+hint = "Change `def wrapper():` to `def wrapper(*args, **kwargs):` and `return func()` to `return func(*args, **kwargs)`."
+
+[[exercises]]
+name = "decorators6"
+path = "exercises/decorators/decorators6.py"
+hint = "Add `import functools` at the top, then add `@functools.wraps(func)` on the line above `def wrapper`."
+
+[[exercises]]
+name = "decorators7"
+path = "exercises/decorators/decorators7.py"
+hint = "Add `wrapper.call_count += 1` as the first line inside the wrapper body, before calling func."
+
+[[exercises]]
+name = "decorators8"
+path = "exercises/decorators/decorators8.py"
+hint = "Inside `repeat(n)`, define a `decorator(func)` that returns a `wrapper(*args, **kwargs)` calling func n times in a loop and returning the last result."
+
+[[exercises]]
+name = "decorators9"
+path = "exercises/decorators/decorators9.py"
+hint = "Add `@add_b` then `@add_a` above `def get_value():`; the decorator nearest the def is applied first, so `add_a` runs first, then `add_b` wraps that."
+
+[[exercises]]
+name = "decorators10"
+path = "exercises/decorators/decorators10.py"
+hint = "Check `if args in wrapper.cache: return wrapper.cache[args]`, otherwise compute, store in `wrapper.cache[args]`, and return the result."
