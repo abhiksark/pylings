@@ -32,14 +32,16 @@ def test_verify_against_only_passing_fixture(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     (tmp_path / "exercises").mkdir()
-    (tmp_path / "exercises" / "ok.py").write_text("assert True\n", encoding="utf-8")
+    (tmp_path / "exercises" / "ok.py").write_text("x = 1\n", encoding="utf-8")
+    (tmp_path / "checks").mkdir()
+    (tmp_path / "checks" / "ok.py").write_text("assert x == 1\n", encoding="utf-8")
 
     result = _run("--root", str(tmp_path), "verify")
     assert result.returncode == 0, result.stderr
 
 
 def test_verify_ignores_marker(tmp_path: Path) -> None:
-    # An exercise with the marker still in place and tests passing
+    # An exercise with the marker still in place and checks passing
     # should be treated as a verify-pass.
     info = tmp_path / "info.toml"
     info.write_text(
@@ -49,8 +51,11 @@ def test_verify_ignores_marker(tmp_path: Path) -> None:
     )
     (tmp_path / "exercises").mkdir()
     (tmp_path / "exercises" / "ok.py").write_text(
-        "# I AM NOT DONE\nassert True\n", encoding="utf-8"
+        "# I AM NOT DONE\nx = 1\n", encoding="utf-8"
     )
+    (tmp_path / "checks").mkdir()
+    (tmp_path / "checks" / "ok.py").write_text("assert x == 1\n", encoding="utf-8")
+
     result = _run("--root", str(tmp_path), "verify")
     assert result.returncode == 0
 

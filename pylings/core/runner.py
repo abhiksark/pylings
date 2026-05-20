@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+import tempfile
 import time
 
 from pylings.core.exercise import Exercise
@@ -14,42 +15,58 @@ DEFAULT_TIMEOUT_S = 5.0
 
 
 def run(exercise: Exercise, timeout_s: float = DEFAULT_TIMEOUT_S) -> RunResult:
-    """Run a single exercise file in a subprocess. Never raises."""
+    """Run an exercise concatenated with its check file, in a subprocess.
+
+    Never raises.
+    """
     start = time.monotonic()
     env = {
         **os.environ,
         "PYTHONDONTWRITEBYTECODE": "1",
         "PYTHONIOENCODING": "utf-8",
     }
+    combined = (
+        exercise.path.read_text(encoding="utf-8")
+        + "\n\n"
+        + exercise.check_path.read_text(encoding="utf-8")
+    )
+    tmp = tempfile.NamedTemporaryFile(
+        mode="w", suffix=".py", delete=False, encoding="utf-8"
+    )
     try:
-        proc = subprocess.run(
-            [sys.executable, str(exercise.path)],
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=timeout_s,
-            env=env,
-        )
-        duration = time.monotonic() - start
-        exit_code = proc.returncode
-        stdout = proc.stdout
-        stderr = proc.stderr
-        timed_out = False
-    except subprocess.TimeoutExpired as e:
-        duration = time.monotonic() - start
-        exit_code = -1
-        stdout = (
-            e.stdout.decode("utf-8", errors="replace")
-            if isinstance(e.stdout, bytes)
-            else (e.stdout or "")
-        )
-        stderr = (
-            e.stderr.decode("utf-8", errors="replace")
-            if isinstance(e.stderr, bytes)
-            else (e.stderr or "")
-        )
-        timed_out = True
+        tmp.write(combined)
+        tmp.close()
+        try:
+            proc = subprocess.run(
+                [sys.executable, tmp.name],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=timeout_s,
+                env=env,
+            )
+            duration = time.monotonic() - start
+            exit_code = proc.returncode
+            stdout = proc.stdout
+            stderr = proc.stderr
+            timed_out = False
+        except subprocess.TimeoutExpired as e:
+            duration = time.monotonic() - start
+            exit_code = -1
+            stdout = (
+                e.stdout.decode("utf-8", errors="replace")
+                if isinstance(e.stdout, bytes)
+                else (e.stdout or "")
+            )
+            stderr = (
+                e.stderr.decode("utf-8", errors="replace")
+                if isinstance(e.stderr, bytes)
+                else (e.stderr or "")
+            )
+            timed_out = True
+    finally:
+        os.unlink(tmp.name)
 
     passed = exit_code == 0 and not timed_out and not exercise.is_pending()
 

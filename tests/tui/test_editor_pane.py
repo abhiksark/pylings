@@ -18,7 +18,13 @@ class _Harness(App[None]):
 async def test_load_exercise_fills_editor(tmp_path: Path) -> None:
     file = tmp_path / "ex.py"
     file.write_text("a = 1\nb = 2\n", encoding="utf-8")
-    exercise = Exercise(name="ex", path=file, topic="t", hint="")
+    exercise = Exercise(
+        name="ex",
+        path=file,
+        check_path=tmp_path / "check.py",
+        topic="t",
+        hint="",
+    )
 
     app = _Harness()
     async with app.run_test() as pilot:

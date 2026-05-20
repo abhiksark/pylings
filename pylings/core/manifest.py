@@ -57,14 +57,24 @@ def load(root: Path) -> Manifest:
         seen.add(name)
 
         rel_path = Path(entry["path"])
+        if not rel_path.parts or rel_path.parts[0] != "exercises":
+            raise ManifestError(
+                f"exercise path must be under exercises/: {rel_path}"
+            )
         abs_path = root / rel_path
         if not abs_path.exists():
             raise ManifestError(f"exercise path does not exist: {rel_path}")
+
+        check_rel = Path("checks", *rel_path.parts[1:])
+        check_abs = root / check_rel
+        if not check_abs.exists():
+            raise ManifestError(f"no check file for {name!r}: {check_rel}")
 
         exercises.append(
             Exercise(
                 name=name,
                 path=abs_path,
+                check_path=check_abs,
                 topic=rel_path.parent.name,
                 hint=entry.get("hint", ""),
             )

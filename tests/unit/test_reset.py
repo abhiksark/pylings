@@ -11,7 +11,13 @@ from pylings.core.reset import ResetError, restore, snapshot
 def _ex(tmp_path: Path, contents: str) -> Exercise:
     file = tmp_path / "ex.py"
     file.write_text(contents, encoding="utf-8")
-    return Exercise(name="ex", path=file, topic="t", hint="")
+    return Exercise(
+        name="ex",
+        path=file,
+        check_path=tmp_path / "check.py",
+        topic="t",
+        hint="",
+    )
 
 
 def test_snapshot_copies_file_to_pylings_originals(tmp_path: Path) -> None:
@@ -58,8 +64,20 @@ def test_snapshot_keys_on_exercise_name_not_filename(tmp_path: Path) -> None:
     a_path.write_text("variables-version\n", encoding="utf-8")
     b_path.write_text("functions-version\n", encoding="utf-8")
 
-    a = Exercise(name="variables_utils", path=a_path, topic="variables", hint="")
-    b = Exercise(name="functions_utils", path=b_path, topic="functions", hint="")
+    a = Exercise(
+        name="variables_utils",
+        path=a_path,
+        check_path=tmp_path / "checks" / "variables_utils.py",
+        topic="variables",
+        hint="",
+    )
+    b = Exercise(
+        name="functions_utils",
+        path=b_path,
+        check_path=tmp_path / "checks" / "functions_utils.py",
+        topic="functions",
+        hint="",
+    )
 
     snapshot(tmp_path, a)
     snapshot(tmp_path, b)

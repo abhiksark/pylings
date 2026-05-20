@@ -8,6 +8,7 @@ from pathlib import Path
 class Exercise:
     name: str
     path: Path
+    check_path: Path
     topic: str
     hint: str
 

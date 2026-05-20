@@ -151,23 +151,36 @@ async def test_typing_triggers_autosave(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_solving_advances_to_next_exercise(tmp_path: Path) -> None:
-    work = _work_copy(tmp_path)
+    # Purpose-built solvable curriculum: one exercise, one check.
+    work = tmp_path / "work"
+    (work / "exercises").mkdir(parents=True)
+    (work / "checks").mkdir(parents=True)
+    (work / "info.toml").write_text(
+        'format_version = 1\n'
+        '[[exercises]]\nname = "first"\npath = "exercises/first.py"\nhint = "h"\n'
+        '[[exercises]]\nname = "second"\npath = "exercises/second.py"\nhint = "h"\n',
+        encoding="utf-8",
+    )
+    (work / "exercises" / "first.py").write_text(
+        "# I AM NOT DONE\nx = ???\n", encoding="utf-8"
+    )
+    (work / "checks" / "first.py").write_text("assert x == 1\n", encoding="utf-8")
+    (work / "exercises" / "second.py").write_text(
+        "# I AM NOT DONE\ny = ???\n", encoding="utf-8"
+    )
+    (work / "checks" / "second.py").write_text("assert y == 2\n", encoding="utf-8")
+
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
-        before = app.state.current
-        assert before is not None
+        assert app.state.current == "first"
 
-        # A solution with no `# I AM NOT DONE` marker that exits 0.
-        app.query_one("#code", TextArea).text = "assert 1 + 1 == 2\n"
+        # Solve `first`: correct code, marker removed.
+        app.query_one("#code", TextArea).text = "x = 1\n"
         app._flush_and_run()
         await _settle(pilot)
 
-        assert before in app.state.completed
-        assert app.state.current != before
-        # The editor has loaded whatever exercise is now current.
-        if app.state.current is not None:
-            loaded = (work / "exercises" / f"{app.state.current}.py").read_text(
-                encoding="utf-8"
-            )
-            assert app.query_one("#code", TextArea).text == loaded
+        assert "first" in app.state.completed
+        assert app.state.current == "second"
+        loaded = (work / "exercises" / "second.py").read_text(encoding="utf-8")
+        assert app.query_one("#code", TextArea).text == loaded
