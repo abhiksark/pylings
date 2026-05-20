@@ -301,3 +301,53 @@ hint = "matrix[row][col] accesses a cell; row 1 col 1 is matrix[1][1], row 2 col
 name = "lists10"
 path = "exercises/lists/lists10.py"
 hint = "Filter with `if record[\"units\"] > 10`, compute revenue as units * price_per_unit, then sum(revenue_list)."
+
+[[exercises]]
+name = "tuples1"
+path = "exercises/tuples/tuples1.py"
+hint = "A tuple literal uses parentheses and commas: point = (3, 4)"
+
+[[exercises]]
+name = "tuples2"
+path = "exercises/tuples/tuples2.py"
+hint = "Use index 0 for the first element and index -1 (or 2) for the last element of rgb."
+
+[[exercises]]
+name = "tuples3"
+path = "exercises/tuples/tuples3.py"
+hint = "Replace the three ???s with the variable names x, y, z: x, y, z = coordinates"
+
+[[exercises]]
+name = "tuples4"
+path = "exercises/tuples/tuples4.py"
+hint = "A single-element tuple needs a trailing comma: solo = (42,)"
+
+[[exercises]]
+name = "tuples5"
+path = "exercises/tuples/tuples5.py"
+hint = "Build a new tuple using slicing and concatenation: original[:1] + (99,) + original[2:]"
+
+[[exercises]]
+name = "tuples6"
+path = "exercises/tuples/tuples6.py"
+hint = "Use the built-ins min() and max() and return both as a tuple: return (min(numbers), max(numbers))"
+
+[[exercises]]
+name = "tuples7"
+path = "exercises/tuples/tuples7.py"
+hint = "The tuple-swap idiom is a single line: a, b = b, a"
+
+[[exercises]]
+name = "tuples8"
+path = "exercises/tuples/tuples8.py"
+hint = "Inside the for loop, add `if score >= 60: passing.append(score)` to collect qualifying scores."
+
+[[exercises]]
+name = "tuples9"
+path = "exercises/tuples/tuples9.py"
+hint = "Tuple keys go directly in the dict literal: {(0, 0): \"origin\", ...}; look up a key with grid[(1, 0)]."
+
+[[exercises]]
+name = "tuples10"
+path = "exercises/tuples/tuples10.py"
+hint = "Unpack each tuple with `for name, score in results`. Use max() with a key for top_student, sum()/len() for average, and a list comprehension for passed."
