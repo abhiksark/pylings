@@ -1081,3 +1081,43 @@ hint = "Replace ??? with deep_sum(rest) to sum the remaining elements after recu
 name = "recursion8"
 path = "exercises/recursion/recursion8.py"
 hint = "tree_depth: return 1 + max(tree_depth(c) for c in tree['children']). tree_search: return any(tree_search(c, target) for c in tree['children'])."
+
+[[exercises]]
+name = "modules1"
+path = "exercises/modules/modules1.py"
+hint = "Add `import math` at the top, then set result = math.sqrt(144)."
+
+[[exercises]]
+name = "modules2"
+path = "exercises/modules/modules2.py"
+hint = "Add `from math import sqrt` so you can call sqrt() without the math. prefix."
+
+[[exercises]]
+name = "modules3"
+path = "exercises/modules/modules3.py"
+hint = "Use `import math as m`, then replace both ??? with m."
+
+[[exercises]]
+name = "modules4"
+path = "exercises/modules/modules4.py"
+hint = "Add `import random`, call `random.seed(42)`, then set pick = random.randint(1, 10)."
+
+[[exercises]]
+name = "modules5"
+path = "exercises/modules/modules5.py"
+hint = "Add `import string`, then assign digits = string.digits and letters = string.ascii_letters."
+
+[[exercises]]
+name = "modules6"
+path = "exercises/modules/modules6.py"
+hint = "When run as a script, __name__ equals the string \"__main__\". Assign that string to module_name."
+
+[[exercises]]
+name = "modules7"
+path = "exercises/modules/modules7.py"
+hint = "Inside the `if __name__ == \"__main__\":` block, replace ??? with True."
+
+[[exercises]]
+name = "modules8"
+path = "exercises/modules/modules8.py"
+hint = "Add `import math` and `import statistics`. Set data with a list comprehension using random.randint(1, 100), then use statistics.mean and math.sqrt."
