@@ -51,3 +51,53 @@ hint = "Convention: name constants in ALL_CAPS. Then use TAX_RATE in the price e
 name = "variables10"
 path = "exercises/variables/variables10.py"
 hint = "Compute each result as a single expression using width and height: area, perimeter, and the Pythagorean diagonal."
+
+[[exercises]]
+name = "strings1"
+path = "exercises/strings/strings1.py"
+hint = "A string literal is written with quotes: greeting = \"hello\""
+
+[[exercises]]
+name = "strings2"
+path = "exercises/strings/strings2.py"
+hint = "Concatenate with +: first + \" \" + last gives you the full name."
+
+[[exercises]]
+name = "strings3"
+path = "exercises/strings/strings3.py"
+hint = "word[0] gives the first character; word[-1] gives the last."
+
+[[exercises]]
+name = "strings4"
+path = "exercises/strings/strings4.py"
+hint = "sentence[4:9] extracts characters at indices 4, 5, 6, 7, 8."
+
+[[exercises]]
+name = "strings5"
+path = "exercises/strings/strings5.py"
+hint = "len(text) counts characters; text.upper() and text.lower() change case."
+
+[[exercises]]
+name = "strings6"
+path = "exercises/strings/strings6.py"
+hint = "raw.strip() removes surrounding whitespace; .replace(old, new) swaps substrings."
+
+[[exercises]]
+name = "strings7"
+path = "exercises/strings/strings7.py"
+hint = "csv_line.split(\",\") splits on commas; \", \".join(items) reassembles with a separator."
+
+[[exercises]]
+name = "strings8"
+path = "exercises/strings/strings8.py"
+hint = "An f-string looks like: f\"Hello, {name}! You are {age} years old.\""
+
+[[exercises]]
+name = "strings9"
+path = "exercises/strings/strings9.py"
+hint = "\"fox\" in sentence returns a bool; sentence.find(\"fox\") returns the start index."
+
+[[exercises]]
+name = "strings10"
+path = "exercises/strings/strings10.py"
+hint = "Use f\"...{price:.2f}\" to format the price to two decimal places."
