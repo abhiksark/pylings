@@ -73,6 +73,9 @@ class PylingsApp(App[int]):
         """Load the current exercise file into the editor (no run)."""
         if self.state.current is None:
             return
+        if self._save_timer is not None:
+            self._save_timer.stop()
+            self._save_timer = None
         exercise = self.manifest.by_name(self.state.current)
         pane = self.query_one(EditorPane)
         pane.load_exercise(exercise)
@@ -81,6 +84,8 @@ class PylingsApp(App[int]):
     # --- the auto-save / run loop ---------------------------------------
 
     def on_text_area_changed(self, event: TextArea.Changed) -> None:
+        if event.text_area is not self.query_one("#code", TextArea):
+            return
         # Ignore the Changed event emitted by a programmatic load, and any
         # edit that lands the buffer back on the loaded baseline.
         if self.query_one(EditorPane).text == self._loaded_text:
@@ -111,6 +116,8 @@ class PylingsApp(App[int]):
         self.call_from_thread(self._apply_result, exercise, result)
 
     def _apply_result(self, exercise: Exercise, result: RunResult) -> None:
+        if exercise.name != self.state.current:
+            return  # a superseded run finished late — ignore its result
         self.query_one(OutputPanel).render_result(exercise, result)
         if not result.passed:
             return

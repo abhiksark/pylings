@@ -57,6 +57,7 @@ class OutputPanel(Vertical):
         """Render the curriculum-complete screen."""
         self.remove_class("failed", "pending")
         self.add_class("passed")
+        self.query_one("#hint", Static).remove_class("visible")
         self.query_one("#output-header", Static).update(
             "[bold green]All exercises complete[/bold green]"
         )

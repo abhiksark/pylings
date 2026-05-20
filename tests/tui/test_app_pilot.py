@@ -7,7 +7,6 @@ from textual.widgets import TextArea
 from textual.worker import WorkerCancelled
 
 from pylings.app import PylingsApp
-from pylings.widgets.editor_pane import EditorPane
 from pylings.widgets.exercise_tree import ExerciseTree
 
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
@@ -105,6 +104,8 @@ async def test_ctrl_q_quits(tmp_path: Path) -> None:
     async with app.run_test() as pilot:
         await _settle(pilot)
         await pilot.press("ctrl+q")
+        await pilot.pause()
+        assert not app.is_running
 
 
 @pytest.mark.asyncio
