@@ -661,3 +661,53 @@ hint = "Add a @classmethod `from_string(cls, s)` that does `return cls(float(s[:
 name = "classes12"
 path = "exercises/classes/classes12.py"
 hint = "Add __init__(self, owner, balance) to store both attributes; fix deposit to add amount; fix withdraw to subtract (raise ValueError if overdraft); fix __str__ to return the formatted string."
+
+[[exercises]]
+name = "functional1"
+path = "exercises/functional/functional1.py"
+hint = "Replace ??? with `lambda x: x * x` (or `lambda x: x ** 2`)."
+
+[[exercises]]
+name = "functional2"
+path = "exercises/functional/functional2.py"
+hint = "Replace ??? with `lambda x: x if x >= 0 else -x`."
+
+[[exercises]]
+name = "functional3"
+path = "exercises/functional/functional3.py"
+hint = "Replace ??? with `lambda x: x * 2` — pass that lambda as the first argument to map()."
+
+[[exercises]]
+name = "functional4"
+path = "exercises/functional/functional4.py"
+hint = "Replace ??? with `lambda x: x % 2 == 0` — pass that lambda as the first argument to filter()."
+
+[[exercises]]
+name = "functional5"
+path = "exercises/functional/functional5.py"
+hint = "Replace ??? with `lambda w: len(w)` to sort words by their length."
+
+[[exercises]]
+name = "functional6"
+path = "exercises/functional/functional6.py"
+hint = "Replace `pass` with `return func(func(value))` — call func on value, then call func on the result."
+
+[[exercises]]
+name = "functional7"
+path = "exercises/functional/functional7.py"
+hint = "Replace `pass` with `return lambda x: x * n` — return a new function that captures n."
+
+[[exercises]]
+name = "functional8"
+path = "exercises/functional/functional8.py"
+hint = "Replace ??? with `lambda a, b: a * b` — reduce multiplies pairs cumulatively to give the product."
+
+[[exercises]]
+name = "functional9"
+path = "exercises/functional/functional9.py"
+hint = "Replace the first ??? with `x < 0 for x in numbers` and the second with `x > 0 for x in positives`."
+
+[[exercises]]
+name = "functional10"
+path = "exercises/functional/functional10.py"
+hint = "Three lambdas: `lambda x: x * 2` for map, `lambda x: x > 10` for filter, `lambda a, b: a + b` for reduce."
