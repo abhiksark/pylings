@@ -3,151 +3,170 @@ import shutil
 from pathlib import Path
 
 import pytest
+from textual.widgets import TextArea
+from textual.worker import WorkerCancelled
 
 from pylings.app import PylingsApp
+from pylings.widgets.editor_pane import EditorPane
+from pylings.widgets.exercise_tree import ExerciseTree
 
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 
 
-@pytest.mark.asyncio
-async def test_app_launches_and_shows_first_exercise(tmp_path: Path) -> None:
+def _work_copy(tmp_path: Path) -> Path:
     work = tmp_path / "work"
     shutil.copytree(FIXTURES, work)
-    app = PylingsApp(root=work)
-    async with app.run_test() as pilot:
+    return work
+
+
+async def _settle(pilot) -> None:
+    """Let mount-time runs — and any chained auto-advance — finish.
+
+    The first fixture exercise (`passing`) passes immediately, so on mount
+    the app runs it, advances, and runs the next one. Each run is a thread
+    worker; waiting for workers repeatedly drains the whole chain.
+
+    WorkerCancelled is suppressed because exclusive=True workers cancel their
+    predecessors; those cancellations are expected and safe to ignore here.
+    """
+    for _ in range(6):
+        try:
+            await pilot.app.workers.wait_for_complete()
+        except WorkerCancelled:
+            pass
         await pilot.pause()
-        progress = pilot.app.query_one("#progress")
-        rendered = str(progress.render())
-        assert "0/4" in rendered or "1/4" in rendered
 
 
 @pytest.mark.asyncio
-async def test_h_binding_toggles_hint(tmp_path: Path) -> None:
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+async def test_app_launches_and_shows_progress(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path))
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        progress = str(app.query_one("#progress").render())
+        assert "/4" in progress
+
+
+@pytest.mark.asyncio
+async def test_welcome_message_is_shown_as_subtitle(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path))
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        assert app.sub_title == app.manifest.welcome_message
+
+
+@pytest.mark.asyncio
+async def test_editor_loads_current_exercise(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
-        await pilot.pause()
-        hint = pilot.app.query_one("#hint")
+        await _settle(pilot)
+        current = app.state.current
+        assert current is not None
+        expected = (work / "exercises" / f"{current}.py").read_text(encoding="utf-8")
+        assert app.query_one("#code", TextArea).text == expected
+
+
+@pytest.mark.asyncio
+async def test_output_header_names_the_exercise(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path))
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        header = str(app.query_one("#output-header").render())
+        assert ".py" in header
+
+
+@pytest.mark.asyncio
+async def test_f1_toggles_hint(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path))
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        hint = app.query_one("#hint")
         assert "visible" not in hint.classes
-        await pilot.press("h")
+        await pilot.press("f1")
         await pilot.pause()
         assert "visible" in hint.classes
 
 
 @pytest.mark.asyncio
-async def test_q_binding_quits(tmp_path: Path) -> None:
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
-    app = PylingsApp(root=work)
+async def test_f3_toggles_tree(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path))
     async with app.run_test() as pilot:
-        await pilot.pause()
-        await pilot.press("q")
-
-
-@pytest.mark.asyncio
-async def test_r_binding_resets_current_file(tmp_path: Path) -> None:
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
-    app = PylingsApp(root=work)
-    async with app.run_test() as pilot:
-        await pilot.pause()
-        # Whichever exercise the app settled on after auto-advancing.
-        current_name = pilot.app.state.current
-        assert current_name is not None
-        target = work / "exercises" / f"{current_name}.py"
-        original = target.read_text()
-        target.write_text("# scrambled\n", encoding="utf-8")
-
-        await pilot.press("r")
-        await pilot.pause()
-        assert target.read_text() == original
-
-
-@pytest.mark.asyncio
-async def test_l_binding_toggles_tree_visibility(tmp_path: Path) -> None:
-    from pylings.widgets.exercise_tree import ExerciseTree
-
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
-    app = PylingsApp(root=work)
-    async with app.run_test() as pilot:
-        await pilot.pause()
-        tree = pilot.app.query_one(ExerciseTree)
+        await _settle(pilot)
+        tree = app.query_one(ExerciseTree)
         before = tree.display
-        await pilot.press("l")
+        await pilot.press("f3")
         await pilot.pause()
         assert tree.display != before
 
 
 @pytest.mark.asyncio
-async def test_output_panel_shows_file_path_and_instruction(tmp_path: Path) -> None:
-    # The output panel must tell the learner which file to edit and what to do
-    # with it — otherwise the TUI is just an unexplained traceback.
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
-    app = PylingsApp(root=work)
+async def test_ctrl_q_quits(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path))
     async with app.run_test() as pilot:
-        await pilot.pause()
-        header = str(pilot.app.query_one("#output-header").render())
-        assert ".py" in header
-        assert "editor" in header.lower()
-
-
-def test_resolve_editor_prefers_visual(monkeypatch) -> None:
-    monkeypatch.setenv("VISUAL", "code --wait")
-    monkeypatch.setenv("EDITOR", "vi")
-    assert PylingsApp._resolve_editor() == ["code", "--wait"]
-
-
-def test_resolve_editor_falls_back_to_editor(monkeypatch) -> None:
-    monkeypatch.delenv("VISUAL", raising=False)
-    monkeypatch.setenv("EDITOR", "nano")
-    assert PylingsApp._resolve_editor() == ["nano"]
-
-
-def test_resolve_editor_returns_none_when_unset(monkeypatch) -> None:
-    monkeypatch.delenv("VISUAL", raising=False)
-    monkeypatch.delenv("EDITOR", raising=False)
-    assert PylingsApp._resolve_editor() is None
+        await _settle(pilot)
+        await pilot.press("ctrl+q")
 
 
 @pytest.mark.asyncio
-async def test_e_binding_does_not_crash(tmp_path: Path, monkeypatch) -> None:
-    # `true` exits 0 immediately — a harmless stand-in for a real editor.
-    monkeypatch.setenv("EDITOR", "true")
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+async def test_f2_resets_current_file(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
-        await pilot.pause()
-        await pilot.press("e")
-        await pilot.pause()
-        # App is still alive and a current exercise is still tracked.
-        assert pilot.app.state.current is not None
+        await _settle(pilot)
+        current = app.state.current
+        assert current is not None
+        target = work / "exercises" / f"{current}.py"
+        original = target.read_text(encoding="utf-8")
+
+        # Use a syntax error so this never passes and advances to the next exercise.
+        scrambled = "def broken(:\n    pass\n"
+        app.query_one("#code", TextArea).text = scrambled
+        app._flush_and_run()
+        await _settle(pilot)
+        assert target.read_text(encoding="utf-8") == scrambled
+
+        await pilot.press("f2")
+        await _settle(pilot)
+        assert app.query_one("#code", TextArea).text == original
+        assert target.read_text(encoding="utf-8") == original
 
 
 @pytest.mark.asyncio
-async def test_welcome_message_is_shown_as_subtitle(tmp_path: Path) -> None:
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+async def test_typing_triggers_autosave(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
-        await pilot.pause()
-        assert pilot.app.sub_title == pilot.app.manifest.welcome_message
+        await _settle(pilot)
+        current = app.state.current
+        assert current is not None
+        target = work / "exercises" / f"{current}.py"
+
+        app.query_one("#code", TextArea).text = "raise SystemExit(7)\n"
+        # Wait past the 0.6s debounce so the timer fires on its own.
+        await pilot.pause(1.0)
+        await _settle(pilot)
+        assert target.read_text(encoding="utf-8") == "raise SystemExit(7)\n"
 
 
 @pytest.mark.asyncio
-async def test_n_binding_is_a_noop_outside_animation(tmp_path: Path) -> None:
-    # Smoke test only: pressing n must not crash, and state should be unchanged.
-    work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+async def test_solving_advances_to_next_exercise(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
     app = PylingsApp(root=work)
     async with app.run_test() as pilot:
-        await pilot.pause()
-        completed_before = set(pilot.app.state.completed)
-        current_before = pilot.app.state.current
-        await pilot.press("n")
-        await pilot.pause()
-        assert pilot.app.state.completed == completed_before
-        assert pilot.app.state.current == current_before
+        await _settle(pilot)
+        before = app.state.current
+        assert before is not None
+
+        # A solution with no `# I AM NOT DONE` marker that exits 0.
+        app.query_one("#code", TextArea).text = "assert 1 + 1 == 2\n"
+        app._flush_and_run()
+        await _settle(pilot)
+
+        assert before in app.state.completed
+        assert app.state.current != before
+        # The editor has loaded whatever exercise is now current.
+        if app.state.current is not None:
+            loaded = (work / "exercises" / f"{app.state.current}.py").read_text(
+                encoding="utf-8"
+            )
+            assert app.query_one("#code", TextArea).text == loaded

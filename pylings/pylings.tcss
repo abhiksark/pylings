@@ -15,9 +15,19 @@ Screen {
 }
 
 #tree {
-    width: 30%;
+    width: 25%;
     border-right: solid $primary;
     padding: 1;
+    display: none;
+}
+
+#editor {
+    width: 1fr;
+    border-right: solid $primary;
+}
+
+#editor #code {
+    height: 1fr;
 }
 
 #output {

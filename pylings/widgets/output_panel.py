@@ -10,9 +10,8 @@ from textual.widgets import Static
 from pylings.core.exercise import Exercise, RunResult
 
 _INSTRUCTION = (
-    "Press [bold]e[/bold] to open this file in your editor "
-    "(or open it yourself), fix the code, and save.\n"
-    "This panel re-runs the checks automatically every time you save."
+    "Edit the code on the left. "
+    "The checks below update automatically as you type."
 )
 
 
@@ -44,8 +43,8 @@ class OutputPanel(Vertical):
             self.add_class("pending")
             body.update(
                 "[bold yellow]Checks pass![/bold yellow]\n\n"
-                "Remove the [yellow]# I AM NOT DONE[/yellow] line from the file "
-                "and save again to advance to the next exercise."
+                "Remove the [yellow]# I AM NOT DONE[/yellow] line from the code "
+                "on the left to advance to the next exercise."
             )
             return
         self.add_class("passed")
@@ -53,6 +52,15 @@ class OutputPanel(Vertical):
             f"[bold green]✓ {exercise.name} complete[/bold green]\n\n"
             f"{result.stdout}".rstrip()
         )
+
+    def show_final(self, message: str) -> None:
+        """Render the curriculum-complete screen."""
+        self.remove_class("failed", "pending")
+        self.add_class("passed")
+        self.query_one("#output-header", Static).update(
+            "[bold green]All exercises complete[/bold green]"
+        )
+        self.query_one("#output-body", Static).update(message)
 
     def _render_header(self, exercise: Exercise) -> None:
         header = self.query_one("#output-header", Static)
