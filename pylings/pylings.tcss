@@ -66,3 +66,11 @@ Screen {
 #hint.visible {
     display: block;
 }
+
+TopicPickerScreen #topics {
+    padding: 1 2;
+}
+
+.topic-row {
+    padding: 0 1;
+}

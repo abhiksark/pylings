@@ -31,3 +31,15 @@ class ExerciseTree(Tree[str]):
             else:
                 marker = "🔒"
             parent.add_leaf(f"{marker} {ex.name}", data=ex.name)
+
+    def render_topic(self, topic, exercises, completed, current) -> None:
+        self.clear()
+        node = self.root.add(topic, expand=True)
+        for ex in exercises:
+            if ex.name in completed:
+                marker = "✓"
+            elif ex.name == current:
+                marker = "●"
+            else:
+                marker = "🔒"
+            node.add_leaf(f"{marker} {ex.name}", data=ex.name)
