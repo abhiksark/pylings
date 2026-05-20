@@ -811,3 +811,43 @@ hint = "At the top of `__next__`, add `if self.current >= self.stop: raise StopI
 name = "generators10"
 path = "exercises/generators/generators10.py"
 hint = "Add `total += n` before the yield, then change `yield n` to `yield total` to emit the running sum."
+
+[[exercises]]
+name = "context_managers1"
+path = "exercises/context_managers/context_managers1.py"
+hint = "Replace the open/write lines with `with open(data_path, 'w') as f:` and indent `f.write('hello, context!')` inside."
+
+[[exercises]]
+name = "context_managers2"
+path = "exercises/context_managers/context_managers2.py"
+hint = "Use `with open(data_path, 'w') as f:` so Python closes the file automatically; then `f.closed` will be True."
+
+[[exercises]]
+name = "context_managers3"
+path = "exercises/context_managers/context_managers3.py"
+hint = "Add `def __enter__(self): return self` and `def __exit__(self, exc_type, exc_val, exc_tb): self.finished = True`."
+
+[[exercises]]
+name = "context_managers4"
+path = "exercises/context_managers/context_managers4.py"
+hint = "Inside `__exit__`, replace `pass` with `self.log.append('done')` to record cleanup."
+
+[[exercises]]
+name = "context_managers5"
+path = "exercises/context_managers/context_managers5.py"
+hint = "Change `return None` in `__enter__` to `return self.connection` so the `as` target receives the dict."
+
+[[exercises]]
+name = "context_managers6"
+path = "exercises/context_managers/context_managers6.py"
+hint = "Inside `managed_counter`: create `counter = []`, then `yield counter`, then `counter.append('finished')`."
+
+[[exercises]]
+name = "context_managers7"
+path = "exercises/context_managers/context_managers7.py"
+hint = "In `__exit__`, check `if exc_type is ZeroDivisionError: return True` to swallow that error type."
+
+[[exercises]]
+name = "context_managers8"
+path = "exercises/context_managers/context_managers8.py"
+hint = "Fill in Resource.__init__/__enter__/__exit__ to track acquired/release_log, then ManagedPool to acquire, yield, and release."
