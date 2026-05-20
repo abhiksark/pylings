@@ -174,5 +174,5 @@ class PylingsApp(App[int]):
         self.exit(0)
 
 
-def run_tui(root: Path) -> int:
+def run_tui(root: Path, start_topic: str | None = None) -> int:
     return PylingsApp(root).run() or 0
