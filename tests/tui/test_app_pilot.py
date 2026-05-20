@@ -186,3 +186,33 @@ async def test_solving_advances_to_next_exercise(tmp_path: Path) -> None:
         assert app.state.current == "second"
         loaded = (work / "exercises" / "second.py").read_text(encoding="utf-8")
         assert app.query_one("#code", TextArea).text == loaded
+
+
+@pytest.mark.asyncio
+async def test_launch_on_completed_curriculum_shows_final_message(
+    tmp_path: Path,
+) -> None:
+    # Launching pylings when every exercise is already done must show the
+    # final message, not sit forever on the "Loading…" placeholder.
+    import json
+
+    work = _work_copy(tmp_path)
+    state_dir = work / ".pylings"
+    state_dir.mkdir(exist_ok=True)
+    (state_dir / "state.json").write_text(
+        json.dumps(
+            {
+                "format_version": 1,
+                "completed": ["passing", "asserts", "syntax", "pending"],
+                "current": None,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    app = PylingsApp(root=work)
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        body = str(app.query_one("#output-body").render())
+        assert "Loading" not in body
+        assert app.manifest.final_message in body

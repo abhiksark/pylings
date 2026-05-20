@@ -57,6 +57,10 @@ class PylingsApp(App[int]):
         self.title = "pylings"
         self.sub_title = self.manifest.welcome_message
         self._render_state()
+        if self.state.current is None:
+            # The curriculum was already complete when pylings launched.
+            self.query_one(OutputPanel).show_final(self.manifest.final_message)
+            return
         self._load_current()
         self._run_current()
         self.query_one(EditorPane).focus_editor()
