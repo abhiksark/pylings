@@ -122,6 +122,8 @@ class TrackScreen(Screen[None]):
         self.app.call_from_thread(self._apply_result, exercise, result)
 
     def _apply_result(self, exercise: Exercise, result: RunResult) -> None:
+        if not self.is_attached:
+            return  # the track screen was popped while a run was in flight
         if exercise.name != self.current:
             return
         self.query_one(OutputPanel).render_result(exercise, result)

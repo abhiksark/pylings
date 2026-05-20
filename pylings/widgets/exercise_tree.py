@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from textual.widgets import Tree
 
 if TYPE_CHECKING:
+    from pylings.core.exercise import Exercise
     from pylings.core.manifest import Manifest
     from pylings.core.state import State
 
@@ -32,7 +33,13 @@ class ExerciseTree(Tree[str]):
                 marker = "🔒"
             parent.add_leaf(f"{marker} {ex.name}", data=ex.name)
 
-    def render_topic(self, topic, exercises, completed, current) -> None:
+    def render_topic(
+        self,
+        topic: str,
+        exercises: list["Exercise"],
+        completed: set[str],
+        current: str | None,
+    ) -> None:
         self.clear()
         node = self.root.add(topic, expand=True)
         for ex in exercises:

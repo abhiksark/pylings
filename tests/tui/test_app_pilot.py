@@ -42,7 +42,7 @@ async def test_picker_lists_topics_with_progress(tmp_path: Path) -> None:
     async with app.run_test() as pilot:
         await _settle(pilot)
         rendered = " ".join(
-            str(line) for line in app.screen.query(".topic-row").results()
+            str(row.content) for row in app.screen.query(".topic-row").results()
         )
         assert "alpha" in rendered
         assert "beta" in rendered
@@ -81,3 +81,25 @@ async def test_solving_a_topic_marks_progress(tmp_path: Path) -> None:
         track._flush_and_run()
         await _settle(pilot)
         assert "b1" in app.state.completed
+
+
+@pytest.mark.asyncio
+async def test_picker_refreshes_progress_after_returning(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    app = PylingsApp(root=work, start_topic="beta")
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        track = app.screen
+        assert isinstance(track, TrackScreen)
+        track.query_one("#code", TextArea).text = "z = 3\n"
+        track._flush_and_run()
+        await _settle(pilot)
+        await pilot.press("f4")
+        await _settle(pilot)
+        assert isinstance(app.screen, TopicPickerScreen)
+        rendered = " ".join(
+            str(row.content)
+            for row in app.screen.query(".topic-row").results()
+        )
+        # beta's one exercise is now done -> "1/1" must appear.
+        assert "1/1" in rendered
