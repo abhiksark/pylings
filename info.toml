@@ -891,3 +891,43 @@ hint = "Change `@dataclass` to `@dataclass(frozen=True)` to make the class immut
 name = "dataclasses8"
 path = "exercises/dataclasses/dataclasses8.py"
 hint = "Replace `pass` in `area` with `return self.width * self.height` and in `perimeter` with `return 2 * (self.width + self.height)`."
+
+[[exercises]]
+name = "type_hints1"
+path = "exercises/type_hints/type_hints1.py"
+hint = "Add `: int` between the variable name and `=`: write `count: int = 0`."
+
+[[exercises]]
+name = "type_hints2"
+path = "exercises/type_hints/type_hints2.py"
+hint = "Add `: str` and `: int` to the parameters and `-> str` before the colon: `def greet(name: str, times: int) -> str:`."
+
+[[exercises]]
+name = "type_hints3"
+path = "exercises/type_hints/type_hints3.py"
+hint = "Use parameterized built-in types: `list[int]` and `dict[str, int]` as parameter annotations, and `int` as the return type."
+
+[[exercises]]
+name = "type_hints4"
+path = "exercises/type_hints/type_hints4.py"
+hint = "Use the union syntax `int | None` for the return type to express that the function may return an int or nothing."
+
+[[exercises]]
+name = "type_hints5"
+path = "exercises/type_hints/type_hints5.py"
+hint = "Fixed-length tuples are written as `tuple[T1, T2, ...]`. Annotate points as `list[tuple[float, float]]` and the return as `tuple[float, float, float, float]`."
+
+[[exercises]]
+name = "type_hints6"
+path = "exercises/type_hints/type_hints6.py"
+hint = "Write `Vector = list[float]` as a type alias, then use `Vector` as the annotation for `v` and the return type, and `float` for `factor`."
+
+[[exercises]]
+name = "type_hints7"
+path = "exercises/type_hints/type_hints7.py"
+hint = "Import `Callable` from `typing` and annotate `func` as `Callable[[int], int]` — a one-argument int-to-int function."
+
+[[exercises]]
+name = "type_hints8"
+path = "exercises/type_hints/type_hints8.py"
+hint = "Combine generics and union types: `list[dict[str, int]]`, `str`, `int | None`, and `dict[str, int | None]` for the four annotations."
