@@ -7,7 +7,7 @@ from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
-from textual.widgets import Footer
+from textual.widgets import Footer, Header
 
 from pylings.core.manifest import Manifest, load as load_manifest
 from pylings.core.runner import run as run_exercise
@@ -38,11 +38,14 @@ class PylingsApp(App[int]):
         self._watcher_task: asyncio.Task[None] | None = None
 
     def compose(self) -> ComposeResult:
+        yield Header()
         yield ProgressBar(id="progress")
         yield Horizontal(ExerciseTree(), OutputPanel(id="output"), id="main")
         yield Footer()
 
     async def on_mount(self) -> None:
+        self.title = "pylings"
+        self.sub_title = self.manifest.welcome_message
         self._render_state()
         await self._run_current()
         self._restart_watcher()

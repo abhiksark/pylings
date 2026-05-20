@@ -81,6 +81,30 @@ async def test_l_binding_toggles_tree_visibility(tmp_path: Path) -> None:
 
 
 @pytest.mark.asyncio
+async def test_output_panel_shows_file_path_and_instruction(tmp_path: Path) -> None:
+    # The output panel must tell the learner which file to edit and what to do
+    # with it — otherwise the TUI is just an unexplained traceback.
+    work = tmp_path / "work"
+    shutil.copytree(FIXTURES, work)
+    app = PylingsApp(root=work)
+    async with app.run_test() as pilot:
+        await pilot.pause()
+        header = str(pilot.app.query_one("#output-header").render())
+        assert ".py" in header
+        assert "Open the file" in header
+
+
+@pytest.mark.asyncio
+async def test_welcome_message_is_shown_as_subtitle(tmp_path: Path) -> None:
+    work = tmp_path / "work"
+    shutil.copytree(FIXTURES, work)
+    app = PylingsApp(root=work)
+    async with app.run_test() as pilot:
+        await pilot.pause()
+        assert pilot.app.sub_title == pilot.app.manifest.welcome_message
+
+
+@pytest.mark.asyncio
 async def test_n_binding_is_a_noop_outside_animation(tmp_path: Path) -> None:
     # Smoke test only: pressing n must not crash, and state should be unchanged.
     work = tmp_path / "work"
