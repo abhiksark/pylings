@@ -18,7 +18,7 @@ def test_list_shows_all_exercises_in_order(tmp_path: Path, monkeypatch) -> None:
     # Use a copy of the fixture so we can control state without polluting it.
     import shutil
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
 
     result = _run("--root", str(work), "list")
     assert result.returncode == 0
@@ -33,7 +33,7 @@ def test_list_shows_all_exercises_in_order(tmp_path: Path, monkeypatch) -> None:
 def test_list_marks_current_with_dot(tmp_path: Path) -> None:
     import shutil
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
     result = _run("--root", str(work), "list")
     # First exercise should be marked as current on a fresh state.
     first_line = next(l for l in result.stdout.splitlines() if "passing" in l)

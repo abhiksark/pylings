@@ -14,7 +14,7 @@ FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 
 def _work_copy(tmp_path: Path) -> Path:
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
     return work
 
 
@@ -116,6 +116,8 @@ async def test_f2_resets_current_file(tmp_path: Path) -> None:
         await _settle(pilot)
         current = app.state.current
         assert current is not None
+        from pylings.core.reset import snapshot
+        snapshot(work, app.manifest.by_name(current))
         target = work / "exercises" / f"{current}.py"
         original = target.read_text(encoding="utf-8")
 

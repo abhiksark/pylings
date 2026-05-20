@@ -65,6 +65,7 @@ def load(root: Path) -> Manifest:
         if not abs_path.exists():
             raise ManifestError(f"exercise path does not exist: {rel_path}")
 
+        # Derive the check path: exercises/<...> mirrors to checks/<...>.
         check_rel = Path("checks", *rel_path.parts[1:])
         check_abs = root / check_rel
         if not check_abs.exists():

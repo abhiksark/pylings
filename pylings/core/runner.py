@@ -25,10 +25,9 @@ def run(exercise: Exercise, timeout_s: float = DEFAULT_TIMEOUT_S) -> RunResult:
         "PYTHONDONTWRITEBYTECODE": "1",
         "PYTHONIOENCODING": "utf-8",
     }
+    exercise_src = exercise.path.read_text(encoding="utf-8")
     combined = (
-        exercise.path.read_text(encoding="utf-8")
-        + "\n\n"
-        + exercise.check_path.read_text(encoding="utf-8")
+        exercise_src + "\n\n" + exercise.check_path.read_text(encoding="utf-8")
     )
     tmp = tempfile.NamedTemporaryFile(
         mode="w", suffix=".py", delete=False, encoding="utf-8"
@@ -65,10 +64,17 @@ def run(exercise: Exercise, timeout_s: float = DEFAULT_TIMEOUT_S) -> RunResult:
                 else (e.stderr or "")
             )
             timed_out = True
+        except Exception as e:  # noqa: BLE001 — run() must never raise
+            duration = time.monotonic() - start
+            exit_code = -1
+            stdout = ""
+            stderr = f"pylings: failed to run exercise: {e}"
+            timed_out = False
     finally:
         os.unlink(tmp.name)
 
-    passed = exit_code == 0 and not timed_out and not exercise.is_pending()
+    pending = Exercise.DONE_MARKER in exercise_src
+    passed = exit_code == 0 and not timed_out and not pending
 
     return RunResult(
         passed=passed,

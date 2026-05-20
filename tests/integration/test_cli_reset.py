@@ -18,7 +18,7 @@ def _run(*args: str, input: str | None = None) -> subprocess.CompletedProcess[st
 
 def test_reset_restores_pristine_content_with_yes(tmp_path: Path) -> None:
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
     target = work / "exercises" / "passing.py"
     original = target.read_text()
 
@@ -34,7 +34,7 @@ def test_reset_restores_pristine_content_with_yes(tmp_path: Path) -> None:
 
 def test_reset_without_yes_aborts_on_no(tmp_path: Path) -> None:
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
     _run("--root", str(work), "list")
     target = work / "exercises" / "passing.py"
     target.write_text("scrambled", encoding="utf-8")
@@ -56,7 +56,7 @@ def test_reset_rewinds_state_when_target_precedes_current(tmp_path: Path) -> Non
     import json
 
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
     _run("--root", str(work), "list")  # snapshot
 
     # Hand-craft state: completed=[passing, asserts], current=syntax.
@@ -82,7 +82,7 @@ def test_reset_leaves_state_unchanged_when_target_is_current(tmp_path: Path) -> 
     import json
 
     work = tmp_path / "work"
-    shutil.copytree(FIXTURES, work)
+    shutil.copytree(FIXTURES, work, ignore=shutil.ignore_patterns(".pylings"))
     _run("--root", str(work), "list")
 
     state_dir = work / ".pylings"
