@@ -136,3 +136,21 @@ def test_manifest_by_name_and_index_of() -> None:
     assert manifest.index_of("syntax") == 2
     with pytest.raises(KeyError):
         manifest.by_name("nope")
+
+
+def test_topics_in_first_appearance_order() -> None:
+    manifest = load(FIXTURES)
+    # tiny_curriculum's exercises all live directly under exercises/,
+    # so they share the single topic "exercises".
+    assert manifest.topics() == ["exercises"]
+
+
+def test_exercises_in_returns_topic_members_in_order() -> None:
+    manifest = load(FIXTURES)
+    names = [ex.name for ex in manifest.exercises_in("exercises")]
+    assert names == ["passing", "asserts", "syntax", "pending"]
+
+
+def test_exercises_in_unknown_topic_is_empty() -> None:
+    manifest = load(FIXTURES)
+    assert manifest.exercises_in("nope") == []

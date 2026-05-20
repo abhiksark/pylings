@@ -30,6 +30,18 @@ class Manifest:
                 return i
         raise KeyError(name)
 
+    def topics(self) -> list[str]:
+        """Topic names in first-appearance order."""
+        ordered: list[str] = []
+        for ex in self.exercises:
+            if ex.topic not in ordered:
+                ordered.append(ex.topic)
+        return ordered
+
+    def exercises_in(self, topic: str) -> list[Exercise]:
+        """Exercises belonging to one topic, in curriculum order."""
+        return [ex for ex in self.exercises if ex.topic == topic]
+
 
 def load(root: Path) -> Manifest:
     info_path = root / "info.toml"
