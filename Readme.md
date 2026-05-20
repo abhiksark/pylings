@@ -21,19 +21,19 @@ pylings reset variables1               # restore original (asks y/N; --yes skips
 pylings --root <path> verify           # CI / curriculum-author validation
 ```
 
-In the TUI:
+In the TUI, you edit the exercise right inside pylings — a code editor
+pane on the left, the live check result on the right. The check re-runs
+automatically a moment after you stop typing; there is no save key.
 
 | Key | Action |
 |---|---|
-| `e` | Open the current exercise in your editor (`$EDITOR`) |
-| `h` | Toggle hint |
-| `r` | Reset current exercise |
-| `n` | Skip success animation |
-| `l` | Toggle exercise list |
-| `q` | Quit |
+| `F1` | Toggle hint |
+| `F2` | Reset the current exercise |
+| `F3` | Toggle the exercise list |
+| `Ctrl+Q` | Quit |
 
 Type `pylings` with no arguments and it resumes on whatever exercise you
-haven't finished yet — press `e` and you're editing it.
+haven't finished yet — the editor opens straight on it.
 
 ## How an exercise works
 
@@ -42,7 +42,9 @@ Each file in `exercises/` contains:
 2. Broken code you have to fix.
 3. A block of `assert` statements at the bottom (the checks — don't edit).
 
-When the script exits 0 *and* you've removed `# I AM NOT DONE`, pylings advances you to the next exercise.
+Edit the code in the pylings editor pane. When the script exits 0 *and*
+you've removed the `# I AM NOT DONE` line, pylings advances you to the
+next exercise.
 
 ## Adding exercises
 
