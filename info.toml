@@ -931,3 +931,53 @@ hint = "Import `Callable` from `typing` and annotate `func` as `Callable[[int], 
 name = "type_hints8"
 path = "exercises/type_hints/type_hints8.py"
 hint = "Combine generics and union types: `list[dict[str, int]]`, `str`, `int | None`, and `dict[str, int | None]` for the four annotations."
+
+[[exercises]]
+name = "regex1"
+path = "exercises/regex/regex1.py"
+hint = "Set pattern to `\"hello\"` — re.match checks whether the string starts with the pattern."
+
+[[exercises]]
+name = "regex2"
+path = "exercises/regex/regex2.py"
+hint = "Set pattern to `\"python\"` — re.search finds the pattern anywhere in the string."
+
+[[exercises]]
+name = "regex3"
+path = "exercises/regex/regex3.py"
+hint = "Replace ??? with `r\"\\d+\"` — \\d matches a digit and + means one or more."
+
+[[exercises]]
+name = "regex4"
+path = "exercises/regex/regex4.py"
+hint = "Replace ??? with `r\"[a-z]+\"` — the character class [a-z] matches only lowercase letters."
+
+[[exercises]]
+name = "regex5"
+path = "exercises/regex/regex5.py"
+hint = "Replace ??? with `r\"\\d+\\.\\d+\"` — \\d+ matches digits, \\. matches a literal dot."
+
+[[exercises]]
+name = "regex6"
+path = "exercises/regex/regex6.py"
+hint = "Replace ??? with `r\"[A-Z]{5}\\d{3}\"` — {n} means exactly n repetitions."
+
+[[exercises]]
+name = "regex7"
+path = "exercises/regex/regex7.py"
+hint = "Replace ??? with `r\"\\((\\d{3})\\)\"` — wrap the three digits in () to create a capturing group."
+
+[[exercises]]
+name = "regex8"
+path = "exercises/regex/regex8.py"
+hint = "Replace ??? with `r\"spam|junk\"` — the pipe | means OR in regex."
+
+[[exercises]]
+name = "regex9"
+path = "exercises/regex/regex9.py"
+hint = "Replace ??? with `r\"(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})\"` to name each group."
+
+[[exercises]]
+name = "regex10"
+path = "exercises/regex/regex10.py"
+hint = "Use `r\"\\[(?P<level>\\w+)\\] (?P<logger>[\\w.]+): (?P<message>.+)\"` to capture all three named groups."
