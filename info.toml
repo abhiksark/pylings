@@ -151,3 +151,53 @@ hint = "The ternary form is: `return n if n >= 0 else -n`."
 name = "conditionals10"
 path = "exercises/conditionals/conditionals10.py"
 hint = "Use `if n > 100`, `elif n > 0`, `elif n == 0`, `elif n >= -100`, `else` for the five cases."
+
+[[exercises]]
+name = "loops1"
+path = "exercises/loops/loops1.py"
+hint = "Write `for n in range(1, 6): total += n` to add 1 through 5."
+
+[[exercises]]
+name = "loops2"
+path = "exercises/loops/loops2.py"
+hint = "Loop `for fruit in fruits:` and append `fruit.upper()` to `upper_fruits`."
+
+[[exercises]]
+name = "loops3"
+path = "exercises/loops/loops3.py"
+hint = "Write `while n > 0:`, append `n`, then `n -= 1` to count down."
+
+[[exercises]]
+name = "loops4"
+path = "exercises/loops/loops4.py"
+hint = "Inside one loop use `total += num` and `product *= num` to accumulate both values."
+
+[[exercises]]
+name = "loops5"
+path = "exercises/loops/loops5.py"
+hint = "Inside `while i < len(values):`, check `if values[i] > 10:`, set `found`, then `break`; always increment `i`."
+
+[[exercises]]
+name = "loops6"
+path = "exercises/loops/loops6.py"
+hint = "Inside the loop, `if num % 2 != 0: continue` skips odds; then `evens.append(num)` collects evens."
+
+[[exercises]]
+name = "loops7"
+path = "exercises/loops/loops7.py"
+hint = "Outer loop `for i in range(1, 4)`, inner loop `for j in range(1, 4)`, build each row then append it to table."
+
+[[exercises]]
+name = "loops8"
+path = "exercises/loops/loops8.py"
+hint = "Use `for i, word in enumerate(words, start=1):` and append `f\"{i}: {word}\"` to labeled."
+
+[[exercises]]
+name = "loops9"
+path = "exercises/loops/loops9.py"
+hint = "Use `for name, score in scores.items():` and update top_name/top_score whenever score > top_score."
+
+[[exercises]]
+name = "loops10"
+path = "exercises/loops/loops10.py"
+hint = "Use `for i, tx in enumerate(transactions, start=1):`, skip zero-amounts with `continue`, update balance, and append the summary dict."
