@@ -851,3 +851,43 @@ hint = "In `__exit__`, check `if exc_type is ZeroDivisionError: return True` to 
 name = "context_managers8"
 path = "exercises/context_managers/context_managers8.py"
 hint = "Fill in Resource.__init__/__enter__/__exit__ to track acquired/release_log, then ManagedPool to acquire, yield, and release."
+
+[[exercises]]
+name = "dataclasses1"
+path = "exercises/dataclasses/dataclasses1.py"
+hint = "Add `@dataclass` above `class Point:` and declare `x: int` and `y: int` as class-level typed fields."
+
+[[exercises]]
+name = "dataclasses2"
+path = "exercises/dataclasses/dataclasses2.py"
+hint = "Change `Color(0, 0, 0)` to `Color(255, 128, 0)` and replace each `???` in the f-string with `orange.red`, `orange.green`, `orange.blue`."
+
+[[exercises]]
+name = "dataclasses3"
+path = "exercises/dataclasses/dataclasses3.py"
+hint = "Change `unit: str` to `unit: str = \"m/s²\"` to give the field a default value."
+
+[[exercises]]
+name = "dataclasses4"
+path = "exercises/dataclasses/dataclasses4.py"
+hint = "Import `field` from `dataclasses` and change the declaration to `items: list = field(default_factory=list)`."
+
+[[exercises]]
+name = "dataclasses5"
+path = "exercises/dataclasses/dataclasses5.py"
+hint = "Remove the hand-written `__init__` method and add field declarations `x: float`, `y: float`, `z: float` at class body level."
+
+[[exercises]]
+name = "dataclasses6"
+path = "exercises/dataclasses/dataclasses6.py"
+hint = "Add `from dataclasses import dataclass`, the `@dataclass` decorator, and declare `title: str` and `pages: int` as fields."
+
+[[exercises]]
+name = "dataclasses7"
+path = "exercises/dataclasses/dataclasses7.py"
+hint = "Change `@dataclass` to `@dataclass(frozen=True)` to make the class immutable."
+
+[[exercises]]
+name = "dataclasses8"
+path = "exercises/dataclasses/dataclasses8.py"
+hint = "Replace `pass` in `area` with `return self.width * self.height` and in `perimeter` with `return 2 * (self.width + self.height)`."
