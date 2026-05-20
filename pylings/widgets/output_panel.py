@@ -10,7 +10,8 @@ from textual.widgets import Static
 from pylings.core.exercise import Exercise, RunResult
 
 _INSTRUCTION = (
-    "Open the file above in your editor, fix the code, and save it.\n"
+    "Press [bold]e[/bold] to open this file in your editor "
+    "(or open it yourself), fix the code, and save.\n"
     "This panel re-runs the checks automatically every time you save."
 )
 

@@ -25,11 +25,15 @@ In the TUI:
 
 | Key | Action |
 |---|---|
+| `e` | Open the current exercise in your editor (`$EDITOR`) |
 | `h` | Toggle hint |
 | `r` | Reset current exercise |
 | `n` | Skip success animation |
 | `l` | Toggle exercise list |
 | `q` | Quit |
+
+Type `pylings` with no arguments and it resumes on whatever exercise you
+haven't finished yet — press `e` and you're editing it.
 
 ## How an exercise works
 

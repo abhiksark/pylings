@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 import asyncio
+import os
+import shlex
+import subprocess
 from pathlib import Path
 
 from textual.app import App, ComposeResult
@@ -21,6 +24,7 @@ from pylings.widgets.progress import ProgressBar
 class PylingsApp(App[int]):
     CSS_PATH = "pylings.tcss"
     BINDINGS = [
+        Binding("e", "edit", "Edit"),
         Binding("h", "toggle_hint", "Hint"),
         Binding("r", "reset", "Reset"),
         Binding("n", "skip_animation", "Next"),
@@ -98,6 +102,36 @@ class PylingsApp(App[int]):
         # rewritten. Re-run explicitly because shutil.copy may not trip the
         # watcher's mtime threshold on every platform.
         save_state(self.root, self.state)
+        asyncio.create_task(self._run_current())
+
+    @staticmethod
+    def _resolve_editor() -> list[str] | None:
+        """Return the editor command (split into argv) from $VISUAL/$EDITOR."""
+        raw = os.environ.get("VISUAL") or os.environ.get("EDITOR")
+        if not raw:
+            return None
+        return shlex.split(raw)
+
+    def action_edit(self) -> None:
+        if self.state.current is None:
+            return
+        ex = self.manifest.by_name(self.state.current)
+        editor = self._resolve_editor()
+        if editor is None:
+            self.notify(
+                f"No $EDITOR set — open {ex.path} yourself, or export EDITOR.",
+                severity="warning",
+                timeout=6,
+            )
+            return
+        try:
+            with self.suspend():
+                subprocess.run([*editor, str(ex.path)])
+        except Exception as exc:  # editor missing, suspend unsupported, etc.
+            self.notify(f"Could not open editor: {exc}", severity="error", timeout=6)
+            return
+        # Re-run: the watcher was paused while the TUI was suspended, so a save
+        # made inside the editor would otherwise go unnoticed until the next one.
         asyncio.create_task(self._run_current())
 
     def action_skip_animation(self) -> None:

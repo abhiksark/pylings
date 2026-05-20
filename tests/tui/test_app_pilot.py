@@ -91,7 +91,40 @@ async def test_output_panel_shows_file_path_and_instruction(tmp_path: Path) -> N
         await pilot.pause()
         header = str(pilot.app.query_one("#output-header").render())
         assert ".py" in header
-        assert "Open the file" in header
+        assert "editor" in header.lower()
+
+
+def test_resolve_editor_prefers_visual(monkeypatch) -> None:
+    monkeypatch.setenv("VISUAL", "code --wait")
+    monkeypatch.setenv("EDITOR", "vi")
+    assert PylingsApp._resolve_editor() == ["code", "--wait"]
+
+
+def test_resolve_editor_falls_back_to_editor(monkeypatch) -> None:
+    monkeypatch.delenv("VISUAL", raising=False)
+    monkeypatch.setenv("EDITOR", "nano")
+    assert PylingsApp._resolve_editor() == ["nano"]
+
+
+def test_resolve_editor_returns_none_when_unset(monkeypatch) -> None:
+    monkeypatch.delenv("VISUAL", raising=False)
+    monkeypatch.delenv("EDITOR", raising=False)
+    assert PylingsApp._resolve_editor() is None
+
+
+@pytest.mark.asyncio
+async def test_e_binding_does_not_crash(tmp_path: Path, monkeypatch) -> None:
+    # `true` exits 0 immediately — a harmless stand-in for a real editor.
+    monkeypatch.setenv("EDITOR", "true")
+    work = tmp_path / "work"
+    shutil.copytree(FIXTURES, work)
+    app = PylingsApp(root=work)
+    async with app.run_test() as pilot:
+        await pilot.pause()
+        await pilot.press("e")
+        await pilot.pause()
+        # App is still alive and a current exercise is still tracked.
+        assert pilot.app.state.current is not None
 
 
 @pytest.mark.asyncio
