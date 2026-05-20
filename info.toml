@@ -251,3 +251,53 @@ hint = "Unpack the returned tuple with `lo, hi = min_max(numbers)` instead of as
 name = "functions10"
 path = "exercises/functions/functions10.py"
 hint = "Inside `is_palindrome`, compare `s.lower()` with `s.lower()[::-1]` and return the result."
+
+[[exercises]]
+name = "lists1"
+path = "exercises/lists/lists1.py"
+hint = "A list literal is written with square brackets: colors = [\"red\", \"green\", \"blue\"]"
+
+[[exercises]]
+name = "lists2"
+path = "exercises/lists/lists2.py"
+hint = "Index 0 is the first element; use numbers[0] for first and numbers[2] = 99 to update."
+
+[[exercises]]
+name = "lists3"
+path = "exercises/lists/lists3.py"
+hint = "items.append(\"cherry\") adds to the end; items.insert(1, \"mango\") inserts at position 1."
+
+[[exercises]]
+name = "lists4"
+path = "exercises/lists/lists4.py"
+hint = "items.remove(\"banana\") deletes by value; last = items.pop() removes and returns the last element."
+
+[[exercises]]
+name = "lists5"
+path = "exercises/lists/lists5.py"
+hint = "Slice syntax: letters[0:3] gives the first three; letters[-2:] gives the last two; letters[2:5] gives indices 2-4."
+
+[[exercises]]
+name = "lists6"
+path = "exercises/lists/lists6.py"
+hint = "scores.sort() sorts in-place; desc = sorted(scores, reverse=True) builds a new descending list."
+
+[[exercises]]
+name = "lists7"
+path = "exercises/lists/lists7.py"
+hint = "len(fruits) counts elements; \"kiwi\" in fruits checks membership; fruits.count(\"apple\") counts occurrences."
+
+[[exercises]]
+name = "lists8"
+path = "exercises/lists/lists8.py"
+hint = "Inside the loop, compute F = temp * 9 / 5 + 32 and append it to fahrenheit."
+
+[[exercises]]
+name = "lists9"
+path = "exercises/lists/lists9.py"
+hint = "matrix[row][col] accesses a cell; row 1 col 1 is matrix[1][1], row 2 col 2 is matrix[2][2]."
+
+[[exercises]]
+name = "lists10"
+path = "exercises/lists/lists10.py"
+hint = "Filter with `if record[\"units\"] > 10`, compute revenue as units * price_per_unit, then sum(revenue_list)."
