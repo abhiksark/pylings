@@ -101,3 +101,53 @@ hint = "\"fox\" in sentence returns a bool; sentence.find(\"fox\") returns the s
 name = "strings10"
 path = "exercises/strings/strings10.py"
 hint = "Use f\"...{price:.2f}\" to format the price to two decimal places."
+
+[[exercises]]
+name = "conditionals1"
+path = "exercises/conditionals/conditionals1.py"
+hint = "Replace ??? with the variable name `is_sunny` — when it is True, the if-block runs."
+
+[[exercises]]
+name = "conditionals2"
+path = "exercises/conditionals/conditionals2.py"
+hint = "Add an `else:` branch after the if-block that returns \"non-positive\"."
+
+[[exercises]]
+name = "conditionals3"
+path = "exercises/conditionals/conditionals3.py"
+hint = "Add `elif score >= 80: return \"B\"` and `elif score >= 70: return \"C\"` before the final `return \"F\"`."
+
+[[exercises]]
+name = "conditionals4"
+path = "exercises/conditionals/conditionals4.py"
+hint = "Replace the two ???s with the comparison operators `<` and `==`."
+
+[[exercises]]
+name = "conditionals5"
+path = "exercises/conditionals/conditionals5.py"
+hint = "Use `and` to require both conditions in can_ride, and `or` to accept either in gets_discount."
+
+[[exercises]]
+name = "conditionals6"
+path = "exercises/conditionals/conditionals6.py"
+hint = "is_closed should return `not is_open`; neither_zero should return `a != 0 and b != 0` or use `not` on each."
+
+[[exercises]]
+name = "conditionals7"
+path = "exercises/conditionals/conditionals7.py"
+hint = "Inside the else block, nest `if is_member: return 8` and `else: return 12`."
+
+[[exercises]]
+name = "conditionals8"
+path = "exercises/conditionals/conditionals8.py"
+hint = "Write `if value:` to test truthiness; add an `else: return \"empty\"` branch."
+
+[[exercises]]
+name = "conditionals9"
+path = "exercises/conditionals/conditionals9.py"
+hint = "The ternary form is: `return n if n >= 0 else -n`."
+
+[[exercises]]
+name = "conditionals10"
+path = "exercises/conditionals/conditionals10.py"
+hint = "Use `if n > 100`, `elif n > 0`, `elif n == 0`, `elif n >= -100`, `else` for the five cases."
