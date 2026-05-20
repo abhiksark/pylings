@@ -551,3 +551,53 @@ hint = "Define 'class InsufficientFundsError(Exception): pass', then raise it wi
 name = "exceptions10"
 path = "exercises/exceptions/exceptions10.py"
 hint = "Check type first (TypeError), then length (ValueError), then .isalnum() (ValueError); return name.lower() on success."
+
+[[exercises]]
+name = "file_io1"
+path = "exercises/file_io/file_io1.py"
+hint = "Replace ??? with the string \"hello, file!\". open(path, \"w\") opens for writing; .write(text) writes the text."
+
+[[exercises]]
+name = "file_io2"
+path = "exercises/file_io/file_io2.py"
+hint = "Replace ??? with open(note_path).read() to read the whole file as a string."
+
+[[exercises]]
+name = "file_io3"
+path = "exercises/file_io/file_io3.py"
+hint = "Replace ??? with the string \"first entry\". The with-block handles opening and closing automatically."
+
+[[exercises]]
+name = "file_io4"
+path = "exercises/file_io/file_io4.py"
+hint = "Change .read() to .readlines() — it returns a list of strings, one per line (newlines included)."
+
+[[exercises]]
+name = "file_io5"
+path = "exercises/file_io/file_io5.py"
+hint = "Change the mode from \"w\" (overwrite) to \"a\" (append) so the first line is preserved."
+
+[[exercises]]
+name = "file_io6"
+path = "exercises/file_io/file_io6.py"
+hint = "Replace `total += line` with `total += int(line.strip())` to convert each text line to an integer."
+
+[[exercises]]
+name = "file_io7"
+path = "exercises/file_io/file_io7.py"
+hint = "Pass a list with newlines appended: fh.writelines(w + \"\\n\" for w in words), or use a for-loop with fh.write(w + \"\\n\")."
+
+[[exercises]]
+name = "file_io8"
+path = "exercises/file_io/file_io8.py"
+hint = "Chain .strip() onto the read call: result = fh.read().strip()"
+
+[[exercises]]
+name = "file_io9"
+path = "exercises/file_io/file_io9.py"
+hint = "Split before counting: word_count = len(fh.read().split())"
+
+[[exercises]]
+name = "file_io10"
+path = "exercises/file_io/file_io10.py"
+hint = "Change dst.write(line) to dst.write(line.upper()) to uppercase every line as it is copied."
