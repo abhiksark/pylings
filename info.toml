@@ -601,3 +601,63 @@ hint = "Split before counting: word_count = len(fh.read().split())"
 name = "file_io10"
 path = "exercises/file_io/file_io10.py"
 hint = "Change dst.write(line) to dst.write(line.upper()) to uppercase every line as it is copied."
+
+[[exercises]]
+name = "classes1"
+path = "exercises/classes/classes1.py"
+hint = "Replace ??? with `pass` — a class body must have at least one statement."
+
+[[exercises]]
+name = "classes2"
+path = "exercises/classes/classes2.py"
+hint = "Inside __init__, add `self.name = name` to store the argument on the instance."
+
+[[exercises]]
+name = "classes3"
+path = "exercises/classes/classes3.py"
+hint = "Add `self.y = y` after `self.x = x` inside __init__."
+
+[[exercises]]
+name = "classes4"
+path = "exercises/classes/classes4.py"
+hint = "Change `return 0` to `return self.width * self.height` in the area method."
+
+[[exercises]]
+name = "classes5"
+path = "exercises/classes/classes5.py"
+hint = "Replace `pass` in increment with `self.count += 1`."
+
+[[exercises]]
+name = "classes6"
+path = "exercises/classes/classes6.py"
+hint = "Change `def __init__(self, brand, speed):` to `def __init__(self, brand, speed=0):`."
+
+[[exercises]]
+name = "classes7"
+path = "exercises/classes/classes7.py"
+hint = "Replace ??? with `self.get_name()` — call the other method on self."
+
+[[exercises]]
+name = "classes8"
+path = "exercises/classes/classes8.py"
+hint = "Add `def __str__(self): return f\"Book: {self.title} by {self.author}\"` to the class."
+
+[[exercises]]
+name = "classes9"
+path = "exercises/classes/classes9.py"
+hint = "Add `def __repr__(self): return f\"Color(r={self.r}, g={self.g}, b={self.b})\"` to the class."
+
+[[exercises]]
+name = "classes10"
+path = "exercises/classes/classes10.py"
+hint = "Move `pi = 3.14159` to be a class-level attribute (one indent level inside the class, not inside __init__), and remove the local `pi = 3.14159` line from __init__."
+
+[[exercises]]
+name = "classes11"
+path = "exercises/classes/classes11.py"
+hint = "Add a @classmethod `from_string(cls, s)` that does `return cls(float(s[:-1]))`."
+
+[[exercises]]
+name = "classes12"
+path = "exercises/classes/classes12.py"
+hint = "Add __init__(self, owner, balance) to store both attributes; fix deposit to add amount; fix withdraw to subtract (raise ValueError if overdraft); fix __str__ to return the formatted string."
