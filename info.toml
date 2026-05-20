@@ -201,3 +201,53 @@ hint = "Use `for name, score in scores.items():` and update top_name/top_score w
 name = "loops10"
 path = "exercises/loops/loops10.py"
 hint = "Use `for i, tx in enumerate(transactions, start=1):`, skip zero-amounts with `continue`, update balance, and append the summary dict."
+
+[[exercises]]
+name = "functions1"
+path = "exercises/functions/functions1.py"
+hint = "The function is called as average(2, 4) — give it two parameters."
+
+[[exercises]]
+name = "functions2"
+path = "exercises/functions/functions2.py"
+hint = "Use `def greet():` with no parameters and `return \"hello\"`, then set `message = greet()`."
+
+[[exercises]]
+name = "functions3"
+path = "exercises/functions/functions3.py"
+hint = "Add a parameter name (e.g. `n`) inside the parentheses of `def double()`."
+
+[[exercises]]
+name = "functions4"
+path = "exercises/functions/functions4.py"
+hint = "Add the `return` keyword before `n * n` so the function hands a value back to the caller."
+
+[[exercises]]
+name = "functions5"
+path = "exercises/functions/functions5.py"
+hint = "Give `greeting` a default value in the signature: `def make_greeting(name, greeting=\"Hello\"):`."
+
+[[exercises]]
+name = "functions6"
+path = "exercises/functions/functions6.py"
+hint = "Use keyword arguments to fix the call order: `describe_pet(name=\"Buddy\", animal_type=\"dog\")`."
+
+[[exercises]]
+name = "functions7"
+path = "exercises/functions/functions7.py"
+hint = "Replace `pass` with `return sum(args)` — `args` is a tuple of all positional arguments."
+
+[[exercises]]
+name = "functions8"
+path = "exercises/functions/functions8.py"
+hint = "Replace `pass` with `return dict(kwargs)` — `kwargs` is already a dict of the keyword arguments."
+
+[[exercises]]
+name = "functions9"
+path = "exercises/functions/functions9.py"
+hint = "Unpack the returned tuple with `lo, hi = min_max(numbers)` instead of assigning the whole tuple to both variables."
+
+[[exercises]]
+name = "functions10"
+path = "exercises/functions/functions10.py"
+hint = "Inside `is_palindrome`, compare `s.lower()` with `s.lower()[::-1]` and return the result."
