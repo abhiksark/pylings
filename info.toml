@@ -351,3 +351,53 @@ hint = "Tuple keys go directly in the dict literal: {(0, 0): \"origin\", ...}; l
 name = "tuples10"
 path = "exercises/tuples/tuples10.py"
 hint = "Unpack each tuple with `for name, score in results`. Use max() with a key for top_student, sum()/len() for average, and a list comprehension for passed."
+
+[[exercises]]
+name = "dictionaries1"
+path = "exercises/dictionaries/dictionaries1.py"
+hint = "A dict literal uses curly braces and colons: ages = {\"alice\": 30, \"bob\": 25}"
+
+[[exercises]]
+name = "dictionaries2"
+path = "exercises/dictionaries/dictionaries2.py"
+hint = "Access a value by its key using square brackets: capitals[\"france\"]"
+
+[[exercises]]
+name = "dictionaries3"
+path = "exercises/dictionaries/dictionaries3.py"
+hint = "Add or update a key with assignment: scores[\"diana\"] = 91 and scores[\"alice\"] = 88"
+
+[[exercises]]
+name = "dictionaries4"
+path = "exercises/dictionaries/dictionaries4.py"
+hint = "Remove with del: `del basket[\"banana\"]`; remove and capture with .pop(): `cherry_count = basket.pop(\"cherry\")`"
+
+[[exercises]]
+name = "dictionaries5"
+path = "exercises/dictionaries/dictionaries5.py"
+hint = "Convert each view to a list: list(inventory.keys()), list(inventory.values()), list(inventory.items())"
+
+[[exercises]]
+name = "dictionaries6"
+path = "exercises/dictionaries/dictionaries6.py"
+hint = "Use .get() with a second argument as the default: config.get(\"timeout\", 30)"
+
+[[exercises]]
+name = "dictionaries7"
+path = "exercises/dictionaries/dictionaries7.py"
+hint = "Iterate with `for item, price in prices.items():` then set `discounted[item] = round(price * 0.9, 2)`"
+
+[[exercises]]
+name = "dictionaries8"
+path = "exercises/dictionaries/dictionaries8.py"
+hint = "The `in` operator checks keys: `\"read\" in permissions` returns True if the key exists."
+
+[[exercises]]
+name = "dictionaries9"
+path = "exercises/dictionaries/dictionaries9.py"
+hint = "Chain square-bracket access for nested dicts: school[\"students\"][\"alice\"][\"grade\"]"
+
+[[exercises]]
+name = "dictionaries10"
+path = "exercises/dictionaries/dictionaries10.py"
+hint = "Use `freq[word] = freq.get(word, 0) + 1` inside a `for word in words:` loop to count occurrences."
