@@ -10,6 +10,7 @@ from pylings.app import PylingsApp
 from pylings.core.state import State, save as save_state
 from pylings.screens.topic_picker import TopicPickerScreen
 from pylings.screens.track import TrackScreen
+from pylings.widgets.output_panel import OutputPanel
 
 MULTI = Path(__file__).parent.parent / "fixtures" / "multi_topic"
 
@@ -133,6 +134,50 @@ async def test_f4_returns_to_picker(tmp_path: Path) -> None:
         await pilot.press("f4")
         await pilot.pause()
         assert isinstance(app.screen, TopicPickerScreen)
+
+
+@pytest.mark.asyncio
+async def test_track_records_resume_when_loaded(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    app = PylingsApp(root=work, start_topic="alpha")
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        assert app.state.seen_intro is True
+        assert app.state.last_topic == "alpha"
+        assert app.state.last_exercise == "a1"
+
+
+@pytest.mark.asyncio
+async def test_instant_advance_updates_resume_to_next_exercise(
+    tmp_path: Path,
+) -> None:
+    work = _work_copy(tmp_path)
+    app = PylingsApp(root=work, start_topic="alpha")
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        track = app.screen
+        assert isinstance(track, TrackScreen)
+        track.query_one("#code", TextArea).text = "x = 1\n"
+        track._flush_and_run()
+        await _settle(pilot)
+        assert "a1" in app.state.completed
+        assert track.current == "a2"
+        assert app.state.last_topic == "alpha"
+        assert app.state.last_exercise == "a2"
+
+
+@pytest.mark.asyncio
+async def test_failed_run_shows_progressive_nudge(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    app = PylingsApp(root=work, start_topic="alpha")
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        track = app.screen
+        assert isinstance(track, TrackScreen)
+        track.query_one("#code", TextArea).text = "x = 99\n"
+        track._flush_and_run()
+        await _settle(pilot)
+        assert "alpha one" in track.query_one(OutputPanel).renderable_text()
 
 
 @pytest.mark.asyncio

@@ -36,6 +36,7 @@ class TrackScreen(Screen[None]):
         self._start_exercise = start_exercise
         self._save_timer: Timer | None = None
         self._loaded_text = ""
+        self._failure_counts: dict[str, int] = {}
         self.current: str | None = None
 
     def compose(self) -> ComposeResult:
@@ -84,6 +85,11 @@ class TrackScreen(Screen[None]):
             self.topic, exs, self.app.state.completed, self.current
         )
 
+    def _progress_counts(self) -> tuple[int, int]:
+        exs = self._exercises()
+        done = sum(1 for ex in exs if ex.name in self.app.state.completed)
+        return done, len(exs)
+
     def _exercise(self, name: str) -> Exercise:
         for ex in self._exercises():
             if ex.name == name:
@@ -99,6 +105,12 @@ class TrackScreen(Screen[None]):
         pane = self.query_one(EditorPane)
         pane.load_exercise(self._exercise(self.current))
         self._loaded_text = pane.text
+        self._failure_counts[self.current] = 0
+        self._record_resume(self.current)
+
+    def _record_resume(self, exercise: str | None) -> None:
+        self.app.state.record_resume(self.topic, exercise)
+        save_state(self.app.root, self.app.state)
 
     # --- auto-save / run loop -------------------------------------------
 
@@ -123,6 +135,8 @@ class TrackScreen(Screen[None]):
         if self.current is None:
             return
         ex = self._exercise(self.current)
+        completed, total = self._progress_counts()
+        self.query_one(OutputPanel).render_running(ex, completed, total)
         self.run_worker(
             lambda: self._run_blocking(ex), exclusive=True, thread=True
         )
@@ -136,7 +150,20 @@ class TrackScreen(Screen[None]):
             return  # the track screen was popped while a run was in flight
         if exercise.name != self.current:
             return
-        self.query_one(OutputPanel).render_result(exercise, result)
+        if result.exit_code != 0 or result.timed_out:
+            self._failure_counts[exercise.name] = (
+                self._failure_counts.get(exercise.name, 0) + 1
+            )
+        else:
+            self._failure_counts[exercise.name] = 0
+        completed, total = self._progress_counts()
+        self.query_one(OutputPanel).render_result(
+            exercise,
+            result,
+            failures=self._failure_counts.get(exercise.name, 0),
+            completed=completed,
+            total=total,
+        )
         if not result.passed:
             return
         self.app.state.mark_done(exercise.name)
@@ -144,6 +171,7 @@ class TrackScreen(Screen[None]):
         self.current = next_pending(self._exercises(), self.app.state.completed)
         self._render_state()
         if self.current is None:
+            self._record_resume(None)
             self.query_one(OutputPanel).show_final(
                 f"Topic '{self.topic}' complete — press F4 for topics."
             )
@@ -176,10 +204,14 @@ class TrackScreen(Screen[None]):
 
     def action_topics(self) -> None:
         self._flush_pending()
+        if self.current is not None:
+            self._record_resume(self.current)
         self.app.pop_screen()
 
     def action_quit(self) -> None:
         self._flush_pending()
+        if self.current is not None:
+            self._record_resume(self.current)
         self.app.exit(0)
 
     def _flush_pending(self) -> None:

@@ -14,6 +14,7 @@ git clone <repo> pylings && cd pylings && pip install -e ".[dev]"
 
 ```bash
 pylings                                # launches the TUI in watch mode
+pylings topics                         # opens the topic picker
 pylings list                           # shows every exercise with its status
 pylings hint variables1                # prints the hint for an exercise
 pylings run variables1                 # one-shot run, no TUI
@@ -30,10 +31,13 @@ automatically a moment after you stop typing; there is no save key.
 | `F1` | Toggle hint |
 | `F2` | Reset the current exercise |
 | `F3` | Toggle the exercise list |
+| `F4` | Return to the topic picker |
 | `Ctrl+Q` | Quit |
 
-Type `pylings` with no arguments and it resumes on whatever exercise you
-haven't finished yet — the editor opens straight on it.
+The first time you run `pylings`, it opens the topic picker and highlights
+a good place to start. After that, `pylings` resumes directly on the last
+exercise you were working on; press `F4` or run `pylings topics` to choose
+a different topic.
 
 ## How an exercise works
 
