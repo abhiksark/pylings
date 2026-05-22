@@ -50,6 +50,31 @@ async def test_picker_lists_topics_with_progress(tmp_path: Path) -> None:
 
 
 @pytest.mark.asyncio
+async def test_picker_shows_first_run_start_banner(tmp_path: Path) -> None:
+    app = PylingsApp(root=_work_copy(tmp_path), force_picker=True)
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        banner = str(app.screen.query_one("#topic-banner").content)
+        assert "Start here" in banner
+        assert "alpha" in banner
+
+
+@pytest.mark.asyncio
+async def test_picker_rows_show_status_labels(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    save_state(work, State(completed={"a1"}, seen_intro=True, last_topic="alpha"))
+    app = PylingsApp(root=work, force_picker=True)
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        rendered = " ".join(
+            str(row.content)
+            for row in app.screen.query(".topic-row").results()
+        )
+        assert "Continue" in rendered
+        assert "Start" in rendered
+
+
+@pytest.mark.asyncio
 async def test_start_topic_opens_track(tmp_path: Path) -> None:
     app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:

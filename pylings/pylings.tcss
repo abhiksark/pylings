@@ -71,6 +71,14 @@ TopicPickerScreen #topics {
     padding: 1 2;
 }
 
+#topic-banner {
+    height: auto;
+    padding: 1 2;
+    background: $primary 20%;
+    color: $text;
+    border-bottom: solid $primary;
+}
+
 .topic-row {
     padding: 0 1;
 }
