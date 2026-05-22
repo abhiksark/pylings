@@ -102,6 +102,7 @@ class TrackScreen(Screen[None]):
         if self._save_timer is not None:
             self._save_timer.stop()
             self._save_timer = None
+        self.query_one(OutputPanel).reset_hint()
         pane = self.query_one(EditorPane)
         pane.load_exercise(self._exercise(self.current))
         self._loaded_text = pane.text

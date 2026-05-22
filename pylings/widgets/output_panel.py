@@ -162,3 +162,8 @@ class OutputPanel(Vertical):
         else:
             hint.add_class("visible")
             hint.update(f"[italic]Hint:[/italic] {text or '(no hint provided)'}")
+
+    def reset_hint(self) -> None:
+        hint = self.query_one("#hint", Static)
+        hint.remove_class("visible")
+        hint.update("")

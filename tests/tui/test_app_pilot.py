@@ -181,6 +181,25 @@ async def test_failed_run_shows_progressive_nudge(tmp_path: Path) -> None:
 
 
 @pytest.mark.asyncio
+async def test_hint_visibility_resets_after_advance(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    app = PylingsApp(root=work, start_topic="alpha")
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        track = app.screen
+        assert isinstance(track, TrackScreen)
+        track.action_toggle_hint()
+        await pilot.pause()
+        assert "visible" in track.query_one("#hint").classes
+
+        track.query_one("#code", TextArea).text = "x = 1\n"
+        track._flush_and_run()
+        await _settle(pilot)
+        assert track.current == "a2"
+        assert "visible" not in track.query_one("#hint").classes
+
+
+@pytest.mark.asyncio
 async def test_solving_a_topic_marks_progress(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
     app = PylingsApp(root=work, start_topic="beta")
