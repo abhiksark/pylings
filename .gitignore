@@ -130,3 +130,4 @@ dmypy.json
 
 # Pylings runtime state (root install and any nested fixture roots)
 .pylings/
+.superpowers/
