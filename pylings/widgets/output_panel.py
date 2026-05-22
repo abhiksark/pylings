@@ -9,48 +9,103 @@ from textual.widgets import Static
 
 from pylings.core.exercise import Exercise, RunResult
 
-_INSTRUCTION = (
-    "Edit the code on the left. "
-    "The checks below update automatically as you type."
-)
+_INSTRUCTION = "Edit the code on the left. Checks update automatically."
 
 
 class OutputPanel(Vertical):
     def compose(self) -> ComposeResult:
         yield Static("", id="output-header")
-        yield Static("Loading…", id="output-body")
+        yield Static("", id="goal")
+        yield Static("Loading…", id="status")
+        yield Static("", id="next-step")
+        yield Static("", id="details")
         yield Static("", id="hint")
 
-    def render_result(self, exercise: Exercise, result: RunResult) -> None:
-        self._render_header(exercise)
-        body = self.query_one("#output-body", Static)
+    def renderable_text(self) -> str:
+        parts: list[str] = []
+        for widget_id in (
+            "output-header",
+            "goal",
+            "status",
+            "next-step",
+            "details",
+            "hint",
+        ):
+            parts.append(str(self.query_one(f"#{widget_id}", Static).content))
+        return "\n".join(parts)
+
+    def render_running(
+        self, exercise: Exercise, completed: int = 0, total: int = 0
+    ) -> None:
+        self.remove_class("passed", "failed", "pending")
+        self._render_header(exercise, completed, total)
+        self.query_one("#goal", Static).update(
+            f"[bold]Goal[/bold]\n{self._goal_from(exercise)}"
+        )
+        self.query_one("#status", Static).update(
+            "[bold blue]Running checks...[/bold blue]"
+        )
+        self.query_one("#next-step", Static).update(
+            "Keep editing; results update automatically."
+        )
+        self.query_one("#details", Static).update("")
+
+    def render_result(
+        self,
+        exercise: Exercise,
+        result: RunResult,
+        failures: int = 0,
+        completed: int = 0,
+        total: int = 0,
+    ) -> None:
+        self._render_header(exercise, completed, total)
+        self.query_one("#goal", Static).update(
+            f"[bold]Goal[/bold]\n{self._goal_from(exercise)}"
+        )
+        details = (result.stderr or result.stdout).rstrip()
+        self.query_one("#details", Static).update(
+            f"[bold]Details[/bold]\n{details}" if details else ""
+        )
         self.remove_class("passed", "failed", "pending")
         if result.timed_out:
             self.add_class("failed")
-            body.update(
-                "[bold red]Not passing yet[/bold red]\n\n"
-                f"Timed out after {result.duration_s:.1f}s — is there an infinite loop?"
+            self.query_one("#status", Static).update(
+                "[bold red]Not passing yet[/bold red]"
+            )
+            self.query_one("#next-step", Static).update(
+                f"Timed out after {result.duration_s:.1f}s. "
+                "Check for an infinite loop."
             )
             return
         if result.exit_code != 0:
             self.add_class("failed")
-            body.update(
-                "[bold red]Not passing yet[/bold red]\n\n"
-                f"{(result.stderr or result.stdout).rstrip()}"
+            self.query_one("#status", Static).update(
+                "[bold red]Not passing yet[/bold red]"
+            )
+            nudge = (
+                self._hint_nudge(exercise)
+                if failures
+                else "Hint available: press F1."
+            )
+            self.query_one("#next-step", Static).update(
+                f"Read the details, fix the code, then pause typing.\n{nudge}"
             )
             return
         if exercise.is_pending():
             self.add_class("pending")
-            body.update(
-                "[bold yellow]Checks pass![/bold yellow]\n\n"
-                "Remove the [yellow]# I AM NOT DONE[/yellow] line from the code "
-                "on the left to advance to the next exercise."
+            self.query_one("#status", Static).update(
+                "[bold yellow]Checks pass, remove marker[/bold yellow]"
+            )
+            self.query_one("#next-step", Static).update(
+                "Remove the # I AM NOT DONE line to advance."
             )
             return
         self.add_class("passed")
-        body.update(
-            f"[bold green]✓ {exercise.name} complete[/bold green]\n\n"
-            f"{result.stdout}".rstrip()
+        self.query_one("#status", Static).update(
+            f"[bold green]✓ {exercise.name} complete[/bold green]"
+        )
+        self.query_one("#next-step", Static).update(
+            "Loading the next exercise."
         )
 
     def show_final(self, message: str) -> None:
@@ -61,14 +116,35 @@ class OutputPanel(Vertical):
         self.query_one("#output-header", Static).update(
             "[bold green]All exercises complete[/bold green]"
         )
-        self.query_one("#output-body", Static).update(message)
+        self.query_one("#goal", Static).update("")
+        self.query_one("#status", Static).update(message)
+        self.query_one("#next-step", Static).update("")
+        self.query_one("#details", Static).update("")
 
-    def _render_header(self, exercise: Exercise) -> None:
+    def _render_header(
+        self, exercise: Exercise, completed: int = 0, total: int = 0
+    ) -> None:
         header = self.query_one("#output-header", Static)
+        progress = f"   [dim]{completed}/{total} complete[/dim]" if total else ""
         header.update(
-            f"[bold]{exercise.name}[/bold]   [dim]{self._display_path(exercise)}[/dim]\n"
+            f"[bold]{exercise.name}[/bold]{progress}   "
+            f"[dim]{self._display_path(exercise)}[/dim]\n"
             f"{_INSTRUCTION}"
         )
+
+    def _goal_from(self, exercise: Exercise) -> str:
+        for line in exercise.path.read_text(encoding="utf-8").splitlines()[:12]:
+            stripped = line.strip()
+            if stripped.startswith("# Goal:"):
+                return stripped.removeprefix("# Goal:").strip()
+            if stripped.startswith("# Exercise:"):
+                return stripped.removeprefix("# Exercise:").strip()
+        return exercise.name
+
+    @staticmethod
+    def _hint_nudge(exercise: Exercise) -> str:
+        first = exercise.hint.strip().split(".")[0].strip()
+        return f"{first}." if first else "Hint available: press F1."
 
     @staticmethod
     def _display_path(exercise: Exercise) -> str:

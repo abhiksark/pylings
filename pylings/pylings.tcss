@@ -41,7 +41,11 @@ Screen {
     color: $text;
 }
 
-#output-body {
+#output-body,
+#goal,
+#status,
+#next-step,
+#details {
     padding: 1 0 0 0;
 }
 
