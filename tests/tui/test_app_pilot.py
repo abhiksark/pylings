@@ -7,6 +7,7 @@ from textual.widgets import TextArea
 from textual.worker import WorkerCancelled
 
 from pylings.app import PylingsApp
+from pylings.core.state import State, save as save_state
 from pylings.screens.topic_picker import TopicPickerScreen
 from pylings.screens.track import TrackScreen
 
@@ -55,6 +56,47 @@ async def test_start_topic_opens_track(tmp_path: Path) -> None:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
         assert app.screen.topic == "alpha"
+
+
+@pytest.mark.asyncio
+async def test_default_launch_resumes_last_incomplete_exercise(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    save_state(
+        work,
+        State(seen_intro=True, last_topic="alpha", last_exercise="a2"),
+    )
+    app = PylingsApp(root=work)
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        assert isinstance(app.screen, TrackScreen)
+        assert app.screen.topic == "alpha"
+        assert app.screen.current == "a2"
+
+
+@pytest.mark.asyncio
+async def test_default_launch_ignores_invalid_resume_state(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    save_state(
+        work,
+        State(seen_intro=True, last_topic="missing", last_exercise="ghost"),
+    )
+    app = PylingsApp(root=work)
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        assert isinstance(app.screen, TopicPickerScreen)
+
+
+@pytest.mark.asyncio
+async def test_force_picker_launch_ignores_resume_state(tmp_path: Path) -> None:
+    work = _work_copy(tmp_path)
+    save_state(
+        work,
+        State(seen_intro=True, last_topic="alpha", last_exercise="a2"),
+    )
+    app = PylingsApp(root=work, force_picker=True)
+    async with app.run_test() as pilot:
+        await _settle(pilot)
+        assert isinstance(app.screen, TopicPickerScreen)
 
 
 @pytest.mark.asyncio

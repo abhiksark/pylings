@@ -20,6 +20,7 @@ def _build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command")
 
     sub.add_parser("watch", help="Launch the TUI in watch mode (default).")
+    sub.add_parser("topics", help="Launch the TUI on the topic picker.")
 
     p_run = sub.add_parser("run", help="Run a single exercise.")
     p_run.add_argument("name")
@@ -212,14 +213,18 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "reset":
             return _cmd_reset(args.root, args.name, args.yes)
 
-        if args.command in (None, "watch", "start"):
+        if args.command in (None, "watch", "start", "topics"):
             start_topic = getattr(args, "topic", None)
             if start_topic is not None:
                 from pylings.core.manifest import load as load_manifest
                 if _resolve_topic(load_manifest(args.root), start_topic) is None:
                     return 2
             from pylings.app import run_tui  # lazy: Textual is heavy
-            return run_tui(args.root, start_topic)
+            return run_tui(
+                args.root,
+                start_topic,
+                force_picker=args.command == "topics",
+            )
 
         # Other subcommands wired in later tasks.
         sys.stderr.write(f"pylings: '{args.command}' not implemented yet\n")

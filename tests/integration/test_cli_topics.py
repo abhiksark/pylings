@@ -3,6 +3,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from pylings.cli import _build_parser
+
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 
 
@@ -51,3 +53,8 @@ def test_start_unknown_topic_errors() -> None:
     result = _run("--root", str(FIXTURES), "start", "nope")
     assert result.returncode == 2
     assert "nope" in result.stderr
+
+
+def test_topics_subcommand_parses() -> None:
+    args = _build_parser().parse_args(["topics"])
+    assert args.command == "topics"

@@ -30,9 +30,10 @@ class TrackScreen(Screen[None]):
         Binding("ctrl+q", "quit", "Quit"),
     ]
 
-    def __init__(self, topic: str) -> None:
+    def __init__(self, topic: str, start_exercise: str | None = None) -> None:
         super().__init__()
         self.topic = topic
+        self._start_exercise = start_exercise
         self._save_timer: Timer | None = None
         self._loaded_text = ""
         self.current: str | None = None
@@ -50,7 +51,7 @@ class TrackScreen(Screen[None]):
 
     def on_mount(self) -> None:
         self.app.sub_title = f"topic: {self.topic}"
-        self.current = next_pending(self._exercises(), self.app.state.completed)
+        self.current = self._initial_exercise()
         self._render_state()
         if self.current is None:
             self.query_one(OutputPanel).show_final(
@@ -65,6 +66,15 @@ class TrackScreen(Screen[None]):
 
     def _exercises(self) -> list[Exercise]:
         return self.app.manifest.exercises_in(self.topic)
+
+    def _initial_exercise(self) -> str | None:
+        names = {ex.name for ex in self._exercises()}
+        if (
+            self._start_exercise in names
+            and self._start_exercise not in self.app.state.completed
+        ):
+            return self._start_exercise
+        return next_pending(self._exercises(), self.app.state.completed)
 
     def _render_state(self) -> None:
         exs = self._exercises()
