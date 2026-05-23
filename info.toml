@@ -1171,3 +1171,293 @@ hint = "combined = monday + tuesday adds counts; remainder = combined - sold dro
 name = "collections10"
 path = "exercises/collections/collections10.py"
 hint = "Build grouped with defaultdict(list) then hit_counts = Counter(cat for cat, _ in log). top_category is most_common(1)[0][0]. avg_times maps each key to sum(v)/len(v)."
+
+[[exercises]]
+name = "itertools1"
+path = "exercises/itertools/itertools1.py"
+hint = "Pass both iterables to chain, then wrap it with list(...)."
+
+[[exercises]]
+name = "itertools2"
+path = "exercises/itertools/itertools2.py"
+hint = "Use islice(count(10), 4) and convert the result to a list."
+
+[[exercises]]
+name = "itertools3"
+path = "exercises/itertools/itertools3.py"
+hint = "product(xs, ys) yields tuples for every left/right combination."
+
+[[exercises]]
+name = "itertools4"
+path = "exercises/itertools/itertools4.py"
+hint = "The key function should return row[0], the category part of each tuple."
+
+[[exercises]]
+name = "itertools5"
+path = "exercises/itertools/itertools5.py"
+hint = "accumulate(values) yields each running sum."
+
+[[exercises]]
+name = "itertools6"
+path = "exercises/itertools/itertools6.py"
+hint = "Wrap cycle(colors) in islice(..., 6), then convert to a list."
+
+[[exercises]]
+name = "itertools7"
+path = "exercises/itertools/itertools7.py"
+hint = "zip_longest(left, right, fillvalue='?') keeps going after the short iterable ends."
+
+[[exercises]]
+name = "itertools8"
+path = "exercises/itertools/itertools8.py"
+hint = "pairwise(flattened) yields overlapping pairs from the flattened list."
+
+[[exercises]]
+name = "json1"
+path = "exercises/json/json1.py"
+hint = "Use json.loads(raw) to turn the JSON string into a dictionary."
+
+[[exercises]]
+name = "json2"
+path = "exercises/json/json2.py"
+hint = "Use json.dumps(payload, sort_keys=True)."
+
+[[exercises]]
+name = "json3"
+path = "exercises/json/json3.py"
+hint = "Index through profile['user']['address']['city']."
+
+[[exercises]]
+name = "json4"
+path = "exercises/json/json4.py"
+hint = "json.dump writes the payload object into the buffer."
+
+[[exercises]]
+name = "json5"
+path = "exercises/json/json5.py"
+hint = "Call data.get('timezone', 'UTC') so missing values have a default."
+
+[[exercises]]
+name = "json6"
+path = "exercises/json/json6.py"
+hint = "Use a list comprehension that keeps users where user['active'] is true."
+
+[[exercises]]
+name = "json7"
+path = "exercises/json/json7.py"
+hint = "Assign the string 'dark' before dumping the settings again."
+
+[[exercises]]
+name = "json8"
+path = "exercises/json/json8.py"
+hint = "Use json.loads(encoded) to decode the serialized object."
+
+[[exercises]]
+name = "datetime1"
+path = "exercises/datetime/datetime1.py"
+hint = "Call date(2026, 5, 23)."
+
+[[exercises]]
+name = "datetime2"
+path = "exercises/datetime/datetime2.py"
+hint = "Use start + timedelta(days=7)."
+
+[[exercises]]
+name = "datetime3"
+path = "exercises/datetime/datetime3.py"
+hint = "Use datetime.strptime(raw, '%Y-%m-%d %H:%M')."
+
+[[exercises]]
+name = "datetime4"
+path = "exercises/datetime/datetime4.py"
+hint = "Use day.strftime('%d/%m/%Y')."
+
+[[exercises]]
+name = "datetime5"
+path = "exercises/datetime/datetime5.py"
+hint = "Date objects can be compared directly with > and <."
+
+[[exercises]]
+name = "datetime6"
+path = "exercises/datetime/datetime6.py"
+hint = "Subtract two dates and read the .days attribute from the timedelta."
+
+[[exercises]]
+name = "datetime7"
+path = "exercises/datetime/datetime7.py"
+hint = "Use datetime.combine(day, clock)."
+
+[[exercises]]
+name = "datetime8"
+path = "exercises/datetime/datetime8.py"
+hint = "Use min(parsed) and max(parsed)."
+
+[[exercises]]
+name = "enums1"
+path = "exercises/enums/enums1.py"
+hint = "Enum member values can be ordinary strings like 'red' and 'blue'."
+
+[[exercises]]
+name = "enums2"
+path = "exercises/enums/enums2.py"
+hint = "Assign auto() to each member when the exact values do not matter."
+
+[[exercises]]
+name = "enums3"
+path = "exercises/enums/enums3.py"
+hint = "Use selected.name and selected.value."
+
+[[exercises]]
+name = "enums4"
+path = "exercises/enums/enums4.py"
+hint = "Use a list comprehension over Size and read member.value."
+
+[[exercises]]
+name = "enums5"
+path = "exercises/enums/enums5.py"
+hint = "Check whether state is in {TicketState.CLOSED, TicketState.CANCELLED}."
+
+[[exercises]]
+name = "enums6"
+path = "exercises/enums/enums6.py"
+hint = "Inside an Enum method, self.value is the value assigned to that member."
+
+[[exercises]]
+name = "pathlib1"
+path = "exercises/pathlib/pathlib1.py"
+hint = "Use Path('notes/today.txt')."
+
+[[exercises]]
+name = "pathlib2"
+path = "exercises/pathlib/pathlib2.py"
+hint = "Use project / 'src' / 'main.py'."
+
+[[exercises]]
+name = "pathlib3"
+path = "exercises/pathlib/pathlib3.py"
+hint = "Use path.parent, path.stem, and path.suffix."
+
+[[exercises]]
+name = "pathlib4"
+path = "exercises/pathlib/pathlib4.py"
+hint = "Use a list comprehension and keep paths whose suffix is '.py'."
+
+[[exercises]]
+name = "pathlib5"
+path = "exercises/pathlib/pathlib5.py"
+hint = "with_name('final.txt') keeps the same parent directory."
+
+[[exercises]]
+name = "pathlib6"
+path = "exercises/pathlib/pathlib6.py"
+hint = "Use source.with_suffix('.json')."
+
+[[exercises]]
+name = "oop_advanced1"
+path = "exercises/oop_advanced/oop_advanced1.py"
+hint = "Put Animal inside Dog's parentheses."
+
+[[exercises]]
+name = "oop_advanced2"
+path = "exercises/oop_advanced/oop_advanced2.py"
+hint = "Call super().__init__(name) before assigning role."
+
+[[exercises]]
+name = "oop_advanced3"
+path = "exercises/oop_advanced/oop_advanced3.py"
+hint = "Sum shape.area() for each shape in shapes."
+
+[[exercises]]
+name = "oop_advanced4"
+path = "exercises/oop_advanced/oop_advanced4.py"
+hint = "A property method can return self._name."
+
+[[exercises]]
+name = "oop_advanced5"
+path = "exercises/oop_advanced/oop_advanced5.py"
+hint = "Return len(self.songs) from __len__."
+
+[[exercises]]
+name = "oop_advanced6"
+path = "exercises/oop_advanced/oop_advanced6.py"
+hint = "Return an f-string that includes self.x and self.y."
+
+[[exercises]]
+name = "oop_advanced7"
+path = "exercises/oop_advanced/oop_advanced7.py"
+hint = "Compare self.isbn with other.isbn."
+
+[[exercises]]
+name = "oop_advanced8"
+path = "exercises/oop_advanced/oop_advanced8.py"
+hint = "Return cls(int(x_text), int(y_text))."
+
+[[exercises]]
+name = "oop_advanced9"
+path = "exercises/oop_advanced/oop_advanced9.py"
+hint = "A valid percentage is between 0 and 100 inclusive."
+
+[[exercises]]
+name = "oop_advanced10"
+path = "exercises/oop_advanced/oop_advanced10.py"
+hint = "Return self.side * self.side from Square.area."
+
+[[exercises]]
+name = "oop_advanced11"
+path = "exercises/oop_advanced/oop_advanced11.py"
+hint = "Return dict(self.__dict__) from the mixin method."
+
+[[exercises]]
+name = "oop_advanced12"
+path = "exercises/oop_advanced/oop_advanced12.py"
+hint = "Return a new Vector with coordinates added pairwise."
+
+[[exercises]]
+name = "async1"
+path = "exercises/async/async1.py"
+hint = "An async function can return a normal string value."
+
+[[exercises]]
+name = "async2"
+path = "exercises/async/async2.py"
+hint = "Use await get_message() inside main."
+
+[[exercises]]
+name = "async3"
+path = "exercises/async/async3.py"
+hint = "Call await asyncio.sleep(0) before the return."
+
+[[exercises]]
+name = "async4"
+path = "exercises/async/async4.py"
+hint = "await asyncio.gather(first(), second()) returns a list-like result of both values."
+
+[[exercises]]
+name = "async5"
+path = "exercises/async/async5.py"
+hint = "Use asyncio.create_task(compute())."
+
+[[exercises]]
+name = "async6"
+path = "exercises/async/async6.py"
+hint = "Append each value to result inside the async for loop."
+
+[[exercises]]
+name = "async7"
+path = "exercises/async/async7.py"
+hint = "Return await asyncio.wait_for(quick(), timeout=1)."
+
+[[exercises]]
+name = "async8"
+path = "exercises/async/async8.py"
+hint = "Use asyncio.run(answer()) at top level."
+
+[[exercises]]
+name = "async9"
+path = "exercises/async/async9.py"
+hint = "Use asyncio.gather with a generator expression that calls double(value)."
+
+[[exercises]]
+name = "async10"
+path = "exercises/async/async10.py"
+hint = "Gather fetch_name(name) for each name, then join the returned list."

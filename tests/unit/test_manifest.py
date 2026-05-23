@@ -154,3 +154,33 @@ def test_exercises_in_returns_topic_members_in_order() -> None:
 def test_exercises_in_unknown_topic_is_empty() -> None:
     manifest = load(FIXTURES)
     assert manifest.exercises_in("nope") == []
+
+
+def test_real_curriculum_has_roadmap_topic_counts() -> None:
+    repo = Path(__file__).parents[2]
+    manifest = load(repo)
+    expected = {
+        "itertools": 8,
+        "json": 8,
+        "datetime": 8,
+        "enums": 6,
+        "pathlib": 6,
+        "oop_advanced": 12,
+        "async": 10,
+    }
+    assert len(manifest.exercises) == 292
+    assert len(manifest.topics()) == 31
+    for topic, count in expected.items():
+        assert len(manifest.exercises_in(topic)) == count
+
+
+def test_real_curriculum_check_files_parse() -> None:
+    import ast
+
+    repo = Path(__file__).parents[2]
+    manifest = load(repo)
+    for exercise in manifest.exercises:
+        ast.parse(
+            exercise.check_path.read_text(encoding="utf-8"),
+            filename=str(exercise.check_path),
+        )
