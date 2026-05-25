@@ -1,7 +1,7 @@
 # Pylings
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://semver.org/)
+[![Version](https://img.shields.io/badge/version-0.1-blue)](https://semver.org/)
 [![SemVer](https://img.shields.io/badge/semver-2.0.0-brightgreen)](https://semver.org/)
 [![Tests](https://img.shields.io/badge/tests-105%20passing-brightgreen)](#development)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
@@ -110,11 +110,11 @@ Pylings uses Semantic Versioning:
 Branch flow is feature-first:
 
 ```text
-feature/<name> -> dev -> main -> vMAJOR.MINOR.PATCH
+feature/<name> -> dev -> main -> vMAJOR.MINOR
 ```
 
 Feature branches are merged into `dev`. A verified `dev` branch is then merged
-into `main` and tagged with an annotated SemVer tag such as `v0.1.0`.
+into `main` and tagged with an annotated release tag such as `v0.1`.
 
 ## Attribution
 
