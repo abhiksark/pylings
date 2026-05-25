@@ -1,0 +1,123 @@
+Screen {
+    layout: vertical;
+}
+
+#progress {
+    height: 1;
+    background: $primary 30%;
+    color: $text;
+    padding: 0 1;
+}
+
+#main {
+    layout: horizontal;
+    height: 1fr;
+}
+
+#tree {
+    width: 25%;
+    border-right: solid $primary;
+    padding: 1;
+    display: none;
+}
+
+#editor {
+    width: 1fr;
+    border-right: solid $primary;
+}
+
+#editor #code {
+    height: 1fr;
+}
+
+#output {
+    width: 1fr;
+    padding: 1;
+}
+
+#output-header {
+    padding: 0 0 1 0;
+    border-bottom: solid $primary;
+    color: $text;
+}
+
+#output-body,
+#goal,
+#docs,
+#status,
+#next-step,
+#details {
+    padding: 1 0 0 0;
+}
+
+#output.passed {
+    background: $success 20%;
+}
+
+#output.failed {
+    background: $error 20%;
+}
+
+#output.pending {
+    background: $warning 20%;
+}
+
+#hint {
+    border-top: dashed $secondary;
+    padding: 1 0;
+    display: none;
+}
+
+#hint.visible {
+    display: block;
+}
+
+TopicPickerScreen #topics {
+    padding: 1 2;
+}
+
+#topic-banner {
+    height: auto;
+    padding: 1 2;
+    background: $primary 20%;
+    color: $text;
+    border-bottom: solid $primary;
+}
+
+.topic-row {
+    padding: 0 1;
+}
+
+DocsScreen {
+    align: center middle;
+}
+
+#docs-window {
+    width: 72%;
+    max-width: 80;
+    height: 70%;
+    max-height: 28;
+    min-height: 14;
+    padding: 1 2;
+    border: heavy $primary;
+    background: $surface;
+    color: $text;
+}
+
+#docs-title {
+    height: 1;
+}
+
+#docs-scroll {
+    height: 1fr;
+    margin: 1 0;
+}
+
+#docs-content {
+    width: 100%;
+}
+
+#docs-footer {
+    height: 1;
+    color: $text;
+}
