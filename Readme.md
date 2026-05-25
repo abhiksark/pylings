@@ -14,6 +14,10 @@ practice, and self-paced Python tutorial workflows: 292 exercises, hidden
 pytest-style checks, a live Textual editor, progressive hints, and bundled
 Python documentation snippets so learners can work without leaving the terminal.
 
+Status: `v0.1.0` alpha. GitHub installs are available now; the PyPI package
+name is `python-learnings` and will become the primary install path after
+publishing is enabled.
+
 ![Coding screen](docs/assets/screenshots/coding-screen.png)
 
 ## Highlights
@@ -25,20 +29,45 @@ Python documentation snippets so learners can work without leaving the terminal.
 - `F5` opens a local Python reference window; `O` opens the official docs page.
 - Bundled docs are generated from the official Python documentation for offline use.
 
+## Who It Is For
+
+- Python beginners who want short, focused practice instead of passive reading.
+- Rustlings users who want the same fix-and-verify loop for Python.
+- Learners who prefer working in a terminal with local docs close to the code.
+- Contributors interested in building curriculum, checks, and terminal UX.
+
+## What Happens When You Run It
+
+1. `pylings init` creates a self-contained learner workspace with exercises,
+   hidden checks, local docs, and original snapshots for reset.
+2. `pylings` opens the first pending exercise in the terminal UI.
+3. You edit the broken code, remove `# I AM NOT DONE`, and checks rerun as you
+   work.
+4. Passing checks mark the exercise complete and move progress forward. `F4`
+   opens the topic picker, `F5` opens local docs, and `Esc` quits main screens.
+
 ## Install
 
-The `pylings` command is installed by the `python-learnings` package. The PyPI
-project name `pylings` is already used by another package, so do not use
-`pip install pylings` for this project.
+Install the current release directly from GitHub:
+
+```bash
+pipx install "git+https://github.com/abhiksark/pylings.git@v0.1.0"
+```
+
+After PyPI publishing is enabled, the package install will be:
 
 ```bash
 pipx install python-learnings
 ```
 
-For unreleased development builds from GitHub:
+The `pylings` command is installed by the `python-learnings` package. The PyPI
+project name `pylings` is already used by another package, so do not use
+`pip install pylings` for this project.
+
+For the latest development build from `main`:
 
 ```bash
-pipx install git+https://github.com/abhiksark/pylings.git
+pipx install --force git+https://github.com/abhiksark/pylings.git
 ```
 
 Create a learner workspace before starting:
@@ -74,6 +103,14 @@ pylings update                       # refresh checks/docs after upgrading pylin
 
 Each exercise contains a `# I AM NOT DONE` marker. Fix the code, remove the
 marker, and let the live check advance you to the next exercise.
+
+## Demo
+
+![Pylings terminal demo](docs/assets/demos/pylings-demo.gif)
+
+The demo is generated from [docs/demo.tape](docs/demo.tape). See
+[docs/DEMO_GIF.md](docs/DEMO_GIF.md) to regenerate it with
+[VHS](https://github.com/charmbracelet/vhs).
 
 ## Interface
 
