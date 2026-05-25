@@ -46,10 +46,13 @@ loads quickly on GitHub and PyPI.
 The scripted flow should stay focused on the first-time user path:
 
 1. Initialize a clean workspace.
-2. Open the Pylings TUI.
-3. Show the first pending exercise in the coding screen.
-4. Open local docs with `F5` if the recording is stable.
-5. Quit with `Esc` or `Ctrl+Q`.
+2. Show topic progress with `pylings list`.
+3. Show a hint and official docs link with `pylings hint variables1`.
+4. Open the Pylings TUI.
+5. Show the first pending exercise in the coding screen.
+6. Open and close the local docs window with `F5` and `Esc`.
+7. Open the topic picker with `F4`.
+8. Quit with `Ctrl+Q`.
 
 ## Fallback Workflow
 

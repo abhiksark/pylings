@@ -110,7 +110,9 @@ marker, and let the live check advance you to the next exercise.
 
 The demo is generated from [docs/demo.tape](docs/demo.tape). See
 [docs/DEMO_GIF.md](docs/DEMO_GIF.md) to regenerate it with
-[VHS](https://github.com/charmbracelet/vhs).
+[VHS](https://github.com/charmbracelet/vhs). It covers the first-run flow,
+progress listing, hints, the coding screen, local docs, topic picker, and quit
+path.
 
 ## Interface
 
