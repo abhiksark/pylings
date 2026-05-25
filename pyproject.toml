@@ -3,15 +3,49 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pylings"
+name = "pylings-tui"
 version = "0.1"
-description = "Rustlings-style interactive Python exercises."
+description = "Rustlings-style interactive Python exercises in a terminal TUI."
 readme = "Readme.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
+keywords = [
+    "python",
+    "python-exercises",
+    "learn-python",
+    "beginner-python",
+    "coding-practice",
+    "rustlings",
+    "textual",
+    "tui",
+    "cli",
+    "education",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Environment :: Console :: Curses",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Education",
+    "Topic :: Education :: Computer Aided Instruction (CAI)",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "textual[syntax]>=8.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/abhiksark/pylings"
+Repository = "https://github.com/abhiksark/pylings"
+Issues = "https://github.com/abhiksark/pylings/issues"
+Changelog = "https://github.com/abhiksark/pylings/blob/main/CHANGELOG.md"
+Documentation = "https://github.com/abhiksark/pylings#readme"
 
 [project.optional-dependencies]
 dev = [
