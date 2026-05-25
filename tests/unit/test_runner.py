@@ -80,3 +80,49 @@ def test_utf8_output(tmp_path: Path) -> None:
     result = run(ex)
     assert result.passed is True
     assert "héllo 🐍" in result.stdout
+
+
+def test_runner_uses_workspace_for_relative_files(tmp_path: Path) -> None:
+    data_path = tmp_path / "data.txt"
+    data_path.write_text("pylings\n", encoding="utf-8")
+    ex_path = tmp_path / "exercise.py"
+    check_path = tmp_path / "check.py"
+    ex_path.write_text(
+        "value = open('data.txt', encoding='utf-8').read().strip()\n",
+        encoding="utf-8",
+    )
+    check_path.write_text("assert value == 'pylings'\n", encoding="utf-8")
+
+    result = run(
+        Exercise(
+            name="relative",
+            path=ex_path,
+            check_path=check_path,
+            topic="t",
+            hint="",
+            root=tmp_path,
+        )
+    )
+
+    assert result.passed is True
+
+
+def test_runner_traceback_mentions_real_exercise_file(tmp_path: Path) -> None:
+    ex_path = tmp_path / "exercise.py"
+    check_path = tmp_path / "check.py"
+    ex_path.write_text("raise RuntimeError('boom')\n", encoding="utf-8")
+    check_path.write_text("assert True\n", encoding="utf-8")
+
+    result = run(
+        Exercise(
+            name="traceback",
+            path=ex_path,
+            check_path=check_path,
+            topic="t",
+            hint="",
+            root=tmp_path,
+        )
+    )
+
+    assert result.passed is False
+    assert str(ex_path) in result.stderr

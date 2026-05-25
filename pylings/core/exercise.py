@@ -12,6 +12,9 @@ class Exercise:
     topic: str
     hint: str
     docs: str = ""
+    root: Path | None = None
+    rel_path: Path | None = None
+    check_rel_path: Path | None = None
 
     DONE_MARKER = "# I AM NOT DONE"
 

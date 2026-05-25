@@ -2,28 +2,28 @@
 
 ## Project Structure & Module Organization
 
-`pylings/` contains the installable application package. Core exercise loading, state, reset, and runner logic lives in `pylings/core/`; CLI entry points are in `pylings/cli.py` and `pylings/__main__.py`; Textual screens and widgets live in `pylings/screens/` and `pylings/widgets/`; `pylings/pylings.tcss` holds TUI styles.
+`pylings/` contains the installable application package. Core exercise loading, workspace setup, state, reset, solutions, and runner logic live in `pylings/core/`; CLI entry points are in `pylings/cli.py` and `pylings/__main__.py`; Textual screens/widgets live in `pylings/screens/` and `pylings/widgets/`; `pylings/pylings.tcss` holds TUI styles.
 
-Curriculum files are split between `exercises/<topic>/<exercise>.py` for learner-editable code and `checks/<topic>/<exercise>.py` for hidden assertions. Keep these trees mirrored. `info.toml` defines exercise order and hints. Tests are under `tests/unit/`, `tests/integration/`, and `tests/tui/`, with reusable sample curricula in `tests/fixtures/`.
+Curriculum files are split between `exercises/<topic>/<exercise>.py` for learner code, `checks/<topic>/<exercise>.py` for hidden assertions, and `solutions/<exercise>.py` for reference answers. Keep these trees aligned with `info.toml`, which defines order, hints, and docs URLs. Tests live in `tests/unit/`, `tests/integration/`, and `tests/tui/`, with fixtures in `tests/fixtures/`.
 
 ## Build, Test, and Development Commands
 
 - `pip install -e ".[dev]"`: install pylings locally with pytest dependencies.
-- `pylings`: launch the Textual app in watch mode.
-- `pylings list`, `pylings hint variables1`, `pylings run variables1`: exercise common CLI paths.
-- `pylings --root tests/fixtures/passing_curriculum verify`: smoke-test curriculum verification against a known passing fixture.
-- `pytest`: run the full test suite configured in `pyproject.toml`.
-- `pytest tests/unit` or `pytest tests/integration/test_cli_run.py`: run focused tests while developing.
-- `python -m build`: build distribution artifacts when the `build` package is available.
+- `pylings init --path ./learn-python`: create a self-contained learner workspace.
+- `pylings`, `pylings topics`, `pylings list`: launch the TUI or inspect progress.
+- `pylings run variables1`, `pylings dry-run variables1`, `pylings solution variables1`: test exercise and solution flows.
+- `pylings --root tests/fixtures/passing_curriculum verify`: smoke-test a known passing fixture.
+- `python -m pytest -q`: run the full suite configured in `pyproject.toml`.
+- `python -m build`: build source and wheel distributions.
 
 ## Coding Style & Naming Conventions
 
-Use Python 3.11+ idioms and standard 4-space indentation. Prefer small, typed functions where practical, and keep UI-specific behavior inside `screens` or `widgets` instead of `core`. Name tests `test_<behavior>.py` and test functions `test_<expected_behavior>`. Curriculum exercise/check filenames use the topic prefix plus an ordinal, such as `variables1.py` or `collections10.py`.
+Use Python 3.11+ idioms and 4-space indentation. Prefer small, typed functions where practical. Keep UI behavior in `screens` or `widgets`; keep filesystem, manifest, reset, and runner behavior in `core`. Name tests `test_<behavior>.py` and test functions `test_<expected_behavior>`. Curriculum names use topic plus ordinal, such as `variables1.py` or `collections10.py`.
 
 ## Testing Guidelines
 
-Use pytest for all tests; async tests are supported by `pytest-asyncio` with auto mode. Add unit tests for core behavior, integration tests for CLI flows, and TUI tests for Textual interactions. When adding or changing curriculum, update both `exercises/`, `checks/`, and `info.toml`, then run the verification fixture command plus relevant pytest files.
+Use pytest for all tests; async tests are supported by `pytest-asyncio` in auto mode. Add unit tests for core behavior, integration tests for CLI/workspace flows, and TUI tests for Textual interactions. When changing curriculum, update `exercises/`, `checks/`, `solutions/`, and `info.toml`, then run relevant pytest files plus `pylings --root tests/fixtures/passing_curriculum verify`.
 
 ## Commit & Pull Request Guidelines
 
-Recent history uses conventional prefixes such as `feat:`, `fix:`, and `docs:`. Keep commits focused and imperative, for example `fix: reset hints between exercises`. Pull requests should explain the user-facing change, list tests run, link related issues when applicable, and include screenshots or terminal output for TUI/CLI behavior changes.
+Recent history uses conventional prefixes such as `feat:`, `fix:`, `docs:`, `chore:`, and merge commits between `feature/*`, `dev`, and `main`. Keep commits focused and imperative, for example `fix: reset exercise originals`. Pull requests should explain the user-facing change, list tests run, link issues when applicable, and include screenshots or terminal output for TUI/CLI changes.

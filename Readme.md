@@ -1,12 +1,12 @@
 # Pylings
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-0.1-blue)](https://semver.org/)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://semver.org/)
 [![SemVer](https://img.shields.io/badge/semver-2.0.0-brightgreen)](https://semver.org/)
-[![Tests](https://img.shields.io/badge/tests-105%20passing-brightgreen)](#development)
+[![Tests](https://img.shields.io/badge/tests-125%20passing-brightgreen)](#development)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
-Rustlings-style interactive Python exercises in a live terminal TUI.
+Python learnings, Rustlings-style, in a live terminal TUI.
 
 Pylings helps you learn Python by fixing small broken programs and watching
 checks rerun as you type. It is built for beginner Python practice, coding
@@ -27,13 +27,26 @@ Python documentation snippets so learners can work without leaving the terminal.
 
 ## Install
 
-The `pylings` command is installed from this repository. The PyPI project name
-`pylings` is already used by another package, so install this project from
-GitHub until a package release is published under its distribution name,
-`pylings-tui`.
+The `pylings` command is installed by the `python-learnings` package. The PyPI
+project name `pylings` is already used by another package, so do not use
+`pip install pylings` for this project.
+
+```bash
+pipx install python-learnings
+```
+
+For unreleased development builds from GitHub:
 
 ```bash
 pipx install git+https://github.com/abhiksark/pylings.git
+```
+
+Create a learner workspace before starting:
+
+```bash
+pylings init --path ~/pylings-workspace
+cd ~/pylings-workspace
+pylings
 ```
 
 For local development:
@@ -47,13 +60,16 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```bash
-pylings                         # open the TUI on the first pending exercise
-pylings topics                  # open the topic picker
-pylings list                    # show topic progress
-pylings hint variables1         # print a hint and docs link
-pylings run variables1          # run one exercise check
-pylings reset variables1 --yes  # restore an exercise from its snapshot
-pylings verify                  # run every exercise check
+pylings init --path ./learn-python     # create a self-contained workspace
+cd learn-python
+pylings                              # open the TUI on the first pending exercise
+pylings topics                       # open the topic picker
+pylings list                         # show topic progress
+pylings hint variables1              # print a hint and docs link
+pylings run variables1               # run one exercise check
+pylings dry-run variables1           # run one exercise non-interactively
+pylings reset variables1 --yes       # restore an exercise from its original
+pylings update                       # refresh checks/docs after upgrading pylings
 ```
 
 Each exercise contains a `# I AM NOT DONE` marker. Fix the code, remove the
@@ -84,6 +100,7 @@ pylings/                 # application package
   screens/               # Textual screens
   widgets/               # reusable TUI widgets
   docs/                  # bundled Python documentation snippets
+pylings/curriculum/      # packaged copy in built wheels
 exercises/<topic>/       # learner-editable exercise files
 checks/<topic>/          # hidden assertions for each exercise
 tests/                   # unit, integration, and TUI tests
@@ -120,11 +137,12 @@ Pylings uses Semantic Versioning:
 Branch flow is feature-first:
 
 ```text
-feature/<name> -> dev -> main -> vMAJOR.MINOR
+feature/<name> -> dev -> main -> vMAJOR.MINOR.PATCH
 ```
 
 Feature branches are merged into `dev`. A verified `dev` branch is then merged
-into `main` and tagged with an annotated release tag such as `v0.1`.
+into `main` and tagged with an annotated release tag such as `v0.1.0`.
+See [RELEASE.md](RELEASE.md) for the release checklist.
 
 ## Attribution
 

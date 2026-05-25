@@ -4,7 +4,9 @@ from pathlib import Path
 
 import pytest
 
+from pylings.core.curriculum import init_workspace
 from pylings.core.exercise import Exercise
+from pylings.core.manifest import load
 from pylings.core.reset import ResetError, restore, snapshot
 
 
@@ -85,3 +87,18 @@ def test_snapshot_keys_on_exercise_name_not_filename(tmp_path: Path) -> None:
     originals = tmp_path / ".pylings" / "originals"
     assert (originals / "variables_utils.py").read_text() == "variables-version\n"
     assert (originals / "functions_utils.py").read_text() == "functions-version\n"
+
+
+def test_restore_uses_pristine_originals_not_current_file(tmp_path: Path) -> None:
+    root = init_workspace(tmp_path / "workspace")
+    manifest = load(root)
+    exercise = manifest.exercises[0]
+    original = root / ".pylings" / "originals" / exercise.rel_path.relative_to(
+        "exercises"
+    )
+    pristine = original.read_text(encoding="utf-8")
+    exercise.path.write_text("# corrupted user edit\n", encoding="utf-8")
+
+    restore(root, exercise)
+
+    assert exercise.path.read_text(encoding="utf-8") == pristine

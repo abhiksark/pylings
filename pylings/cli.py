@@ -5,12 +5,20 @@ import argparse
 import sys
 from pathlib import Path
 
-__version__ = "0.1"
+__version__ = "0.1.0"
 
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="pylings")
     parser.add_argument("--version", action="version", version=f"pylings {__version__}")
+    parser.add_argument(
+        "--debug", action="store_true", help="Write debug output to .pylings_debug.log."
+    )
+    parser.add_argument(
+        "--watch-files",
+        action="store_true",
+        help="Rerun checks when exercise files change outside the TUI.",
+    )
     parser.add_argument(
         "--root",
         type=Path,
@@ -19,11 +27,28 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command")
 
+    p_init = sub.add_parser("init", help="Create a pylings workspace.")
+    p_init.add_argument("--path", type=Path, default=Path.cwd())
+    p_init.add_argument(
+        "--force", action="store_true", help="Overwrite managed workspace files."
+    )
+
+    p_update = sub.add_parser("update", help="Update an existing pylings workspace.")
+    p_update.add_argument("--path", type=Path, default=Path.cwd())
+
     sub.add_parser("watch", help="Launch the TUI in watch mode (default).")
     sub.add_parser("topics", help="Launch the TUI on the topic picker.")
 
     p_run = sub.add_parser("run", help="Run a single exercise.")
     p_run.add_argument("name")
+
+    p_dry_run = sub.add_parser("dry-run", help="Run one exercise non-interactively.")
+    p_dry_run.add_argument("name")
+
+    p_solution = sub.add_parser(
+        "solution", aliases=["sol"], help="Run a reference solution."
+    )
+    p_solution.add_argument("name")
 
     p_hint = sub.add_parser("hint", help="Print the hint for an exercise.")
     p_hint.add_argument("name")
@@ -46,16 +71,6 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _snapshot_all(root: Path) -> None:
-    """Ensure every exercise has a snapshot in .pylings/originals/."""
-    from pylings.core.manifest import load as load_manifest
-    from pylings.core.reset import snapshot
-
-    manifest = load_manifest(root)
-    for ex in manifest.exercises:
-        snapshot(root, ex)
-
-
 def _resolve_topic(manifest, topic: str):
     """Return the topic name if valid, else write an error and return None."""
     if topic in manifest.topics():
@@ -65,6 +80,30 @@ def _resolve_topic(manifest, topic: str):
         f"Topics: {', '.join(manifest.topics())}\n"
     )
     return None
+
+
+def _cmd_init(path: Path, force: bool) -> int:
+    from pylings.core.curriculum import WorkspaceError, init_workspace
+
+    try:
+        root = init_workspace(path, force=force)
+    except WorkspaceError as e:
+        sys.stderr.write(f"pylings: {e}\n")
+        return 1
+    print(f"initialized: {root}")
+    return 0
+
+
+def _cmd_update(path: Path) -> int:
+    from pylings.core.curriculum import WorkspaceError, update_workspace
+
+    try:
+        root = update_workspace(path)
+    except WorkspaceError as e:
+        sys.stderr.write(f"pylings: {e}\n")
+        return 1
+    print(f"updated: {root}")
+    return 0
 
 
 def _cmd_verify(root: Path, topic: str | None) -> int:
@@ -162,6 +201,29 @@ def _cmd_run(root: Path, name: str) -> int:
     return 0
 
 
+def _cmd_solution(root: Path, name: str) -> int:
+    from pylings.core.manifest import load as load_manifest
+    from pylings.core.runner import run_verify
+    from pylings.core.solutions import SolutionError, solution_exercise
+
+    manifest = load_manifest(root)
+    try:
+        ex = solution_exercise(root, manifest.by_name(name))
+    except KeyError:
+        sys.stderr.write(f"pylings: no exercise named {name!r}\n")
+        return 1
+    except SolutionError as e:
+        sys.stderr.write(f"pylings: {e}\n")
+        return 1
+
+    result = run_verify(ex)
+    if result.stdout:
+        sys.stdout.write(result.stdout)
+    if result.stderr:
+        sys.stderr.write(result.stderr)
+    return 0 if result.passed else 1
+
+
 def _cmd_reset(root: Path, name: str, yes: bool) -> int:
     from pylings.core.manifest import load as load_manifest
     from pylings.core.reset import ResetError, restore
@@ -198,11 +260,19 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv if argv is not None else sys.argv[1:])
 
     try:
-        if args.command not in {"hint"}:
+        if getattr(args, "debug", False):
             try:
-                _snapshot_all(args.root)
-            except Exception:
-                pass  # snapshot best-effort; real errors surface from subcommands
+                (args.root / ".pylings_debug.log").write_text(
+                    f"argv={argv if argv is not None else sys.argv[1:]!r}\n",
+                    encoding="utf-8",
+                )
+            except OSError:
+                pass
+
+        if args.command == "init":
+            return _cmd_init(args.path, args.force)
+        if args.command == "update":
+            return _cmd_update(args.path)
 
         if args.command == "verify":
             return _cmd_verify(args.root, args.topic)
@@ -212,6 +282,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_hint(args.root, args.name)
         if args.command == "run":
             return _cmd_run(args.root, args.name)
+        if args.command == "dry-run":
+            return _cmd_run(args.root, args.name)
+        if args.command in {"solution", "sol"}:
+            return _cmd_solution(args.root, args.name)
         if args.command == "reset":
             return _cmd_reset(args.root, args.name, args.yes)
 
@@ -226,6 +300,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.root,
                 start_topic,
                 force_picker=args.command == "topics",
+                watch_files=getattr(args, "watch_files", False),
             )
 
         # Other subcommands wired in later tasks.

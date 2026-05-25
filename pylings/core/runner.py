@@ -20,22 +20,39 @@ def run(exercise: Exercise, timeout_s: float = DEFAULT_TIMEOUT_S) -> RunResult:
     Never raises.
     """
     start = time.monotonic()
+    exercise_path = exercise.path.resolve()
+    check_path = exercise.check_path.resolve()
     env = {
         **os.environ,
         "PYTHONDONTWRITEBYTECODE": "1",
         "PYTHONIOENCODING": "utf-8",
     }
-    exercise_src = exercise.path.read_text(encoding="utf-8")
-    combined = (
-        exercise_src + "\n\n" + exercise.check_path.read_text(encoding="utf-8")
+    exercise_src = exercise_path.read_text(encoding="utf-8")
+    runner_src = (
+        "import sys\n"
+        "from pathlib import Path\n"
+        f"exercise_path = Path({str(exercise_path)!r})\n"
+        f"check_path = Path({str(check_path)!r})\n"
+        "sys.path.insert(0, str(Path.cwd()))\n"
+        "namespace = {\n"
+        "    '__name__': '__main__',\n"
+        "    '__file__': str(exercise_path),\n"
+        "    '__package__': None,\n"
+        "}\n"
+        "exercise_src = exercise_path.read_text(encoding='utf-8')\n"
+        "check_src = check_path.read_text(encoding='utf-8')\n"
+        "exec(compile(exercise_src, str(exercise_path), 'exec'), namespace)\n"
+        "namespace['__file__'] = str(check_path)\n"
+        "exec(compile(check_src, str(check_path), 'exec'), namespace)\n"
     )
     tmp = tempfile.NamedTemporaryFile(
         mode="w", suffix=".py", delete=False, encoding="utf-8"
     )
     try:
-        tmp.write(combined)
+        tmp.write(runner_src)
         tmp.close()
         try:
+            cwd = (exercise.root or exercise_path.parent).resolve()
             proc = subprocess.run(
                 [sys.executable, tmp.name],
                 capture_output=True,
@@ -44,6 +61,7 @@ def run(exercise: Exercise, timeout_s: float = DEFAULT_TIMEOUT_S) -> RunResult:
                 errors="replace",
                 timeout=timeout_s,
                 env=env,
+                cwd=cwd,
             )
             duration = time.monotonic() - start
             exit_code = proc.returncode

@@ -91,6 +91,9 @@ def load(root: Path) -> Manifest:
                 topic=rel_path.parent.name,
                 hint=entry.get("hint", ""),
                 docs=entry.get("docs", ""),
+                root=root,
+                rel_path=rel_path,
+                check_rel_path=check_rel,
             )
         )
 

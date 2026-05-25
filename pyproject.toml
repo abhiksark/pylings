@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pylings-tui"
-version = "0.1"
-description = "Rustlings-style interactive Python exercises in a terminal TUI."
+name = "python-learnings"
+version = "0.1.0"
+description = "Python learnings, Rustlings-style, in a terminal TUI."
 readme = "Readme.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -13,6 +13,7 @@ keywords = [
     "python",
     "python-exercises",
     "learn-python",
+    "python-learnings",
     "beginner-python",
     "coding-practice",
     "rustlings",
@@ -38,6 +39,7 @@ classifiers = [
 ]
 dependencies = [
     "textual[syntax]>=8.0.0",
+    "watchdog>=6.0.0",
 ]
 
 [project.urls]
@@ -61,7 +63,10 @@ packages = ["pylings"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "pylings/pylings.tcss" = "pylings/pylings.tcss"
-"pylings/docs" = "pylings/docs"
+"info.toml" = "pylings/curriculum/info.toml"
+"exercises" = "pylings/curriculum/exercises"
+"checks" = "pylings/curriculum/checks"
+"solutions" = "pylings/curriculum/solutions"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
