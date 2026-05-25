@@ -6,15 +6,20 @@
 [![Tests](https://img.shields.io/badge/tests-105%20passing-brightgreen)](#development)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
-Pylings is a Rustlings-style learning environment for Python. It ships broken
-exercises, hidden checks, a live Textual editor, progressive hints, and bundled
+Rustlings-style interactive Python exercises in a live terminal TUI.
+
+Pylings helps you learn Python by fixing small broken programs and watching
+checks rerun as you type. It is built for beginner Python practice, coding
+practice, and self-paced Python tutorial workflows: 292 exercises, hidden
+pytest-style checks, a live Textual editor, progressive hints, and bundled
 Python documentation snippets so learners can work without leaving the terminal.
 
 ![Coding screen](docs/assets/screenshots/coding-screen.png)
 
 ## Highlights
 
-- 292 exercises across 31 Python topics, from variables through async.
+- 292 Python exercises across 31 topics, from variables through async.
+- Rustlings-inspired learn-by-doing flow for Python coding practice.
 - Live in-terminal editor with automatic checks after edits.
 - Topic picker with progress, resume state, reset, hints, and one-shot CLI runs.
 - `F5` opens a local Python reference window; `O` opens the official docs page.
@@ -22,8 +27,13 @@ Python documentation snippets so learners can work without leaving the terminal.
 
 ## Install
 
+The `pylings` command is installed from this repository. The PyPI project name
+`pylings` is already used by another package, so install this project from
+GitHub until a package release is published under its distribution name,
+`pylings-tui`.
+
 ```bash
-pipx install pylings
+pipx install git+https://github.com/abhiksark/pylings.git
 ```
 
 For local development:
