@@ -3,7 +3,7 @@
 All notable changes to this project are documented here. Pylings follows
 Semantic Versioning.
 
-## [0.1.0] - 2026-05-25
+## [0.1] - 2026-05-25
 
 ### Added
 
