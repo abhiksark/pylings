@@ -1,0 +1,13 @@
+format_version = 1
+welcome_message = "Welcome to the CI test curriculum."
+final_message = "All CI test exercises complete."
+
+[[exercises]]
+name = "passing1"
+path = "exercises/passing1.py"
+hint = "This exercise tests basic assertions."
+
+[[exercises]]
+name = "passing2"
+path = "exercises/passing2.py"
+hint = "This exercise tests function definitions."

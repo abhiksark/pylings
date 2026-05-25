@@ -1,0 +1,19 @@
+format_version = 1
+welcome_message = "Multi-topic test fixture."
+final_message = "Done."
+
+[[exercises]]
+name = "a1"
+path = "exercises/alpha/a1.py"
+hint = "alpha one"
+docs = "https://docs.python.org/3/tutorial/introduction.html"
+
+[[exercises]]
+name = "a2"
+path = "exercises/alpha/a2.py"
+hint = "alpha two"
+
+[[exercises]]
+name = "b1"
+path = "exercises/beta/b1.py"
+hint = "beta one"
