@@ -1,0 +1,160 @@
+{
+  "generated_from": "https://docs.python.org/3/",
+  "topics": {
+    "async": {
+      "file": "topics/async.md",
+      "source_url": "https://docs.python.org/3/library/asyncio.html",
+      "title": "Asyncio"
+    },
+    "classes": {
+      "file": "topics/classes.md",
+      "source_url": "https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes",
+      "title": "Classes"
+    },
+    "collections": {
+      "file": "topics/collections.md",
+      "source_url": "https://docs.python.org/3/library/collections.html",
+      "title": "Collections"
+    },
+    "comprehensions": {
+      "file": "topics/comprehensions.md",
+      "source_url": "https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions",
+      "title": "Comprehensions"
+    },
+    "conditionals": {
+      "file": "topics/conditionals.md",
+      "source_url": "https://docs.python.org/3/tutorial/controlflow.html#if-statements",
+      "title": "Conditionals"
+    },
+    "context_managers": {
+      "file": "topics/context_managers.md",
+      "source_url": "https://docs.python.org/3/reference/compound_stmts.html#the-with-statement",
+      "title": "Context Managers"
+    },
+    "dataclasses": {
+      "file": "topics/dataclasses.md",
+      "source_url": "https://docs.python.org/3/library/dataclasses.html",
+      "title": "Dataclasses"
+    },
+    "datetime": {
+      "file": "topics/datetime.md",
+      "source_url": "https://docs.python.org/3/library/datetime.html",
+      "title": "Datetime"
+    },
+    "decorators": {
+      "file": "topics/decorators.md",
+      "source_url": "https://docs.python.org/3/reference/compound_stmts.html#function-definitions",
+      "title": "Decorators"
+    },
+    "dictionaries": {
+      "file": "topics/dictionaries.md",
+      "source_url": "https://docs.python.org/3/tutorial/datastructures.html#dictionaries",
+      "title": "Dictionaries"
+    },
+    "enums": {
+      "file": "topics/enums.md",
+      "source_url": "https://docs.python.org/3/library/enum.html",
+      "title": "Enums"
+    },
+    "exceptions": {
+      "file": "topics/exceptions.md",
+      "source_url": "https://docs.python.org/3/tutorial/errors.html#handling-exceptions",
+      "title": "Exceptions"
+    },
+    "file_io": {
+      "file": "topics/file_io.md",
+      "source_url": "https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files",
+      "title": "File I/O"
+    },
+    "functional": {
+      "file": "topics/functional.md",
+      "source_url": "https://docs.python.org/3/howto/functional.html",
+      "title": "Functional Tools"
+    },
+    "functions": {
+      "file": "topics/functions.md",
+      "source_url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+      "title": "Functions"
+    },
+    "generators": {
+      "file": "topics/generators.md",
+      "source_url": "https://docs.python.org/3/tutorial/classes.html#generators",
+      "title": "Generators"
+    },
+    "itertools": {
+      "file": "topics/itertools.md",
+      "source_url": "https://docs.python.org/3/library/itertools.html",
+      "title": "Itertools"
+    },
+    "json": {
+      "file": "topics/json.md",
+      "source_url": "https://docs.python.org/3/library/json.html",
+      "title": "JSON"
+    },
+    "lists": {
+      "file": "topics/lists.md",
+      "source_url": "https://docs.python.org/3/tutorial/datastructures.html#more-on-lists",
+      "title": "Lists"
+    },
+    "loops": {
+      "file": "topics/loops.md",
+      "source_url": "https://docs.python.org/3/tutorial/controlflow.html#for-statements",
+      "title": "Loops"
+    },
+    "modules": {
+      "file": "topics/modules.md",
+      "source_url": "https://docs.python.org/3/tutorial/modules.html#modules",
+      "title": "Modules"
+    },
+    "oop_advanced": {
+      "file": "topics/oop_advanced.md",
+      "source_url": "https://docs.python.org/3/tutorial/classes.html",
+      "title": "Advanced OOP"
+    },
+    "pathlib": {
+      "file": "topics/pathlib.md",
+      "source_url": "https://docs.python.org/3/library/pathlib.html",
+      "title": "Pathlib"
+    },
+    "recursion": {
+      "file": "topics/recursion.md",
+      "source_url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+      "title": "Recursion"
+    },
+    "regex": {
+      "file": "topics/regex.md",
+      "source_url": "https://docs.python.org/3/library/re.html",
+      "title": "Regular Expressions"
+    },
+    "sets": {
+      "file": "topics/sets.md",
+      "source_url": "https://docs.python.org/3/tutorial/datastructures.html#sets",
+      "title": "Sets"
+    },
+    "strings": {
+      "file": "topics/strings.md",
+      "source_url": "https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str",
+      "title": "Strings"
+    },
+    "testing": {
+      "file": "topics/testing.md",
+      "source_url": "https://docs.python.org/3/library/unittest.html",
+      "title": "Testing"
+    },
+    "tuples": {
+      "file": "topics/tuples.md",
+      "source_url": "https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences",
+      "title": "Tuples"
+    },
+    "type_hints": {
+      "file": "topics/type_hints.md",
+      "source_url": "https://docs.python.org/3/library/typing.html",
+      "title": "Type Hints"
+    },
+    "variables": {
+      "file": "topics/variables.md",
+      "source_url": "https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator",
+      "title": "Variables"
+    }
+  }
+}
