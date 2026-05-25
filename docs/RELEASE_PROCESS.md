@@ -10,7 +10,7 @@ Pylings uses a feature-branch workflow and Semantic Versioning.
 
 ## Versioning
 
-Use `MAJOR.MINOR.PATCH`.
+Use `MAJOR.MINOR` release tags.
 
 - Increment `MAJOR` for incompatible CLI, manifest, or curriculum changes.
 - Increment `MINOR` for new exercises, topics, TUI features, or docs workflows.
@@ -23,5 +23,5 @@ Use `MAJOR.MINOR.PATCH`.
 3. Run `pylings --root tests/fixtures/passing_curriculum verify`.
 4. Update `CHANGELOG.md` and the version in `pylings/cli.py` and `pyproject.toml`.
 5. Merge `dev` into `main`.
-6. Create an annotated tag, for example `git tag -a v0.1.0 -m "Release v0.1.0"`.
+6. Create an annotated tag, for example `git tag -a v0.1 -m "Release v0.1"`.
 7. Push `main`, `dev`, and tags.
