@@ -1,0 +1,10 @@
+assert classify(500) == "large positive", f"classify(500) => 'large positive', got {classify(500)!r}"
+assert classify(101) == "large positive", f"classify(101) => 'large positive', got {classify(101)!r}"
+assert classify(100) == "small positive", f"classify(100) => 'small positive', got {classify(100)!r}"
+assert classify(1) == "small positive", f"classify(1) => 'small positive', got {classify(1)!r}"
+assert classify(0) == "zero", f"classify(0) => 'zero', got {classify(0)!r}"
+assert classify(-1) == "small negative", f"classify(-1) => 'small negative', got {classify(-1)!r}"
+assert classify(-100) == "small negative", f"classify(-100) => 'small negative', got {classify(-100)!r}"
+assert classify(-101) == "large negative", f"classify(-101) => 'large negative', got {classify(-101)!r}"
+assert classify(-999) == "large negative", f"classify(-999) => 'large negative', got {classify(-999)!r}"
+print("conditionals10 ✓")
