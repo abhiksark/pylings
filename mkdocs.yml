@@ -33,6 +33,12 @@ plugins:
 
 nav:
   - Home: index.md
+  - Quick Start: quick-start.md
+  - Interface: interface.md
+  - Curriculum: curriculum.md
+  - Local Docs: local-docs.md
+  - Contributing: contributing.md
+  - Roadmap: roadmap.md
 
 extra:
   social:
