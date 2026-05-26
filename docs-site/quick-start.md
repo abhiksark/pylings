@@ -24,9 +24,9 @@ cd ~/pylings-workspace
 pylings
 ```
 
-`pylings init` copies exercises, hidden checks, local docs, and reset snapshots
-into a learner workspace. Run `pylings` from that workspace to open the first
-pending exercise.
+`pylings init` copies exercises, hidden checks, reference solutions, and reset
+snapshots into a learner workspace. Run `pylings` from that workspace to open
+the first pending exercise.
 
 ## Useful Commands
 
