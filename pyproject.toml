@@ -47,7 +47,7 @@ Homepage = "https://github.com/abhiksark/pylings"
 Repository = "https://github.com/abhiksark/pylings"
 Issues = "https://github.com/abhiksark/pylings/issues"
 Changelog = "https://github.com/abhiksark/pylings/blob/main/CHANGELOG.md"
-Documentation = "https://github.com/abhiksark/pylings#readme"
+Documentation = "https://pylings.abhik.ai/"
 
 [project.optional-dependencies]
 dev = [
