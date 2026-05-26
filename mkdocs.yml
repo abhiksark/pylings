@@ -1,0 +1,40 @@
+site_name: Pylings
+site_url: https://pylings.abhik.ai/
+site_description: Python learnings, Rustlings-style, in a terminal TUI.
+repo_url: https://github.com/abhiksark/pylings
+repo_name: abhiksark/pylings
+edit_uri: edit/main/docs-site/
+docs_dir: docs-site
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: blue
+      accent: amber
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/abhiksark/pylings
