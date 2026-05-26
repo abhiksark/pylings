@@ -131,6 +131,7 @@ dmypy.json
 # Pylings runtime state (root install and any nested fixture roots)
 .pylings/
 .superpowers/
+.worktrees
 
 # Local artifacts from older pylings workspaces; not part of this package.
 /pylings/.gitignore
