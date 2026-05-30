@@ -8,6 +8,11 @@
 #
 # The signature should read:
 #   def find_index(items: list[str], target: str) -> int | None:
+#
+# Keep the `from __future__ import annotations` line below: it lets the modern
+# `int | None` syntax work on Python 3.9 and 3.10 as well.
+from __future__ import annotations
+
 
 def find_index(items, target):
     try:

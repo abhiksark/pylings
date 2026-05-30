@@ -1008,7 +1008,16 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
                'left = ["a", "b", "c"]\n'
                'right = [1]\n'
                'pairs = list(zip_longest(left, right, fillvalue="?"))\n',
- 'itertools8': 'from itertools import pairwise\n'
+ 'itertools8': 'try:\n'
+               '    from itertools import pairwise\n'
+               'except ImportError:  # Python < 3.10\n'
+               '    from itertools import tee\n'
+               '\n'
+               '    def pairwise(iterable):\n'
+               '        a, b = tee(iterable)\n'
+               '        next(b, None)\n'
+               '        return zip(a, b)\n'
+               '\n'
                'batches = [[1, 2], [3], [4, 5]]\n'
                'flattened = [item for batch in batches for item in batch]\n'
                'adjacent_pairs = list(pairwise(flattened))\n',
@@ -1567,7 +1576,10 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
  'type_hints2': 'def greet(name: str, times: int) -> str:\n    return (name + " ") * times\n',
  'type_hints3': 'def total(scores: list[int], labels: dict[str, int]) -> int:\n'
                 '    return sum(scores) + sum(labels.values())\n',
- 'type_hints4': 'def find_index(items: list[str], target: str) -> int | None:\n'
+ 'type_hints4': 'from __future__ import annotations\n'
+                '\n'
+                '\n'
+                'def find_index(items: list[str], target: str) -> int | None:\n'
                 '    try:\n'
                 '        return items.index(target)\n'
                 '    except ValueError:\n'
@@ -1585,7 +1597,10 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
                 '\n'
                 'def apply_twice(func: Callable[[int], int], value: int) -> int:\n'
                 '    return func(func(value))\n',
- 'type_hints8': 'def summarise(records: list[dict[str, int]], key: str, default: int | None) -> '
+ 'type_hints8': 'from __future__ import annotations\n'
+                '\n'
+                '\n'
+                'def summarise(records: list[dict[str, int]], key: str, default: int | None) -> '
                 'dict[str, int | None]:\n'
                 '    return {\n'
                 '        "count": len(records),\n'

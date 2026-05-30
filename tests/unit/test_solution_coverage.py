@@ -1,6 +1,9 @@
 from pathlib import Path
 
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python < 3.11
+    import tomli as tomllib
 
 
 def test_every_exercise_has_solution_file() -> None:
