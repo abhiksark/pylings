@@ -167,6 +167,14 @@ When adding curriculum, update `exercises/`, `checks/`, and `info.toml`
 together. Keep exercise and check filenames mirrored, for example
 `exercises/lists/lists3.py` and `checks/lists/lists3.py`.
 
+## Contributing
+
+Pylings is actively developed and welcomes contributors — beginners included.
+The current focus is the [0.3.0 roadmap](docs/roadmap/0.3.0.md) (wider adoption),
+and every roadmap issue is written to be picked up cold. Start with a
+[`good first issue`](https://github.com/abhiksark/pylings/issues?q=is%3Aopen+label%3A%22good+first+issue%22),
+comment to claim it, and see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Release Flow
 
 Pylings uses Semantic Versioning:
