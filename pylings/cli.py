@@ -290,14 +290,21 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_reset(args.root, args.name, args.yes)
 
         if args.command in (None, "watch", "start", "topics"):
+            from pylings.core.curriculum import ensure_workspace
+            root, created = ensure_workspace(args.root)
+            if root != args.root.expanduser().resolve():
+                if created:
+                    print(f"No pylings workspace found here; created one at {root}")
+                else:
+                    print(f"Using existing pylings workspace at {root}")
             start_topic = getattr(args, "topic", None)
             if start_topic is not None:
                 from pylings.core.manifest import load as load_manifest
-                if _resolve_topic(load_manifest(args.root), start_topic) is None:
+                if _resolve_topic(load_manifest(root), start_topic) is None:
                     return 2
             from pylings.app import run_tui  # lazy: Textual is heavy
             return run_tui(
-                args.root,
+                root,
                 start_topic,
                 force_picker=args.command == "topics",
                 watch_files=getattr(args, "watch_files", False),
