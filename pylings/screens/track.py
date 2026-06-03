@@ -19,6 +19,17 @@ from pylings.widgets.progress import ProgressBar
 _DEBOUNCE_SECONDS = 0.6
 
 
+def celebration_message(total: int) -> str:
+    """Message shown when every exercise in the curriculum is complete."""
+    return (
+        f"🎉  You finished all {total} pylings exercises! 🎉\n\n"
+        "That's the whole curriculum — nicely done.\n"
+        f"Share it: \"I just completed all {total} pylings Python exercises 🎉\"\n"
+        "If pylings helped, a ⭐ on GitHub or a contribution is hugely appreciated.\n\n"
+        "Press Ctrl+Q to quit, or F4 to revisit topics."
+    )
+
+
 class TrackScreen(Screen[None]):
     """One topic's linear track: editor + output + auto-save loop."""
 
@@ -82,7 +93,11 @@ class TrackScreen(Screen[None]):
     def _render_state(self) -> None:
         exs = self._exercises()
         done = sum(1 for ex in exs if ex.name in self.app.state.completed)
-        self.query_one(ProgressBar).update_progress(done, len(exs))
+        overall_total = len(self.app.manifest.exercises)
+        overall_done = len(self.app.state.completed)
+        self.query_one(ProgressBar).update_progress(
+            done, len(exs), overall_done, overall_total
+        )
         self.query_one(ExerciseTree).render_topic(
             self.topic, exs, self.app.state.completed, self.current
         )
@@ -175,9 +190,15 @@ class TrackScreen(Screen[None]):
         self._render_state()
         if self.current is None:
             self._record_resume(None)
-            self.query_one(OutputPanel).show_final(
-                f"Topic '{self.topic}' complete — press F4 for topics."
-            )
+            all_exercises = self.app.manifest.exercises
+            if next_pending(all_exercises, self.app.state.completed) is None:
+                self.query_one(OutputPanel).show_final(
+                    celebration_message(len(all_exercises))
+                )
+            else:
+                self.query_one(OutputPanel).show_final(
+                    f"Topic '{self.topic}' complete — press F4 for topics."
+                )
             return
         self._load_current()
         self._run_current()

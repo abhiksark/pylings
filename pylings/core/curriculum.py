@@ -10,6 +10,7 @@ class WorkspaceError(RuntimeError):
 
 
 CURRICULUM_DIRS = ("exercises", "checks", "solutions")
+DEFAULT_WORKSPACE_DIRNAME = "pylings-workspace"
 GITIGNORE_LINES = [
     ".pylings/state.json",
     ".pylings_debug.log",
@@ -77,6 +78,26 @@ def init_workspace(path: Path, *, force: bool = False) -> Path:
     _sync_originals(path, src_root)
     _write_workspace_gitignore(path)
     return path
+
+
+def ensure_workspace(root: Path) -> tuple[Path, bool]:
+    """Return a usable workspace for `root`, creating one if needed.
+
+    - If `root` is already a workspace (has `info.toml`), use it as-is.
+    - Else if a previously auto-created `root/pylings-workspace` exists, reuse it.
+    - Otherwise initialize a fresh workspace at `root/pylings-workspace`.
+
+    Returns `(workspace_path, created_new)`.
+    """
+    root = root.expanduser().resolve()
+    if (root / "info.toml").exists():
+        return root, False
+
+    default = root / DEFAULT_WORKSPACE_DIRNAME
+    if (default / "info.toml").exists():
+        return default.resolve(), False
+
+    return init_workspace(default), True
 
 
 def update_workspace(path: Path) -> Path:
