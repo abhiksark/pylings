@@ -20,6 +20,9 @@ MULTI = Path(__file__).parent.parent / "fixtures" / "multi_topic"
 def _work_copy(tmp_path: Path) -> Path:
     work = tmp_path / "work"
     shutil.copytree(MULTI, work, ignore=shutil.ignore_patterns(".pylings"))
+    # These tests exercise the returning-user flow, so start past the
+    # first-launch welcome overlay (covered separately in test_welcome_pilot.py).
+    save_state(work, State(seen_intro=True))
     return work
 
 
@@ -69,7 +72,10 @@ async def test_enter_on_picker_opens_selected_topic(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_picker_shows_first_run_start_banner(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), force_picker=True)
+    # This one needs genuine first-run state (no seen_intro seed) for the banner.
+    work = tmp_path / "work"
+    shutil.copytree(MULTI, work, ignore=shutil.ignore_patterns(".pylings"))
+    app = PylingsApp(root=work, force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         banner = str(app.screen.query_one("#topic-banner").content)

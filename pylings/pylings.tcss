@@ -121,3 +121,30 @@ DocsScreen {
     height: 1;
     color: $text;
 }
+
+WelcomeScreen {
+    align: center middle;
+}
+
+#welcome-window {
+    width: 72%;
+    max-width: 76;
+    height: auto;
+    padding: 1 2;
+    border: heavy $primary;
+    background: $surface;
+    color: $text;
+}
+
+#welcome-title {
+    height: 1;
+}
+
+#welcome-body {
+    margin: 1 0;
+}
+
+#welcome-footer {
+    height: 1;
+    color: $text-muted;
+}
