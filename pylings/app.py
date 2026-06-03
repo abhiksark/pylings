@@ -30,11 +30,16 @@ class PylingsApp(App[int]):
         self.watch_files = watch_files
 
     def on_mount(self) -> None:
+        first_launch = not self.state.seen_intro
         self.push_screen(TopicPickerScreen())
         target = self._startup_target()
         if target is not None:
             topic, exercise = target
             self.push_screen(TrackScreen(topic, start_exercise=exercise))
+        if first_launch and target is not None:
+            from pylings.screens.welcome import WelcomeScreen
+
+            self.push_screen(WelcomeScreen())
 
     def _startup_target(self) -> tuple[str, str | None] | None:
         if self._start_topic is not None:
