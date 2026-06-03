@@ -1,14 +1,14 @@
 # Pylings
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://semver.org/)
-[![SemVer](https://img.shields.io/badge/semver-2.0.0-brightgreen)](https://semver.org/)
-[![Tests](https://img.shields.io/badge/tests-125%20passing-brightgreen)](#development)
+[![PyPI](https://img.shields.io/pypi/v/python-learnings)](https://pypi.org/project/python-learnings/)
+[![Python](https://img.shields.io/pypi/pyversions/python-learnings)](https://pypi.org/project/python-learnings/)
+[![CI](https://github.com/abhiksark/pylings/actions/workflows/ci.yml/badge.svg)](https://github.com/abhiksark/pylings/actions/workflows/ci.yml)
+[![Downloads](https://img.shields.io/pypi/dm/python-learnings)](https://pypi.org/project/python-learnings/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 Documentation: [pylings.abhik.ai](https://pylings.abhik.ai/)
 
-Python learnings, Rustlings-style, in a live terminal TUI.
+**Rustlings for Python — learn by fixing 292 tiny broken programs in your terminal.**
 
 Pylings helps you learn Python by fixing small broken programs and watching
 checks rerun as you type. It is built for beginner Python practice, coding
@@ -16,9 +16,18 @@ practice, and self-paced Python tutorial workflows: 292 exercises, hidden
 pytest-style checks, a live Textual editor, progressive hints, and bundled
 Python documentation snippets so learners can work without leaving the terminal.
 
-Status: `v0.1.0` alpha. GitHub installs are available now; the PyPI package
-name is `python-learnings` and will become the primary install path after
-publishing is enabled.
+**Try it in 10 seconds** — zero install, needs [Python 3.9+](https://www.python.org/downloads/)
+and [uv](https://docs.astral.sh/uv/):
+
+```bash
+uvx --from python-learnings pylings init --path ./learn-python
+cd learn-python && uvx --from python-learnings pylings
+```
+
+How it works: **edit** the broken exercise in your own editor → **save** →
+checks rerun and advance you to the next one. That's the whole loop.
+
+Status: `v0.2.0`, alpha — published on PyPI as `python-learnings`.
 
 ![Coding screen](docs/assets/screenshots/coding-screen.png)
 
@@ -50,26 +59,37 @@ publishing is enabled.
 
 ## Install
 
-Install the current release directly from GitHub:
+Pylings is on PyPI as **`python-learnings`** (it installs the `pylings`
+command). You need [Python 3.9+](https://www.python.org/downloads/).
 
-```bash
-pipx install "git+https://github.com/abhiksark/pylings.git@v0.1.0"
-```
-
-After PyPI publishing is enabled, the package install will be:
+Recommended — install it isolated, like any CLI app:
 
 ```bash
 pipx install python-learnings
+# or
+uv tool install python-learnings
 ```
 
-The `pylings` command is installed by the `python-learnings` package. The PyPI
-project name `pylings` is already used by another package, so do not use
-`pip install pylings` for this project.
+Or run it with no install at all:
+
+```bash
+uvx --from python-learnings pylings
+```
+
+Or plain pip (use a virtual environment):
+
+```bash
+pip install python-learnings
+```
+
+> The PyPI **name** is `python-learnings`; the **command** is `pylings`. The
+> name `pylings` on PyPI belongs to a different project, so do **not** run
+> `pip install pylings`.
 
 For the latest development build from `main`:
 
 ```bash
-pipx install --force git+https://github.com/abhiksark/pylings.git
+pipx install --force "git+https://github.com/abhiksark/pylings.git"
 ```
 
 Create a learner workspace before starting:
