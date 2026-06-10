@@ -1,7 +1,7 @@
 # Demo GIF Workflow
 
 Use this workflow to generate a repeatable GIF for the README, GitHub release,
-and PyPI project page. The goal is to show the real `pylings` first-run flow,
+and PyPI project page. The goal is to show the real `pythonlings` first-run flow,
 not a mocked terminal.
 
 ## Recommended Tool
@@ -30,12 +30,12 @@ VHS_BIN=/path/to/vhs scripts/generate_demo_gif.sh
 
 If Homebrew VHS fails on macOS with `could not open ttyd` and
 `ERR_CONNECTION_REFUSED`, use a newer VHS build or run VHS through Docker. That
-failure happens before Pylings starts.
+failure happens before Pythonlings starts.
 
 The tape writes:
 
 ```text
-docs/assets/demos/pylings-demo.gif
+docs/assets/demos/pythonlings-demo.gif
 ```
 
 Review the GIF before committing it. Keep the recording under 20 seconds so it
@@ -46,9 +46,9 @@ loads quickly on GitHub and PyPI.
 The scripted flow should stay focused on the first-time user path:
 
 1. Initialize a clean workspace.
-2. Show topic progress with `pylings list`.
-3. Show a hint and official docs link with `pylings hint variables1`.
-4. Open the Pylings TUI.
+2. Show topic progress with `pythonlings list`.
+3. Show a hint and official docs link with `pythonlings hint variables1`.
+4. Open the Pythonlings TUI.
 5. Show the first pending exercise in the coding screen.
 6. Open and close the local docs window with `F5` and `Esc`.
 7. Open the topic picker with `F4`.
@@ -61,8 +61,8 @@ and render it with `agg`:
 
 ```bash
 brew install asciinema agg
-asciinema rec docs/assets/demos/pylings.cast
-agg docs/assets/demos/pylings.cast docs/assets/demos/pylings-demo.gif
+asciinema rec docs/assets/demos/pythonlings.cast
+agg docs/assets/demos/pythonlings.cast docs/assets/demos/pythonlings-demo.gif
 ```
 
 The VHS path is preferred because `docs/demo.tape` keeps the public demo

@@ -5,5 +5,5 @@
 
 from pathlib import Path
 
-project = Path("pylings")
+project = Path("pythonlings")
 source = ???

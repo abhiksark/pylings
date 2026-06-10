@@ -1038,7 +1038,7 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
           'buffer.seek(0)\n'
           'restored = json.load(buffer)\n',
  'json5': 'import json\n'
-          'data = json.loads(\'{"name": "Pylings"}\')\n'
+          'data = json.loads(\'{"name": "Pythonlings"}\')\n'
           'timezone = data.get("timezone", "UTC")\n',
  'json6': 'import json\n'
           'raw = \'[{"name": "Ada", "active": true}, {"name": "Lin", "active": false}, {"name": '
@@ -1050,7 +1050,7 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
           'settings["theme"] = "dark"\n'
           'encoded = json.dumps(settings, sort_keys=True)\n',
  'json8': 'import json\n'
-          'original = {"project": "pylings", "tags": ["python", "practice"], "meta": {"level": '
+          'original = {"project": "pythonlings", "tags": ["python", "practice"], "meta": {"level": '
           '3}}\n'
           'encoded = json.dumps(original, sort_keys=True)\n'
           'decoded = json.loads(encoded)\n'
@@ -1269,7 +1269,7 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
                   '        return 0 <= percent <= 100\n',
  'pathlib1': 'from pathlib import Path\npath = Path("notes/today.txt")\nfilename = path.name\n',
  'pathlib2': 'from pathlib import Path\n'
-             'project = Path("pylings")\n'
+             'project = Path("pythonlings")\n'
              'source = project / "src" / "main.py"\n',
  'pathlib3': 'from pathlib import Path\n'
              'path = Path("docs/guide.md")\n'
@@ -1476,7 +1476,7 @@ ANSWERS: dict[str, str] = {'async1': 'async def greet():\n    return "hello asyn
               '\n'
               'def test_title_case():\n'
               '    assert to_title_case("hello world") == "Hello World"\n'
-              '    assert to_title_case("pylings") == "Pylings"\n'
+              '    assert to_title_case("pythonlings") == "Pythonlings"\n'
               '\n'
               'def test_truncate():\n'
               '    assert truncate("short", 10) == "short"\n'

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pylings.core import curriculum
+from pythonlings.core import curriculum
 
 
 def test_source_root_finds_curriculum_files() -> None:
@@ -21,10 +21,10 @@ def test_init_workspace_copies_curriculum(tmp_path: Path) -> None:
     assert (target / "exercises").is_dir()
     assert (target / "checks").is_dir()
     assert (target / "solutions").is_dir()
-    assert (target / ".pylings" / "originals").is_dir()
+    assert (target / ".pythonlings" / "originals").is_dir()
     assert (target / ".gitignore").read_text(encoding="utf-8").splitlines() == [
-        ".pylings/state.json",
-        ".pylings_debug.log",
+        ".pythonlings/state.json",
+        ".pythonlings_debug.log",
         "__pycache__/",
         "*.pyc",
     ]
@@ -51,6 +51,6 @@ def test_update_workspace_preserves_user_exercise_edit(tmp_path: Path) -> None:
     curriculum.update_workspace(target)
 
     assert exercise.read_text(encoding="utf-8") == "# user edit\n"
-    original = target / ".pylings" / "originals" / exercise.relative_to(target / "exercises")
+    original = target / ".pythonlings" / "originals" / exercise.relative_to(target / "exercises")
     assert original.exists()
     assert (target / "solutions" / "_answers.py").exists()

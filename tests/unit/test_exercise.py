@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from pylings.core.exercise import Exercise
+from pythonlings.core.exercise import Exercise
 
 
 def _ex(path: Path) -> Exercise:

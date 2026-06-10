@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from pylings.core.curriculum import init_workspace
-from pylings.core.exercise import Exercise
-from pylings.core.manifest import load
-from pylings.core.reset import ResetError, restore, snapshot
+from pythonlings.core.curriculum import init_workspace
+from pythonlings.core.exercise import Exercise
+from pythonlings.core.manifest import load
+from pythonlings.core.reset import ResetError, restore, snapshot
 
 
 def _ex(tmp_path: Path, contents: str) -> Exercise:
@@ -22,10 +22,10 @@ def _ex(tmp_path: Path, contents: str) -> Exercise:
     )
 
 
-def test_snapshot_copies_file_to_pylings_originals(tmp_path: Path) -> None:
+def test_snapshot_copies_file_to_pythonlings_originals(tmp_path: Path) -> None:
     ex = _ex(tmp_path, "original content\n")
     snapshot(tmp_path, ex)
-    snap = tmp_path / ".pylings" / "originals" / "ex.py"
+    snap = tmp_path / ".pythonlings" / "originals" / "ex.py"
     assert snap.exists()
     assert snap.read_text() == "original content\n"
 
@@ -35,7 +35,7 @@ def test_snapshot_does_not_overwrite_existing(tmp_path: Path) -> None:
     snapshot(tmp_path, ex)
     ex.path.write_text("modified\n", encoding="utf-8")
     snapshot(tmp_path, ex)  # second call should be a no-op
-    snap = tmp_path / ".pylings" / "originals" / "ex.py"
+    snap = tmp_path / ".pythonlings" / "originals" / "ex.py"
     assert snap.read_text() == "first\n"
 
 
@@ -84,7 +84,7 @@ def test_snapshot_keys_on_exercise_name_not_filename(tmp_path: Path) -> None:
     snapshot(tmp_path, a)
     snapshot(tmp_path, b)
 
-    originals = tmp_path / ".pylings" / "originals"
+    originals = tmp_path / ".pythonlings" / "originals"
     assert (originals / "variables_utils.py").read_text() == "variables-version\n"
     assert (originals / "functions_utils.py").read_text() == "functions-version\n"
 
@@ -93,7 +93,7 @@ def test_restore_uses_pristine_originals_not_current_file(tmp_path: Path) -> Non
     root = init_workspace(tmp_path / "workspace")
     manifest = load(root)
     exercise = manifest.exercises[0]
-    original = root / ".pylings" / "originals" / exercise.rel_path.relative_to(
+    original = root / ".pythonlings" / "originals" / exercise.rel_path.relative_to(
         "exercises"
     )
     pristine = original.read_text(encoding="utf-8")

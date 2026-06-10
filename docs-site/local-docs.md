@@ -1,6 +1,6 @@
 # Local Docs
 
-Pylings bundles short Python reference snippets so learners can stay in the
+Pythonlings bundles short Python reference snippets so learners can stay in the
 terminal while solving exercises.
 
 ## In The TUI
@@ -12,7 +12,7 @@ terminal while solving exercises.
 ## Source Material
 
 Bundled snippets are generated from the official Python documentation. Licensing
-details live in `pylings/docs/NOTICE.md`.
+details live in `pythonlings/docs/NOTICE.md`.
 
 ## Refresh Snippets
 
@@ -25,8 +25,8 @@ python scripts/fetch_python_docs.py
 The generated files live under:
 
 ```text
-pylings/docs/index.json
-pylings/docs/topics/
+pythonlings/docs/index.json
+pythonlings/docs/topics/
 ```
 
 When adding or changing exercises, keep `info.toml` docs links aligned with the

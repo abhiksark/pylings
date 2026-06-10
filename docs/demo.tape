@@ -1,4 +1,4 @@
-Output docs/assets/demos/pylings-demo.gif
+Output docs/assets/demos/pythonlings-demo.gif
 
 Set Shell "bash"
 Set FontSize 18
@@ -8,23 +8,23 @@ Set Padding 16
 Set Framerate 16
 Set TypingSpeed 35ms
 
-Type "pylings init --path /tmp/pylings-demo"
+Type "pythonlings init --path /tmp/pythonlings-demo"
 Enter
 Sleep 1s
 
-Type "cd /tmp/pylings-demo"
+Type "cd /tmp/pythonlings-demo"
 Enter
 Sleep 300ms
 
-Type "pylings list"
+Type "pythonlings list"
 Enter
 Sleep 1.5s
 
-Type "pylings hint variables1"
+Type "pythonlings hint variables1"
 Enter
 Sleep 1.5s
 
-Type "pylings"
+Type "pythonlings"
 Enter
 Sleep 2s
 

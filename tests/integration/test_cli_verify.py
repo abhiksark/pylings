@@ -8,7 +8,7 @@ FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 
 def _run(*args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, "-m", "pylings", *args],
+        [sys.executable, "-m", "pythonlings", *args],
         capture_output=True,
         text=True,
     )

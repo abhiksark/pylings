@@ -1,8 +1,8 @@
-site_name: Pylings
-site_url: https://pylings.abhik.ai/
+site_name: Pythonlings
+site_url: https://pythonlings.abhik.ai/
 site_description: Python learnings, Rustlings-style, in a terminal TUI.
-repo_url: https://github.com/abhiksark/pylings
-repo_name: abhiksark/pylings
+repo_url: https://github.com/abhiksark/pythonlings
+repo_name: abhiksark/pythonlings
 edit_uri: edit/main/docs-site/
 docs_dir: docs-site
 
@@ -43,4 +43,4 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/abhiksark/pylings
+      link: https://github.com/abhiksark/pythonlings

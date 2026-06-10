@@ -1,4 +1,4 @@
-from pylings.cli import main
+from pythonlings.cli import main
 
 
 def test_dry_run_alias_runs_one_exercise() -> None:

@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from pylings.core.docs import load_snippet, load_topic_snippet
-from pylings.core.manifest import load
-from pylings.screens.docs import DocsScreen
+from pythonlings.core.docs import load_snippet, load_topic_snippet
+from pythonlings.core.manifest import load
+from pythonlings.screens.docs import DocsScreen
 
 
 def test_load_topic_snippet_returns_bundled_reference() -> None:

@@ -128,13 +128,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Pylings runtime state (root install and any nested fixture roots)
-.pylings/
+# Pythonlings runtime state (root install and any nested fixture roots)
+.pythonlings/
 .superpowers/
 .worktrees
 
-# Local artifacts from older pylings workspaces; not part of this package.
-/pylings/.gitignore
-/pylings/.git/
-/pylings/.pylings.toml
-/pylings/exercises/
+# Local artifacts from older pythonlings workspaces; not part of this package.
+/pythonlings/.gitignore
+/pythonlings/.git/
+/pythonlings/.pythonlings.toml
+/pythonlings/exercises/

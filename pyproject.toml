@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "python-learnings"
-version = "0.2.0"
+name = "pythonlings"
+version = "0.3.0"
 description = "Python learnings, Rustlings-style, in a terminal TUI."
 readme = "Readme.md"
 requires-python = ">=3.9"
@@ -13,7 +13,7 @@ keywords = [
     "python",
     "python-exercises",
     "learn-python",
-    "python-learnings",
+    "pythonlings",
     "beginner-python",
     "coding-practice",
     "rustlings",
@@ -46,11 +46,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/abhiksark/pylings"
-Repository = "https://github.com/abhiksark/pylings"
-Issues = "https://github.com/abhiksark/pylings/issues"
-Changelog = "https://github.com/abhiksark/pylings/blob/main/CHANGELOG.md"
-Documentation = "https://pylings.abhik.ai/"
+Homepage = "https://github.com/abhiksark/pythonlings"
+Repository = "https://github.com/abhiksark/pythonlings"
+Issues = "https://github.com/abhiksark/pythonlings/issues"
+Changelog = "https://github.com/abhiksark/pythonlings/blob/main/CHANGELOG.md"
+Documentation = "https://pythonlings.abhik.ai/"
 
 [project.optional-dependencies]
 dev = [
@@ -59,17 +59,17 @@ dev = [
 ]
 
 [project.scripts]
-pylings = "pylings.cli:main"
+pythonlings = "pythonlings.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["pylings"]
+packages = ["pythonlings"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"pylings/pylings.tcss" = "pylings/pylings.tcss"
-"info.toml" = "pylings/curriculum/info.toml"
-"exercises" = "pylings/curriculum/exercises"
-"checks" = "pylings/curriculum/checks"
-"solutions" = "pylings/curriculum/solutions"
+"pythonlings/pythonlings.tcss" = "pythonlings/pythonlings.tcss"
+"info.toml" = "pythonlings/curriculum/info.toml"
+"exercises" = "pythonlings/curriculum/exercises"
+"checks" = "pythonlings/curriculum/checks"
+"solutions" = "pythonlings/curriculum/solutions"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

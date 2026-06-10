@@ -4,8 +4,8 @@ import pytest
 from textual.app import App, ComposeResult
 from textual.widgets import Static
 
-from pylings.core.exercise import Exercise, RunResult
-from pylings.widgets.output_panel import OutputPanel
+from pythonlings.core.exercise import Exercise, RunResult
+from pythonlings.widgets.output_panel import OutputPanel
 
 
 class _Harness(App[None]):

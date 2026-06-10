@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-from pylings.core.exercise import Exercise
-from pylings.core.runner import run
+from pythonlings.core.exercise import Exercise
+from pythonlings.core.runner import run
 
 CURRICULUM = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 EXERCISES = CURRICULUM / "exercises"
@@ -84,14 +84,14 @@ def test_utf8_output(tmp_path: Path) -> None:
 
 def test_runner_uses_workspace_for_relative_files(tmp_path: Path) -> None:
     data_path = tmp_path / "data.txt"
-    data_path.write_text("pylings\n", encoding="utf-8")
+    data_path.write_text("pythonlings\n", encoding="utf-8")
     ex_path = tmp_path / "exercise.py"
     check_path = tmp_path / "check.py"
     ex_path.write_text(
         "value = open('data.txt', encoding='utf-8').read().strip()\n",
         encoding="utf-8",
     )
-    check_path.write_text("assert value == 'pylings'\n", encoding="utf-8")
+    check_path.write_text("assert value == 'pythonlings'\n", encoding="utf-8")
 
     result = run(
         Exercise(
