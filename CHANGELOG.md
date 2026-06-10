@@ -3,7 +3,7 @@
 All notable changes to this project are documented here. Pythonlings follows
 Semantic Versioning.
 
-## [Unreleased]
+## [0.3.0] - 2026-06-10
 
 ### Changed
 
