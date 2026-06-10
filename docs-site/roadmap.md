@@ -1,6 +1,6 @@
 # Roadmap
 
-Pylings is currently `v0.1.0` alpha. The core learner loop works, but the
+Pythonlings is currently `v0.1.0` alpha. The core learner loop works, but the
 project still needs product hardening before calling it stable.
 
 ## Current Release
@@ -13,7 +13,7 @@ project still needs product hardening before calling it stable.
 
 ## Next Work
 
-- Finish PyPI publishing for the `python-learnings` project name.
+- Finish PyPI publishing for the `pythonlings` project name.
 - Improve first-run onboarding and empty-state copy.
 - Harden keyboard flow around `Enter`, `Esc`, `F4`, and `F5`.
 - Add more TUI tests for the coding screen, docs window, and topic picker.
@@ -22,7 +22,7 @@ project still needs product hardening before calling it stable.
 
 ## Release Policy
 
-Pylings follows Semantic Versioning.
+Pythonlings follows Semantic Versioning.
 
 - `MAJOR`: incompatible curriculum or CLI changes.
 - `MINOR`: new topics, exercises, TUI features, or docs workflows.

@@ -5,8 +5,8 @@ import pytest
 from textual.app import App, ComposeResult
 from textual.widgets import TextArea
 
-from pylings.core.exercise import Exercise
-from pylings.widgets.editor_pane import EditorPane
+from pythonlings.core.exercise import Exercise
+from pythonlings.widgets.editor_pane import EditorPane
 
 
 class _Harness(App[None]):

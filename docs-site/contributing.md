@@ -6,8 +6,8 @@ contributor workflow.
 ## Development Setup
 
 ```bash
-git clone git@github.com:abhiksark/pylings.git
-cd pylings
+git clone git@github.com:abhiksark/pythonlings.git
+cd pythonlings
 pip install -e ".[dev]"
 python -m pytest -q
 ```
@@ -16,7 +16,7 @@ python -m pytest -q
 
 ```bash
 python -m pytest -q
-pylings --root tests/fixtures/passing_curriculum verify
+pythonlings --root tests/fixtures/passing_curriculum verify
 python -m build
 ```
 

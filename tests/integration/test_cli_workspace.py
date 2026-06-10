@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pylings.cli import main
+from pythonlings.cli import main
 
 
 def test_init_command_creates_workspace(tmp_path: Path) -> None:
@@ -37,4 +37,4 @@ def test_update_command_preserves_user_exercises(tmp_path: Path) -> None:
 
     assert code == 0
     assert exercise.read_text(encoding="utf-8") == "# edited\n"
-    assert (target / ".pylings" / "originals").is_dir()
+    assert (target / ".pythonlings" / "originals").is_dir()

@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Pylings follows the Contributor Covenant Code of Conduct, version 2.1.
+Pythonlings follows the Contributor Covenant Code of Conduct, version 2.1.
 
 ## Our Standards
 

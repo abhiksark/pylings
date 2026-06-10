@@ -5,5 +5,5 @@
 
 import json
 
-data = json.loads('{"name": "Pylings"}')
+data = json.loads('{"name": "Pythonlings"}')
 timezone = ???

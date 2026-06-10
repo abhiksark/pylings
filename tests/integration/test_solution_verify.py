@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from pylings.core.manifest import load
-from pylings.core.runner import run_verify
-from pylings.core.solutions import solution_exercise
+from pythonlings.core.manifest import load
+from pythonlings.core.runner import run_verify
+from pythonlings.core.solutions import solution_exercise
 
 
 def test_every_reference_solution_passes() -> None:

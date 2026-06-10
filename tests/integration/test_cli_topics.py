@@ -3,14 +3,14 @@ import subprocess
 import sys
 from pathlib import Path
 
-from pylings.cli import _build_parser
+from pythonlings.cli import _build_parser
 
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 
 
 def _run(*args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, "-m", "pylings", *args], capture_output=True, text=True
+        [sys.executable, "-m", "pythonlings", *args], capture_output=True, text=True
     )
 
 

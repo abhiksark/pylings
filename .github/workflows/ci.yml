@@ -18,9 +18,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e ".[dev]"
       - run: pytest -v
-      - run: pylings --root tests/fixtures/passing_curriculum verify
+      - run: pythonlings --root tests/fixtures/passing_curriculum verify
       - run: python -m pip install build
       - run: python -m build
       - run: python -m pip install --force-reinstall dist/*.whl
-      - run: pylings init --path /tmp/pylings-workspace
-      - run: pylings --root /tmp/pylings-workspace list
+      - run: pythonlings init --path /tmp/pythonlings-workspace
+      - run: pythonlings --root /tmp/pythonlings-workspace list

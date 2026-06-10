@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch small local reference snippets from the official Python docs.
 
-The generated snippets are committed so learners can use pylings offline.
+The generated snippets are committed so learners can use pythonlings offline.
 Run from the repository root:
 
     python scripts/fetch_python_docs.py
@@ -21,7 +21,7 @@ from urllib.parse import urldefrag
 
 
 BASE_URL = "https://docs.python.org/3/"
-OUTPUT = Path("pylings/docs")
+OUTPUT = Path("pythonlings/docs")
 MAX_LINES = 26
 
 
@@ -141,7 +141,7 @@ class SectionParser(HTMLParser):
 def fetch(url: str) -> str:
     request = urllib.request.Request(
         url,
-        headers={"User-Agent": "pylings-doc-fetcher/0.1"},
+        headers={"User-Agent": "pythonlings-doc-fetcher/0.1"},
     )
     with urllib.request.urlopen(request, timeout=20) as response:
         return response.read().decode("utf-8", errors="replace")
@@ -180,7 +180,7 @@ def render_markdown(source: Source, extracted: str) -> str:
         f"# {source.title}\n\n"
         f"Source: {source.url}\n\n"
         "This local reference is generated from the official Python documentation "
-        "and trimmed for pylings.\n\n"
+        "and trimmed for pythonlings.\n\n"
         f"{source.summary}\n\n"
         "## Extracted reference\n\n"
         f"{extracted}\n"
@@ -215,7 +215,7 @@ def write_outputs(sources: tuple[Source, ...], output: Path) -> None:
             # Bundled Python Documentation Snippets
 
             These snippets are generated from the official Python documentation at
-            https://docs.python.org/3/ and trimmed for use inside pylings.
+            https://docs.python.org/3/ and trimmed for use inside pythonlings.
 
             Python documentation pages are licensed under the Python Software
             Foundation License Version 2. Examples, recipes, and other code in the

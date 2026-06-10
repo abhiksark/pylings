@@ -1,4 +1,4 @@
-from pylings.core.watcher import changed_python_file
+from pythonlings.core.watcher import changed_python_file
 
 
 def test_changed_python_file_accepts_exercise_file() -> None:

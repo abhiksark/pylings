@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pylings.cli import main
+from pythonlings.cli import main
 
 
 def test_solution_command_runs_workspace_solution(tmp_path: Path) -> None:
@@ -51,4 +51,4 @@ docs = "https://docs.python.org/3/"
     code = main(["--debug", "--root", str(root), "run", "passing1"])
 
     assert code == 0
-    assert "run" in (root / ".pylings_debug.log").read_text(encoding="utf-8")
+    assert "run" in (root / ".pythonlings_debug.log").read_text(encoding="utf-8")

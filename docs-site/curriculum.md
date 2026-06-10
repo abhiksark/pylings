@@ -1,6 +1,6 @@
 # Curriculum
 
-Pylings ships 292 exercises across 31 topics. Each exercise has a learner file,
+Pythonlings ships 292 exercises across 31 topics. Each exercise has a learner file,
 a hidden check file, a hint, and a Python documentation link in `info.toml`.
 
 ## Topic Coverage
@@ -55,4 +55,4 @@ Exercise and check filenames stay mirrored. For example,
 
 Progress is stored in the learner workspace, not in the package repository.
 Passing checks mark exercises complete. Reset restores a learner file from the
-original snapshot created during `pylings init`.
+original snapshot created during `pythonlings init`.
