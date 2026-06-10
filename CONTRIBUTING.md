@@ -1,15 +1,15 @@
 # Contributing
 
-Pylings is actively developed and **open to contributors** — beginners welcome.
-The fastest way in is a [`good first issue`](https://github.com/abhiksark/pylings/issues?q=is%3Aopen+label%3A%22good+first+issue%22).
+Pythonlings is actively developed and **open to contributors** — beginners welcome.
+The fastest way in is a [`good first issue`](https://github.com/abhiksark/pythonlings/issues?q=is%3Aopen+label%3A%22good+first+issue%22).
 
 ## Where the work is
 
 - **[0.3.0 roadmap](docs/roadmap/0.3.0.md)** — the current focus (wider adoption
   for beginners). Each roadmap issue is written to be picked up cold: it has
   context, scope, the exact files to touch, and how to verify.
-- Browse open issues by label: [`good first issue`](https://github.com/abhiksark/pylings/issues?q=is%3Aopen+label%3A%22good+first+issue%22),
-  [`help wanted`](https://github.com/abhiksark/pylings/issues?q=is%3Aopen+label%3A%22help+wanted%22).
+- Browse open issues by label: [`good first issue`](https://github.com/abhiksark/pythonlings/issues?q=is%3Aopen+label%3A%22good+first+issue%22),
+  [`help wanted`](https://github.com/abhiksark/pythonlings/issues?q=is%3Aopen+label%3A%22help+wanted%22).
 
 ## Claiming an issue
 
@@ -23,8 +23,8 @@ No need to wait for a formal assignment; claiming by comment is enough.
 ## Development Setup
 
 ```bash
-git clone git@github.com:abhiksark/pylings.git
-cd pylings
+git clone git@github.com:abhiksark/pythonlings.git
+cd pythonlings
 pip install -e ".[dev]"   # or: uv pip install -e ".[dev]"
 python -m pytest -q
 ```

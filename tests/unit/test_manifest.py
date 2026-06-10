@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from pylings.core.manifest import Manifest, ManifestError, load
+from pythonlings.core.manifest import Manifest, ManifestError, load
 
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "tiny_curriculum"
 
@@ -50,7 +50,7 @@ def test_check_path_is_derived() -> None:
 def test_load_defaults_messages_when_omitted(tmp_path: Path) -> None:
     _write_curriculum(tmp_path, "a")
     manifest = load(tmp_path)
-    assert manifest.welcome_message == "Welcome to pylings!"
+    assert manifest.welcome_message == "Welcome to pythonlings!"
     assert manifest.final_message == "All exercises complete."
 
 

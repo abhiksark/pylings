@@ -1,7 +1,7 @@
 # tests/unit/test_state.py
 from pathlib import Path
 
-from pylings.core.state import State, load, save
+from pythonlings.core.state import State, load, save
 
 
 def test_load_creates_fresh_state_when_missing(tmp_path: Path) -> None:
@@ -35,7 +35,7 @@ def test_save_then_load_ux_fields(tmp_path: Path) -> None:
 def test_missing_ux_fields_default_for_existing_v2_state(tmp_path: Path) -> None:
     import json
 
-    pdir = tmp_path / ".pylings"
+    pdir = tmp_path / ".pythonlings"
     pdir.mkdir()
     (pdir / "state.json").write_text(
         json.dumps({"format_version": 2, "completed": ["x"]}),
@@ -51,14 +51,14 @@ def test_missing_ux_fields_default_for_existing_v2_state(tmp_path: Path) -> None
 def test_state_file_is_format_version_2(tmp_path: Path) -> None:
     import json
     save(tmp_path, State(completed={"a"}))
-    data = json.loads((tmp_path / ".pylings" / "state.json").read_text())
+    data = json.loads((tmp_path / ".pythonlings" / "state.json").read_text())
     assert data["format_version"] == 2
     assert data["completed"] == ["a"]
 
 
 def test_old_v1_state_is_discarded(tmp_path: Path) -> None:
     import json
-    pdir = tmp_path / ".pylings"
+    pdir = tmp_path / ".pythonlings"
     pdir.mkdir()
     (pdir / "state.json").write_text(
         json.dumps({"format_version": 1, "completed": ["x"], "current": "y"}),
@@ -70,7 +70,7 @@ def test_old_v1_state_is_discarded(tmp_path: Path) -> None:
 
 
 def test_corrupt_state_is_recovered(tmp_path: Path) -> None:
-    pdir = tmp_path / ".pylings"
+    pdir = tmp_path / ".pythonlings"
     pdir.mkdir()
     (pdir / "state.json").write_text("not json {{", encoding="utf-8")
     state = load(tmp_path)

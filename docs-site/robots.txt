@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pylings.abhik.ai/sitemap.xml
+Sitemap: https://pythonlings.abhik.ai/sitemap.xml

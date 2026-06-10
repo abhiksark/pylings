@@ -7,19 +7,19 @@ import pytest
 from textual.widgets import Markdown, Static, TextArea
 from textual.worker import WorkerCancelled
 
-from pylings.app import PylingsApp
-from pylings.core.state import State, save as save_state
-from pylings.screens.docs import DocsScreen
-from pylings.screens.topic_picker import TopicPickerScreen
-from pylings.screens.track import TrackScreen
-from pylings.widgets.output_panel import OutputPanel
+from pythonlings.app import PythonlingsApp
+from pythonlings.core.state import State, save as save_state
+from pythonlings.screens.docs import DocsScreen
+from pythonlings.screens.topic_picker import TopicPickerScreen
+from pythonlings.screens.track import TrackScreen
+from pythonlings.widgets.output_panel import OutputPanel
 
 MULTI = Path(__file__).parent.parent / "fixtures" / "multi_topic"
 
 
 def _work_copy(tmp_path: Path) -> Path:
     work = tmp_path / "work"
-    shutil.copytree(MULTI, work, ignore=shutil.ignore_patterns(".pylings"))
+    shutil.copytree(MULTI, work, ignore=shutil.ignore_patterns(".pythonlings"))
     return work
 
 
@@ -34,7 +34,7 @@ async def _settle(pilot) -> None:
 
 @pytest.mark.asyncio
 async def test_default_launch_opens_first_pending_exercise(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path))
+    app = PythonlingsApp(root=_work_copy(tmp_path))
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -44,7 +44,7 @@ async def test_default_launch_opens_first_pending_exercise(tmp_path: Path) -> No
 
 @pytest.mark.asyncio
 async def test_picker_lists_topics_with_progress(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), force_picker=True)
+    app = PythonlingsApp(root=_work_copy(tmp_path), force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         rendered = " ".join(
@@ -56,7 +56,7 @@ async def test_picker_lists_topics_with_progress(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_enter_on_picker_opens_selected_topic(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), force_picker=True)
+    app = PythonlingsApp(root=_work_copy(tmp_path), force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TopicPickerScreen)
@@ -69,7 +69,7 @@ async def test_enter_on_picker_opens_selected_topic(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_picker_shows_first_run_start_banner(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), force_picker=True)
+    app = PythonlingsApp(root=_work_copy(tmp_path), force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         banner = str(app.screen.query_one("#topic-banner").content)
@@ -81,7 +81,7 @@ async def test_picker_shows_first_run_start_banner(tmp_path: Path) -> None:
 async def test_picker_rows_show_status_labels(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
     save_state(work, State(completed={"a1"}, seen_intro=True, last_topic="alpha"))
-    app = PylingsApp(root=work, force_picker=True)
+    app = PythonlingsApp(root=work, force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         rendered = " ".join(
@@ -94,7 +94,7 @@ async def test_picker_rows_show_status_labels(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_start_topic_opens_track(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
+    app = PythonlingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -108,7 +108,7 @@ async def test_default_launch_resumes_last_incomplete_exercise(tmp_path: Path) -
         work,
         State(seen_intro=True, last_topic="alpha", last_exercise="a2"),
     )
-    app = PylingsApp(root=work)
+    app = PythonlingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -123,7 +123,7 @@ async def test_default_launch_falls_back_from_invalid_resume_state(tmp_path: Pat
         work,
         State(seen_intro=True, last_topic="missing", last_exercise="ghost"),
     )
-    app = PylingsApp(root=work)
+    app = PythonlingsApp(root=work)
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -138,7 +138,7 @@ async def test_force_picker_launch_ignores_resume_state(tmp_path: Path) -> None:
         work,
         State(seen_intro=True, last_topic="alpha", last_exercise="a2"),
     )
-    app = PylingsApp(root=work, force_picker=True)
+    app = PythonlingsApp(root=work, force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TopicPickerScreen)
@@ -146,7 +146,7 @@ async def test_force_picker_launch_ignores_resume_state(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_f4_returns_to_picker(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
+    app = PythonlingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -157,7 +157,7 @@ async def test_f4_returns_to_picker(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_escape_quits_from_track_screen(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
+    app = PythonlingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -168,7 +168,7 @@ async def test_escape_quits_from_track_screen(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_escape_quits_from_topic_picker(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), force_picker=True)
+    app = PythonlingsApp(root=_work_copy(tmp_path), force_picker=True)
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TopicPickerScreen)
@@ -179,7 +179,7 @@ async def test_escape_quits_from_topic_picker(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_f5_opens_docs_popup_for_current_exercise(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
+    app = PythonlingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert isinstance(app.screen, TrackScreen)
@@ -199,7 +199,7 @@ async def test_f5_opens_docs_popup_for_current_exercise(tmp_path: Path) -> None:
 
 @pytest.mark.asyncio
 async def test_escape_closes_docs_popup_without_quitting(tmp_path: Path) -> None:
-    app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
+    app = PythonlingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         await pilot.press("f5")
@@ -217,7 +217,7 @@ async def test_docs_popup_can_open_browser(
 ) -> None:
     opened: list[str] = []
     monkeypatch.setattr(webbrowser, "open", lambda url: opened.append(url))
-    app = PylingsApp(root=_work_copy(tmp_path), start_topic="alpha")
+    app = PythonlingsApp(root=_work_copy(tmp_path), start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         await pilot.press("f5")
@@ -231,7 +231,7 @@ async def test_docs_popup_can_open_browser(
 @pytest.mark.asyncio
 async def test_track_records_resume_when_loaded(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
-    app = PylingsApp(root=work, start_topic="alpha")
+    app = PythonlingsApp(root=work, start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         assert app.state.seen_intro is True
@@ -244,7 +244,7 @@ async def test_instant_advance_updates_resume_to_next_exercise(
     tmp_path: Path,
 ) -> None:
     work = _work_copy(tmp_path)
-    app = PylingsApp(root=work, start_topic="alpha")
+    app = PythonlingsApp(root=work, start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         track = app.screen
@@ -261,7 +261,7 @@ async def test_instant_advance_updates_resume_to_next_exercise(
 @pytest.mark.asyncio
 async def test_failed_run_shows_progressive_nudge(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
-    app = PylingsApp(root=work, start_topic="alpha")
+    app = PythonlingsApp(root=work, start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         track = app.screen
@@ -275,7 +275,7 @@ async def test_failed_run_shows_progressive_nudge(tmp_path: Path) -> None:
 @pytest.mark.asyncio
 async def test_hint_visibility_resets_after_advance(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
-    app = PylingsApp(root=work, start_topic="alpha")
+    app = PythonlingsApp(root=work, start_topic="alpha")
     async with app.run_test() as pilot:
         await _settle(pilot)
         track = app.screen
@@ -294,7 +294,7 @@ async def test_hint_visibility_resets_after_advance(tmp_path: Path) -> None:
 @pytest.mark.asyncio
 async def test_solving_a_topic_marks_progress(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
-    app = PylingsApp(root=work, start_topic="beta")
+    app = PythonlingsApp(root=work, start_topic="beta")
     async with app.run_test() as pilot:
         await _settle(pilot)
         track = app.screen
@@ -309,7 +309,7 @@ async def test_solving_a_topic_marks_progress(tmp_path: Path) -> None:
 @pytest.mark.asyncio
 async def test_picker_refreshes_progress_after_returning(tmp_path: Path) -> None:
     work = _work_copy(tmp_path)
-    app = PylingsApp(root=work, start_topic="beta")
+    app = PythonlingsApp(root=work, start_topic="beta")
     async with app.run_test() as pilot:
         await _settle(pilot)
         track = app.screen

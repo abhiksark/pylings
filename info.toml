@@ -1,5 +1,5 @@
 format_version = 1
-welcome_message = "Welcome to pylings! Save a file to re-run its checks."
+welcome_message = "Welcome to pythonlings! Save a file to re-run its checks."
 final_message = "All exercises complete. 🐍 Nice work."
 
 [[exercises]]

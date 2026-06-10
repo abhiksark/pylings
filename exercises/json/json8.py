@@ -5,7 +5,7 @@
 
 import json
 
-original = {"project": "pylings", "tags": ["python", "practice"], "meta": {"level": 3}}
+original = {"project": "pythonlings", "tags": ["python", "practice"], "meta": {"level": 3}}
 encoded = json.dumps(original, sort_keys=True)
 decoded = ???
 tag_count = len(decoded["tags"])

@@ -22,6 +22,6 @@ EOF
 fi
 
 mkdir -p "$output_dir"
-rm -rf /tmp/pylings-demo
+rm -rf /tmp/pythonlings-demo
 cd "$repo_root"
 "$vhs_bin" docs/demo.tape

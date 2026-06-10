@@ -30,10 +30,10 @@ jobs:
       - run: python -m pip install build
       - run: python -m build
       - run: python -m pip install --force-reinstall dist/*.whl
-      - run: pylings --version
-      - run: pylings init --path /tmp/pylings-workspace
-      - run: pylings --root /tmp/pylings-workspace list
-      - run: pylings --root /tmp/pylings-workspace solution variables1
-      - run: pylings --root /tmp/pylings-workspace reset variables1 --yes
-      - run: pylings --root tests/fixtures/passing_curriculum verify
+      - run: pythonlings --version
+      - run: pythonlings init --path /tmp/pythonlings-workspace
+      - run: pythonlings --root /tmp/pythonlings-workspace list
+      - run: pythonlings --root /tmp/pythonlings-workspace solution variables1
+      - run: pythonlings --root /tmp/pythonlings-workspace reset variables1 --yes
+      - run: pythonlings --root tests/fixtures/passing_curriculum verify
       - uses: pypa/gh-action-pypi-publish@release/v1

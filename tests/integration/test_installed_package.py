@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pylings.cli import main
+from pythonlings.cli import main
 
 
 def test_package_can_initialize_and_list_workspace(tmp_path: Path) -> None:

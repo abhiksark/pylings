@@ -12,7 +12,7 @@ def _cold_start_ms(*args: str) -> str:
     # We don't measure wall-clock for the test (CI flake); we assert that
     # textual was never imported in the subcommand path.
     proc = subprocess.run(
-        [sys.executable, "-X", "importtime", "-m", "pylings", "--root", str(FIXTURES), *args],
+        [sys.executable, "-X", "importtime", "-m", "pythonlings", "--root", str(FIXTURES), *args],
         capture_output=True,
         text=True,
     )
@@ -21,7 +21,7 @@ def _cold_start_ms(*args: str) -> str:
 
 def test_hint_does_not_import_textual() -> None:
     out = _cold_start_ms("hint", "passing")
-    assert "import 'textual'" not in out, f"textual loaded for `pylings hint`:\n{out}"
+    assert "import 'textual'" not in out, f"textual loaded for `pythonlings hint`:\n{out}"
 
 
 def test_list_does_not_import_textual() -> None:

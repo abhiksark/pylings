@@ -15,4 +15,4 @@ labels: bug
 - OS:
 - Python:
 - Terminal:
-- Pylings version:
+- Pythonlings version:
